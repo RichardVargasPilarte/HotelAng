@@ -1,0 +1,59 @@
+<mat-toolbar class="mat-elevation-z8">
+    <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened">
+            menu
+        </mat-icon>
+        <mat-icon *ngIf="sidenav.opened">
+            close
+        </mat-icon>
+    </button>
+
+    <span>
+        Responsive side navigation
+    </span>
+
+    <span class="example-spacer"></span>
+
+    <button mat-flat-button color="warn" aria-label="Example icon-button with heart icon">
+        Salir
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+
+        <button mat-button matTooltip="Menu" class="text-center">
+            <span>Menu</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button matTooltip="Alojamientos" class="menu-button">
+            <mat-icon>home</mat-icon>
+            <span>Alojamientos</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button matTooltip="Habitaciones" class="menu-button">
+            <mat-icon>bedroom_parent</mat-icon>
+            <span>Habitaciones</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button matTooltip="Usuarios" class="menu-button">
+            <mat-icon>person</mat-icon>
+            <span>Usuarios</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="content">
+            <!-- <app-table></app-table> -->
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

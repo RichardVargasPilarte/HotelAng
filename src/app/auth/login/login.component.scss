@@ -1,0 +1,42 @@
+body { 
+    font-family: sans-serif;
+    padding: 70px;
+    background-image: url(../../../assets/images/fondo.jpg);
+    // background-image: url(../../../assets/images/1092141.jpg);
+    // background-image: url(../../../assets/images/hotel1.jpg);
+    // background-image: url(../../../assets/images/hotel2.jpg);
+    // background-image: url(../../../assets/images/hotel3.jpg);
+    // background-image: url(../../../assets/images/hotel4.jpg);
+    background-repeat: no-repeat;
+    overflow: visible;
+    background-size: cover;
+}
+
+.container {
+    max-width: 380px;
+    margin: auto;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.header {
+    text-align: center;
+    padding-top: 75px;
+}
+
+.header h1 {
+    color: white;
+    font-size: 45px;
+    margin-bottom: 80px;
+}
+
+.main {
+    text-align: center;
+}
+
+.main button {
+    width: 200px;
+    height: 45px;
+    margin-bottom: 25px;
+}
+

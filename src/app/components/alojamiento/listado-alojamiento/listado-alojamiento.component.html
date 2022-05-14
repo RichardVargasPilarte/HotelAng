@@ -1,0 +1,51 @@
+<mat-toolbar id="prueba" class="">
+    <span>Alojamientos</span>
+    <span class="example-spacer"></span>
+    <button mat-flat-button color="warn">
+        <span>Nuevo</span>
+        <mat-icon>add</mat-icon>
+    </button>
+</mat-toolbar>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> N<sup>o</sup> </th>
+        <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+    </ng-container>
+
+    <!-- descripcion Column -->
+    <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripción </th>
+        <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+    </ng-container>
+
+    <!-- tiempo_estadia Column -->
+    <ng-container matColumnDef="tiempo_estadia">
+        <th mat-header-cell *matHeaderCellDef> Tiempo Estadia </th>
+        <td mat-cell *matCellDef="let element"> {{element.tiempo_estadia}} Días </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-mini-fab color="primary" class="mr-2 mb-2 mt-2" (click)="openDialog('u', element.id)">
+                <mat-icon appTooltip="Editar">create</mat-icon>
+            </button>
+
+            <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="eliminarAlojamiento(element.id)">
+                <mat-icon appTooltip="Eliminar">delete_forever</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
