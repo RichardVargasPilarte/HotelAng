@@ -1,1 +1,46 @@
-<p>formulario-alojamiento works!</p>
+<form [formGroup]="form" *ngIf="form">
+    <mat-card class="form-card">
+        <mat-card-header>
+            <mat-card-title>Formulario</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre Alojamiento</mat-label>
+                        <input matInput placeholder="Nombre Alojamiento" formControlName="nombre">
+                        <mat-error *ngIf="form.controls['nombre'].hasError('required')">
+                            El nombre es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['nombre'].hasError('minlength')">
+                            El nombre debe de tener minimo 8 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tiempo Estadia</mat-label>
+                        <input matInput type="number" placeholder="Tiempo Estadia" formControlName="tiempo_estadia">
+                        <mat-error *ngIf="form.controls['tiempo_estadia'].hasError('required')">
+                            El tiempo de estadia es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Descripción</mat-label>
+                        <input matInput placeholder="Descripción" formControlName="descripcion">
+                        <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
+                            La descripción es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</form>

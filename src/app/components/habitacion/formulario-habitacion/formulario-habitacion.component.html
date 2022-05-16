@@ -1,1 +1,108 @@
-<p>formulario-habitacion works!</p>
+<form [formGroup]="form" *ngIf="form">
+    <mat-card class="form-card">
+        <mat-card-header>
+            <mat-card-title>Formulario</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre Habitación:</mat-label>
+
+                        <input matInput formControlName="nombre" name="nombre" placeholder="Nombre de la Habitación"
+                            autocomplete="off" maxlength="25">
+
+                        <mat-error *ngIf="form.controls['nombre'].hasError('required')">
+                            El nombre es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['nombre'].hasError('minlength')">
+                            El nombre debe de tener minimo 8 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Precio:</mat-label>
+
+                        <input type="number" matInput name="precio" formControlName="precio" placeholder="Precio"
+                            autocomplete="off">
+
+                        <mat-error *ngIf="form.controls['precio'].hasError('required')">
+                            El precio es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['precio'].hasError('minlength')">
+                            El precio debe de tener minimo 2 digitos
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tipo de Alojamiento</mat-label>
+                        <mat-select formControlName="nombre_alojamiento">
+                            <mat-option *ngFor="let alojamiento of AlojamientosCargados" [value]="alojamiento.id">
+                                {{alojamiento.nombre}}
+                            </mat-option>
+                        </mat-select>
+
+                        <mat-error *ngIf="form.controls['nombre_alojamiento'].hasError('required')">
+                            El tipo de alojamiento es <strong>requerido</strong>
+
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Número de Personas:</mat-label>
+
+                        <input type="number" matInput name="numero_personas" formControlName="numero_personas"
+                            placeholder="NumeroPersonas" autocomplete="off">
+
+                        <mat-error *ngIf="form.controls['numero_personas'].hasError('required')">
+                            El numero de personas es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['numero_personas'].hasError('minlength')">
+                            El minimo de personas por habitación es de 1 persona
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Estado Habitación:</mat-label>
+                        <mat-select formControlName="activo">
+                            <ng-container *ngFor="let estado of EstadoHabitaciones">
+                                <mat-option [value]="estado">{{estado}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                        <mat-error *ngIf="form.controls['activo'].hasError('required')">
+                            El estado de la habitación es <strong>requerida</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Descripción" formControlName="descripcion">
+                        <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
+                            La descripción es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+</form>

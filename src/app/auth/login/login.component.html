@@ -7,23 +7,35 @@
         </div>
 
         <div class="main">
-            <form>
+            <form [formGroup]="loginForm" *ngIf="loginForm">
                 <span>
                     <mat-form-field appearance="outline">
                         <mat-label>Nombre de Usuario</mat-label>
-                        <input type="text" matInput placeholder="Nombre de Usuario">
+                        <input type="text" matInput formControlName="username" placeholder="Nombre de Usuario">
+                        <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+                            El nombre es <strong>requerido</strong>
+                        </mat-error>
                     </mat-form-field>
                 </span>
                 <br>
                 <span>
                     <mat-form-field appearance="outline">
                         <mat-label>Contraseña</mat-label>
-                        <input type="password" matInput placeholder="Contraseña">
+                        <input type="password" matInput formControlName="password" placeholder="Contraseña">
+
+                        <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                            La contraseña es <strong>requerida</strong>
+                        </mat-error>
                     </mat-form-field>
                 </span>
                 <br>
 
-                <button mat-raised-button color="primary">Login</button>
+                <button mat-raised-button
+                    type="submit"
+                    color="primary"
+                    [disabled]="loginForm.invalid" (click)="login()">
+                    Login
+                </button>
             </form>
         </div>
     </div>

@@ -1,1 +1,67 @@
-<p>listado-habitacion works!</p>
+<mat-toolbar id="prueba" class="">
+    <span>Habitaciones</span>
+    <span class="example-spacer"></span>
+    <button mat-flat-button color="warn">
+        <span>Nuevo</span>
+        <mat-icon>add</mat-icon>
+    </button>
+</mat-toolbar>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Columna del id -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let i=index"> {{i+1}} </td>
+    </ng-container>
+
+    <!-- Columna del nombre habitacion -->
+    <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.nombre}} </td>
+    </ng-container>
+
+    <!-- Columna del nombre alojamiento -->
+    <ng-container matColumnDef="nombre_alojamiento">
+        <th mat-header-cell *matHeaderCellDef> Alojamiento </th>
+        <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.nombre_alojamiento.nombre}} </td>
+    </ng-container>
+
+    <!-- Columna de numero personas -->
+    <ng-container matColumnDef="numero_personas">
+        <th mat-header-cell *matHeaderCellDef> Personas </th>
+        <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.numero_personas}} </td>
+    </ng-container>
+
+    <!-- Columna del precio -->
+    <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef> Precio </th>
+        <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.precio | currency:'USD'}} </td>
+    </ng-container>
+
+    <!-- Columna del estado -->
+    <ng-container matColumnDef="activo">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.activo}} </td>
+    </ng-container>
+
+    <!-- Columna de las acciones -->
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let habitaciones">
+            <button mat-mini-fab color="primary" class="mr-2 mb-2 mt-2" (click)="openDialog('u', habitaciones.id)">
+                <mat-icon appTooltip="Editar">create</mat-icon>
+            </button>
+
+            <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="eliminarhabitacion(habitaciones.id)">
+                <mat-icon appTooltip="Eliminar">delete_forever</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale" [fullScreen]="true">
+    <p style="color: white"> Cargando los datos... </p>
+</ngx-spinner>

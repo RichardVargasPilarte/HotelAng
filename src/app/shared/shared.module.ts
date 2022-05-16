@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Error404Component } from './error404/error404.component';
 
 const MaterialComponents = [
   MatSidenavModule,
@@ -23,8 +24,8 @@ const MaterialComponents = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, Error404Component],
   imports: [CommonModule, MaterialComponents, RouterModule],
-  exports: [MaterialComponents, DashboardComponent],
+  exports: [MaterialComponents, DashboardComponent, Error404Component],
 })
 export class SharedModule {}
