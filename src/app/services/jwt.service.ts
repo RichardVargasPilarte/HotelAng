@@ -57,7 +57,7 @@ export class JwtService {
 
   tokenVerify(): Observable<any> {
     const body = { token: this.Token };
-    const head = {};
+    const head = {} as any;
     head['Content-Type'] = 'application/json';
     return this.httpClient.post(environment.Api_Auth_Verify, body, head);
   }

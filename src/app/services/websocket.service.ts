@@ -8,7 +8,7 @@ import { ip } from '../Models/api.model';
   providedIn: 'root',
 })
 export class WebsocketService {
-  socket: WebSocket;
+  socket: WebSocket | undefined;
   constructor(
     private jwt: JwtService,
     private Aloj$: AlojamientoService,
@@ -48,7 +48,7 @@ export class WebsocketService {
         console.log(
           `reconectando ws intento ${this.contador} de ${this.MAX_RECONNECTION}`
         );
-        this.socket = null;
+        this.socket = undefined;
         const p3 = new Promise<void>((resolve) => {
           // alertify.error(`reconectando ws intento ${this.contador} de ${this.MAX_RECONNECTION}`);
           this.contador++;
@@ -66,7 +66,7 @@ export class WebsocketService {
       }
     };
     if (this.socket.readyState === WebSocket.OPEN) {
-      this.socket.onopen(null);
+      this.socket.onopen(null as any);
     }
   }
 }

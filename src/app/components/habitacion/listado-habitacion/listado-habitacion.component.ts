@@ -23,7 +23,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   public subs: Subscription[] = [];
   private promesas: Promise<any>[] = [];
   public isLoaded = false;
-  sub: Subscription[] = [];
+  sub: Subscription | undefined;
   public dataSource: Habitacion[] = [];
   refHabitacion!: Observable<any[]>;
   refAlojamiento!: Observable<any[]>;
@@ -49,19 +49,36 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     this.promesas.push(
       new Promise<void>((resolve, reject) => {
         const sub = this.habitacionservice.ListadoHabitaciones().subscribe(
-          (resp) => this.habitaciones.push(resp),
-          (error) => console.log(error),
-          () => resolve()
+          // (resp) => this.habitaciones.push(resp),
+          // (error) => console.log(error),
+          // () => resolve()
+          {
+            next: (resp) => {
+              this.habitaciones.push(resp);
+              (error: any) => console.log(error);
+              () => resolve();
+            },
+          }
         );
+        this.subs.push(sub);
       })
     );
 
     this.promesas.push(
       new Promise<void>((resolve, reject) => {
         const sub = this.alojamiento$.ObtenerAlojamientos().subscribe(
-          (resp) => this.alojamiento.push(resp),
-          (error) => console.log(error),
-          () => resolve()
+          // (resp) => this.alojamiento.push(resp),
+          // (error) => console.log(error),
+          // () => resolve()
+
+          {
+            next: (resp) => {
+              this.alojamiento.push(resp);
+            },
+            error: (error) => {
+              console.log(error), () => resolve();
+            },
+          }
         );
         this.subs.push(sub);
       })
@@ -87,7 +104,10 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
         this.refHabitacion.subscribe((data) => {
           console.log('probando');
           this.habitaciones = [];
-          this.habitaciones = data;
+          // data.forEach((element) => {
+          //   this.habitaciones.push(element);
+          // });
+          this.habitaciones = data; // linea correcta
           this.CloseDialog();
         });
       }
@@ -100,6 +120,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
       this.sub.unsubscribe();
     }
   }
+
   // Metodo encargado de eliminar las habitaciones mediante su Id
   eliminarhabitacion(id: number): any {
     this.habitacionservice.BorrarHabitacion(id).subscribe((data) => {

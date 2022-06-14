@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 import { Error404Component } from './error404/error404.component';
 
 const MaterialComponents = [
@@ -21,6 +22,7 @@ const MaterialComponents = [
   MatIconModule,
   MatGridListModule,
   MatTooltipModule,
+  MatDialogModule,
 ];
 
 @NgModule({

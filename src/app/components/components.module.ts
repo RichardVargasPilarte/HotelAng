@@ -19,8 +19,8 @@ import { ListadoAlojamientoComponent } from './alojamiento/listado-alojamiento/l
 import { FormularioAlojamientoComponent } from './alojamiento/formulario-alojamiento/formulario-alojamiento.component';
 import { FormularioHabitacionComponent } from './habitacion/formulario-habitacion/formulario-habitacion.component';
 import { ListadoHabitacionComponent } from './habitacion/listado-habitacion/listado-habitacion.component';
-import { ListadoUsuarioComponent } from "./usuario/listado-usuario/listado-usuario.component";
-import { FormularioUsuarioComponent } from "./usuario/formulario-usuario/formulario-usuario.component";
+import { ListadoUsuarioComponent } from './usuario/listado-usuario/listado-usuario.component';
+import { FormularioUsuarioComponent } from './usuario/formulario-usuario/formulario-usuario.component';
 
 const MaterialComponents = [
   MatSidenavModule,
@@ -43,7 +43,7 @@ const MaterialComponents = [
     FormularioHabitacionComponent,
     ListadoHabitacionComponent,
     ListadoUsuarioComponent,
-    FormularioUsuarioComponent
+    FormularioUsuarioComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +52,6 @@ const MaterialComponents = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [MaterialComponents],
+  exports: [MaterialComponents, NgxSpinnerModule],
 })
 export class ComponentsModule {}

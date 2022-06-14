@@ -37,14 +37,25 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
   ) {
     this.promesa = new Promise<void>((resolve) => {
       const sub = this._alojamientoService.ObtenerAlojamientos().subscribe(
-        (res) => this.alojamientos.push(res),
-        (error) => console.log('Hubo un fallo al momento de traer los datos'),
-        () => resolve()
+        // (res) => this.alojamientos.push(res),
+        // (error) => console.log('Hubo un fallo al momento de traer los datos'),
+        // () => resolve()
+
+        {
+          next: (res) => {
+            this.alojamientos.push(res);
+          },
+          error: (error: any) => {
+            console.log(error),
+              console.log('Hubo un fallo al momento de traer los datos');
+            () => resolve();
+          },
+        }
       );
       this.subs.push(sub);
       this.dataSource = this.alojamientos;
-      console.log('Yo traigo los datos');
-      console.log('Los datos son:', this.dataSource);
+      console.log('Yo traigo los datos y son estos:', this.dataSource);
+      // console.log('Los datos son:', this.dataSource);
     });
 
     this.refAloj = this._alojamientoService.getList();
@@ -118,6 +129,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     } else {
       const alojam = this.alojamientos.find((d) => d.id === id);
       this.dialog.open(FormularioAlojamientoComponent, {
+        // width: '70%',
         data: { type: tipo, alojam },
       });
     }

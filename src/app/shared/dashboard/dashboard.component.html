@@ -12,9 +12,9 @@
         Responsive side navigation
     </span>
 
-    <span class="example-spacer"></span>
+    <span class="spacer"></span>
 
-    <button mat-flat-button color="warn" aria-label="Example icon-button with heart icon">
+    <button mat-flat-button color="warn" (click)="logout()">
         Salir
         <mat-icon>logout</mat-icon>
     </button>
@@ -31,21 +31,21 @@
 
         <button mat-button matTooltip="Alojamientos" class="menu-button">
             <mat-icon>home</mat-icon>
-            <span>Alojamientos</span>
+            <span [routerLink]="['/Alojamientos/Listado']" routerLinkActive="active">Alojamientos</span>
         </button>
 
         <mat-divider></mat-divider>
 
         <button mat-button matTooltip="Habitaciones" class="menu-button">
             <mat-icon>bedroom_parent</mat-icon>
-            <span>Habitaciones</span>
+            <span [routerLink]="['/Habitaciones/Listado']" routerLinkActive="active">Habitaciones</span>
         </button>
 
         <mat-divider></mat-divider>
 
         <button mat-button matTooltip="Usuarios" class="menu-button">
             <mat-icon>person</mat-icon>
-            <span>Usuarios</span>
+            <span [routerLink]="['/Usuarios/Listado']" routerLinkActive="active">Usuarios</span>
         </button>
 
         <mat-divider></mat-divider>
@@ -53,7 +53,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content">
-            <!-- <app-table></app-table> -->
+            <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

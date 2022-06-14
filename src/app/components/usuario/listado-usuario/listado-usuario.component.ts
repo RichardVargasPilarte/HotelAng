@@ -25,7 +25,7 @@ export class ListadoUsuarioComponent implements OnInit {
   public subs: Subscription[] = [];
   public isLoaded = false;
   private promesas: Promise<any>[] = [];
-  sub: Subscription[] = [];
+  sub: Subscription | undefined;
   public dataSource: Usuario[] = [];
   refUsuarios!: Observable<any[]>;
   refGrupos!: Observable<any[]>;
@@ -51,21 +51,25 @@ export class ListadoUsuarioComponent implements OnInit {
   ) {
     this.promesas.push(
       new Promise<void>((resolve, reject) => {
-        const sub = this.usuariosServicio.ObtenerUsuarios().subscribe(
-          (resp) => this.usuarios.push(resp),
-          (error) => console.log(error),
-          () => resolve()
-        );
+        const sub = this.usuariosServicio.ObtenerUsuarios().subscribe({
+          next: (res) => {
+            this.usuarios.push(res);
+            (error: any) => console.log(error);
+            () => resolve();
+          },
+        });
       })
     );
 
     this.promesas.push(
       new Promise<void>((resolve, reject) => {
-        const sub = grupos$.ObtenerGrupos().subscribe(
-          (resp) => this.grupos.push(resp),
-          (error) => console.log(error),
-          () => resolve()
-        );
+        const sub = grupos$.ObtenerGrupos().subscribe({
+          next: (res) => {
+            this.grupos.push(res);
+            (error: any) => console.log(error);
+            () => resolve();
+          },
+        });
         this.subs.push(sub);
       })
     );
@@ -117,18 +121,20 @@ export class ListadoUsuarioComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.SpinnerService.show();
-        this.usuariosServicio.BorrarUsuario(id).subscribe(
-          (data) => {
-            // this.success = true;
+        this.usuariosServicio.BorrarUsuario(id).subscribe({
+          next: (data) => {
             Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
             this.SpinnerService.hide();
             console.log('Se elimino el usuario');
             // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
             console.log(data);
+
+            (error: any) =>
+              console.log(
+                'Hubo un fallo al momento de eliminar el dato' + error
+              );
           },
-          (error) =>
-            console.log('Hubo un fallo al momento de eliminar el dato' + error)
-        );
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         (error: string) =>
           console.log('Hubo un fallo al momento de eliminar el dato' + error);
