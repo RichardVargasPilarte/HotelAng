@@ -45,14 +45,26 @@ export class LoginComponent implements OnInit {
     this._JwtService
       .login(this.Form['username'].value, this.Form['password'].value)
       .subscribe(
-        (res) => {
-          console.log(res);
-          window.location.reload();
-          this.loading = false;
-        },
-        (err) => {
-          alert(err.error.non_field_errors);
-          this.loading = false;
+        // (res) => {
+        //   console.log(res);
+        //   window.location.reload();
+        //   this.loading = false;
+        // },
+        // (err) => {
+        //   alert(err.error.non_field_errors);
+        //   this.loading = false;
+        // }
+
+        {
+          next: (res) => {
+            console.log(res);
+            window.location.reload();
+            this.loading = false;
+          },
+          error: (error) => {
+            alert(error.error.non_field_errors);
+            this.loading = false;
+          }
         }
       );
   }

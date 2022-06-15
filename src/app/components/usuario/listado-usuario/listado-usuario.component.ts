@@ -23,9 +23,9 @@ export class ListadoUsuarioComponent implements OnInit {
   public usuarios: Usuario[] = [];
   public grupos: Grupos[] = [];
   public subs: Subscription[] = [];
+  sub: Subscription | undefined;
   public isLoaded = false;
   private promesas: Promise<any>[] = [];
-  sub: Subscription | undefined;
   public dataSource: Usuario[] = [];
   refUsuarios!: Observable<any[]>;
   refGrupos!: Observable<any[]>;
@@ -54,7 +54,9 @@ export class ListadoUsuarioComponent implements OnInit {
         const sub = this.usuariosServicio.ObtenerUsuarios().subscribe({
           next: (res) => {
             this.usuarios.push(res);
-            (error: any) => console.log(error);
+          },
+          error: (error: any) => {
+            console.log(error);
             () => resolve();
           },
         });
@@ -66,7 +68,9 @@ export class ListadoUsuarioComponent implements OnInit {
         const sub = grupos$.ObtenerGrupos().subscribe({
           next: (res) => {
             this.grupos.push(res);
-            (error: any) => console.log(error);
+          },
+          error: (error: any) => {
+            console.log(error);
             () => resolve();
           },
         });

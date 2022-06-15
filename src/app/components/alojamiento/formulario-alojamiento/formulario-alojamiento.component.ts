@@ -86,8 +86,8 @@ export class FormularioAlojamientoComponent implements OnInit {
         {
           next: (res) => {
             this.dialogRef.close();
-            (error: any) => console.log('Hubo un error' + error)
-          }
+          },
+          error: (error: any) => console.log('Hubo un error' + error)
         }
       )
     );

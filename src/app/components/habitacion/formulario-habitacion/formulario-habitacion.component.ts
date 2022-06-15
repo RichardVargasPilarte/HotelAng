@@ -128,9 +128,9 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
         {
           next: (res) => {
             this.dialogRef.close();
-            console.log(res),
-            (error: any) => console.log(error);
-          }
+            console.log(res);
+          },
+          error: (error: any) => console.log(error)
         }
         // (res) => {
         //   this.dialogRef.close();
