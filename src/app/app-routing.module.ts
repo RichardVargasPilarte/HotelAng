@@ -11,8 +11,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { Error404Component } from './shared/error404/error404.component';
 
 const routes: Routes = [
-  { path: 'Login', component: LoginComponent },
-  { path: 'Alojamientos/Listado', component: ListadoAlojamientoComponent },
+  { path: 'Login', component: LoginComponent, title: 'Login' },
+  {
+    path: 'Alojamientos/Listado',
+    component: ListadoAlojamientoComponent,
+    title: 'Listado de Alojamientos',
+  },
   {
     path: 'Alojamientos/Formularios',
     component: FormularioAlojamientoComponent,
@@ -21,7 +25,11 @@ const routes: Routes = [
     path: 'Alojamientos/Formularios/:id',
     component: FormularioAlojamientoComponent,
   },
-  { path: 'Habitaciones/Listado', component: ListadoHabitacionComponent },
+  {
+    path: 'Habitaciones/Listado',
+    component: ListadoHabitacionComponent,
+    title: 'Listado de Habitaciones',
+  },
   {
     path: 'Habitaciones/Formularios',
     component: FormularioHabitacionComponent,
@@ -30,7 +38,11 @@ const routes: Routes = [
     path: 'Habitaciones/Formularios/:id',
     component: FormularioHabitacionComponent,
   },
-  { path: 'Usuarios/Listado', component: ListadoUsuarioComponent },
+  {
+    path: 'Usuarios/Listado',
+    component: ListadoUsuarioComponent,
+    title: 'Listado de Usuarios',
+  },
   { path: 'Usuarios/Formularios', component: FormularioUsuarioComponent },
   { path: 'Usuarios/Formularios/:id', component: FormularioUsuarioComponent },
   { path: '', component: LoginComponent, pathMatch: 'full' },

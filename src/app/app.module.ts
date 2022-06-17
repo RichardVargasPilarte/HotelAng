@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CookieService } from 'ngx-cookie-service';
 import { JwtInterceptorInterceptor } from './Interceptores/jwt.interceptor';
@@ -20,7 +19,6 @@ import { ComponentsModule } from './components/components.module';
 
 // Servicios
 import { AlojamientoService } from './services/alojamiento.service';
-import { AuthGuardService } from './services/auth-guard.service';
 import { GruposService } from './services/grupos.service';
 import { HabitacionService } from './services/habitacion.service';
 import { JwtService } from './services/jwt.service';
@@ -34,7 +32,6 @@ import { } from '../environments/environment';
 
 const Servicios = [
   AlojamientoService,
-  // AuthGuardService,
   GruposService,
   HabitacionService,
   JwtService,
@@ -52,9 +49,7 @@ const Servicios = [
     HttpClientModule,
     SharedModule,
     AuthModule,
-    ComponentsModule,
-    // FormsModule,
-    // ReactiveFormsModule,
+    ComponentsModule
   ],
   exports: [],
   providers: [
