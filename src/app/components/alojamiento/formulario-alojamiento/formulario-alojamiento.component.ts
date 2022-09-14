@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
+  FormBuilder,
+  FormControl,
   Validators,
+  FormGroup,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -26,51 +26,53 @@ export class FormularioAlojamientoComponent implements OnInit {
   public edit!: boolean;
   subs: Subscription[] = [];
   public selected = '0';
-  public form!: UntypedFormGroup;
+  public form!: FormGroup;
 
   constructor(
     private alojamientoServicio: AlojamientoService,
     public dialogRef: MatDialogRef<FormularioAlojamientoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private fb: UntypedFormBuilder
-  ) {}
+    private fb: FormBuilder
+  ) {
+    this.createForm()
+  }
 
   ngOnInit(): void {}
 
   createForm(id?: string): void {
     if (this.data.type === 'c') {
       this.form = this.fb.group({
-        id: new UntypedFormControl(0),
-        nombre: new UntypedFormControl('', [
+        id: new FormControl(0),
+        nombre: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
         ]),
-        descripcion: new UntypedFormControl('', [
+        descripcion: new FormControl('', [
           Validators.required,
           Validators.minLength(10),
         ]),
-        tiempo_estadia: new UntypedFormControl('', [
+        tiempo_estadia: new FormControl('', [
           Validators.required,
           Validators.minLength(1),
         ]),
-        eliminado: new UntypedFormControl('NO'),
+        eliminado: new FormControl('NO'),
       });
     } else {
       this.form = this.fb.group({
         id: this.data.alojam!.id,
-        nombre: new UntypedFormControl(this.data.alojam!.nombre, [
+        nombre: new FormControl(this.data.alojam!.nombre, [
           Validators.required,
           Validators.minLength(8),
         ]),
-        descripcion: new UntypedFormControl(this.data.alojam!.descripcion, [
+        descripcion: new FormControl(this.data.alojam!.descripcion, [
           Validators.required,
           Validators.minLength(10),
         ]),
-        tiempo_estadia: new UntypedFormControl(this.data.alojam!.tiempo_estadia, [
+        tiempo_estadia: new FormControl(this.data.alojam!.tiempo_estadia, [
           Validators.required,
           Validators.minLength(1),
         ]),
-        eliminado: new UntypedFormControl('NO'),
+        eliminado: new FormControl('NO'),
       });
     }
   }

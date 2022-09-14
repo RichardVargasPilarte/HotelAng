@@ -10,7 +10,7 @@ export const environment = {
   API_URI: 'http://localhost:8000/api',
   API_Auth: 'http://localhost:8000/api/token/',
   Api_Auth_Verify: 'http://localhost:8000/api/token/verify/',
-  APP_name: 'SPA'
+  APP_name: 'SPA',
 };
 
 /*
