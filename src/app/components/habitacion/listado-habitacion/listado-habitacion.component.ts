@@ -21,9 +21,9 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   public alojamiento: Alojamiento[] = []; // propiedad encarga de interactuar con el modelo alojamientos
   alerts = true;
   public subs: Subscription[] = [];
+  sub: Subscription | undefined;
   private promesas: Promise<any>[] = [];
   public isLoaded = false;
-  sub: Subscription | undefined;
   public dataSource: Habitacion[] = [];
   refHabitacion!: Observable<any[]>;
   refAlojamiento!: Observable<any[]>;
@@ -55,7 +55,9 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
           {
             next: (resp) => {
               this.habitaciones.push(resp);
-              (error: any) => console.log(error);
+            },
+            error: (error: any) => {
+              console.log(error);
               () => resolve();
             },
           }
@@ -76,7 +78,8 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
               this.alojamiento.push(resp);
             },
             error: (error) => {
-              console.log(error), () => resolve();
+              console.log(error), 
+              () => resolve();
             },
           }
         );

@@ -48,14 +48,13 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
           error: (error: any) => {
             console.log(error),
               console.log('Hubo un fallo al momento de traer los datos');
-            () => resolve();
+          },
+          complete() {
+            resolve();
           },
         }
       );
       this.subs.push(sub);
-      this.dataSource = this.alojamientos;
-      console.log('Yo traigo los datos y son estos:', this.dataSource);
-      // console.log('Los datos son:', this.dataSource);
     });
 
     this.refAloj = this._alojamientoService.getList();
@@ -64,11 +63,12 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.SpinnerService.show();
     this.promesa.then(() => {
+      this.dataSource = this.alojamientos;
+      console.log('Yo traigo los datos y son estos:', this.dataSource);
       this.isLoaded = true;
-      // this._alojamientoService.successObten();
       this.subs.push();
+      this.CloseDialog();
     });
-    this.CloseDialog();
     this.refAloj.subscribe((data) => {
       this.alojamientos = data;
       // console.log('Hola', data);

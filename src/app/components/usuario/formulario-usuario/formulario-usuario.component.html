@@ -1,1 +1,127 @@
-<p>formulario-usuario works!</p>
+<form [formGroup]="form" *ngIf="form">
+    <mat-card class="form-card">
+        <mat-card-header>
+            <mat-card-title>Formulario</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombres:</mat-label>
+
+                        <input matInput formControlName="first_name" name="first_name" placeholder="Nombres de usuario"
+                            autocomplete="off" required>
+
+                        <mat-error *ngIf="form.controls['first_name'].hasError('required')">
+                            El nombre es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['first_name'].hasError('minlength')">
+                            <strong>El nombre debe de tener minimo 8 caracteres</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dirección:</mat-label>
+
+                        <input type="text" matInput name="direccion" formControlName="direccion"
+                            placeholder="Dirección del usuario" required autocomplete="off">
+
+                        <mat-error *ngIf="form.controls['direccion'].hasError('required')">
+                            <strong>La dirección es requerida</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['direccion'].hasError('minlength')">
+                            <strong>La dirección debe de tener minimo 8 caracteres</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Contraseña:</mat-label>
+                        <input matInput type="password" formControlName="password" placeholder="Ingrese su contraseña"
+                            required autocomplete="off">
+
+                        <mat-error *ngIf="form.controls['password'].hasError('required')">
+                            <strong>La contraseña es requerida</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['password'].hasError('minlength')">
+                            <strong>La contraseña debe de tener minimo 8 caracteres</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre de usuario (Nick):</mat-label>
+
+                        <input type="text" matInput formControlName="username" placeholder="Ingrese el nick de usuario"
+                            required autocomplete="off" />
+
+                        <mat-error *ngIf="form.controls['username'].hasError('required')">
+                            <strong>El nombre de usuario es requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['username'].hasError('minlength')">
+                            <strong>El nombre de usuario debe de tener minimo 8 caracteres</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apellidos:</mat-label>
+                        <input matInput type="text" formControlName="last_name" placeholder="Apellidos del usuario"
+                            required autocomplete="off">
+
+                        <mat-error *ngIf="form.controls['last_name'].hasError('required')">
+                            <strong>Los apellidos son requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['last_name'].hasError('minlength')">
+                            <strong>El apellido debe de tener minimo 8 caracteres</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Número de teléfono:</mat-label>
+
+                        <input type="tel" matInput formControlName="telefono" placeholder="Ingrese su número telefónico"
+                            required autocomplete="off" />
+
+                        <mat-error *ngIf="form.controls['telefono'].hasError('required')">
+                            <strong>El Número de teléfono es requerido</strong>
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tipo de usuario:</mat-label>
+                        <mat-select formControlName="tipo_usuario" [(ngModel)]="selected">
+                            <mat-option *ngFor="let tipo_usuario of gruposCargados" [value]="tipo_usuario.id">
+                                {{tipo_usuario.name}}
+                            </mat-option>
+                        </mat-select>
+
+                        <mat-error *ngIf="form.controls['tipo_usuario'].hasError('required')">
+                            <strong>El tipo usuario es requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</form>

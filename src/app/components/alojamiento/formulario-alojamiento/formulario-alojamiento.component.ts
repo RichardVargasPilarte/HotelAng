@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
-  FormGroup,
   FormBuilder,
   FormControl,
   Validators,
+  FormGroup,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -33,7 +33,9 @@ export class FormularioAlojamientoComponent implements OnInit {
     public dialogRef: MatDialogRef<FormularioAlojamientoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.createForm()
+  }
 
   ngOnInit(): void {}
 
@@ -86,8 +88,8 @@ export class FormularioAlojamientoComponent implements OnInit {
         {
           next: (res) => {
             this.dialogRef.close();
-            (error: any) => console.log('Hubo un error' + error)
-          }
+          },
+          error: (error: any) => console.log('Hubo un error' + error)
         }
       )
     );
