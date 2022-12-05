@@ -47,7 +47,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     private SpinnerService: NgxSpinnerService
   ) {
     this.promesas.push(
-      new Promise<void>((resolve, reject) => {
+      new Promise<void>((resolve) => {
         const sub = this.habitacionservice.ListadoHabitaciones().subscribe(
           // (resp) => this.habitaciones.push(resp),
           // (error) => console.log(error),
@@ -58,8 +58,11 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
             },
             error: (error: any) => {
               console.log(error);
-              () => resolve();
+              console.log('Hubo un fallo al momento de traer los datos');
             },
+            complete() {
+              resolve();
+            }
           }
         );
         this.subs.push(sub);
@@ -67,7 +70,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     );
 
     this.promesas.push(
-      new Promise<void>((resolve, reject) => {
+      new Promise<void>((resolve) => {
         const sub = this.alojamiento$.ObtenerAlojamientos().subscribe(
           // (resp) => this.alojamiento.push(resp),
           // (error) => console.log(error),
@@ -79,15 +82,18 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
             },
             error: (error) => {
               console.log(error), 
-              () => resolve();
+              console.log('Hubo un fallo al momento de traer los datos');
             },
+            complete: () => {
+              resolve();
+            }
           }
         );
         this.subs.push(sub);
       })
     );
     this.refHabitacion = this.habitacionservice.getList();
-    console.log(this.refHabitacion);
+    // console.log(this.refHabitacion);
     this.refAlojamiento = this.alojamiento$.getList();
   }
 
@@ -101,19 +107,21 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
           this.router
         )
       ) {
+        this.dataSource = this.habitaciones;
+        console.log('estas son las habitaciones:', this.dataSource);
         this.isLoaded = true;
-        // this.habitacionservice.successObten();
+        this.subs.push();
         this.CloseDialog();
-        this.refHabitacion.subscribe((data) => {
-          console.log('probando');
-          this.habitaciones = [];
-          // data.forEach((element) => {
-          //   this.habitaciones.push(element);
-          // });
-          this.habitaciones = data; // linea correcta
-          this.CloseDialog();
-        });
       }
+    });
+    this.refHabitacion.subscribe((data) => {
+      this.habitaciones = data;
+      // console.log('probando', data);
+      this.dataSource = [];
+      this.habitaciones.forEach((element) => {
+        this.dataSource.push(element);
+      });
+      this.CloseDialog();
     });
   }
 
@@ -147,7 +155,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     } else {
       const habitac = this.habitaciones.find((d) => d.id === id);
       this.dialog.open(FormularioHabitacionComponent, {
-        width: '70%',
+        // width: '80%',
         data: { type: tipo, hab: habitac },
       });
     }

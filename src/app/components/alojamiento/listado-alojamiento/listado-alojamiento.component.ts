@@ -47,7 +47,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
           },
           error: (error: any) => {
             console.log(error),
-              console.log('Hubo un fallo al momento de traer los datos');
+            console.log('Hubo un fallo al momento de traer los datos');
           },
           complete() {
             resolve();
@@ -59,7 +59,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
 
     this.refAloj = this._alojamientoService.getList();
   }
-
+  
   ngOnInit(): void {
     this.SpinnerService.show();
     this.promesa.then(() => {

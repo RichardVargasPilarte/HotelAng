@@ -1,7 +1,8 @@
 body { 
     font-family: sans-serif;
-    padding: 70px;
+    // padding: 70px;
     background-image: url(../../../assets/images/fondo.jpg);
+    // background-image: url(../../../assets/images/fondo.jpg);
     // background-image: url(../../../assets/images/1092141.jpg);
     // background-image: url(../../../assets/images/hotel1.jpg);
     // background-image: url(../../../assets/images/hotel2.jpg);
@@ -13,10 +14,10 @@ body {
 }
 
 .container {
-    max-width: 380px;
+    max-width: 350px;
     margin: auto;
     border-radius: 25px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.25);
 }
 
 .header {

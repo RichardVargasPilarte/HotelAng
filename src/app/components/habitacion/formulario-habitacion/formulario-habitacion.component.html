@@ -103,6 +103,21 @@
                 </div>
             </div>
 
+            <div class="row">
+                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+                    (click)="data.type === 'c' ? saveHabitacion():updateHabitacion()"
+                    [disabled]="form.invalid">
+                    Guardar
+                    <i class="material-icons">save</i>
+                </button>
+
+                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+                    (click)="dialogRef.close()">
+                    Cancelar
+                    <i class="material-icons">cancel</i>
+                </button>
+            </div>
+
         </mat-card-content>
     </mat-card>
 </form>
