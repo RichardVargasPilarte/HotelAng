@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { UsuariosService } from '../../../services/usuarios.service';
 import { GruposService } from '../../../services/grupos.service';
@@ -9,23 +10,22 @@ import { Grupos } from '../../../Models/grupo.model';
 
 import { FormularioUsuarioComponent } from '../formulario-usuario/formulario-usuario.component';
 
-import { Router } from '@angular/router';
 import { RedirIfFailPipe } from '../../../Pipes/redir-if-fail.pipe';
-import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-usuario',
   templateUrl: './listado-usuario.component.html',
   styleUrls: ['./listado-usuario.component.scss'],
 })
-export class ListadoUsuarioComponent implements OnInit {
+export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   public usuarios: Usuario[] = [];
   public grupos: Grupos[] = [];
   public subs: Subscription[] = [];
   sub: Subscription | undefined;
-  public isLoaded = false;
   private promesas: Promise<any>[] = [];
+  public isLoaded = false;
   public dataSource: Usuario[] = [];
   refUsuarios!: Observable<any[]>;
   refGrupos!: Observable<any[]>;
@@ -50,30 +50,41 @@ export class ListadoUsuarioComponent implements OnInit {
     private SpinnerService: NgxSpinnerService
   ) {
     this.promesas.push(
-      new Promise<void>((resolve, reject) => {
-        const sub = this.usuariosServicio.ObtenerUsuarios().subscribe({
-          next: (res) => {
-            this.usuarios.push(res);
-          },
-          error: (error: any) => {
-            console.log(error);
-            () => resolve();
-          },
-        });
+      new Promise<void>((resolve) => {
+        const sub = this.usuariosServicio.ObtenerUsuarios().subscribe(
+          {
+            next: (res) => {
+              this.usuarios.push(res);
+            },
+            error: (error: any) => {
+              console.log(error);
+              console.log('Hubo un fallo al momento de traer los datos');
+            },
+            complete: () => {
+              resolve();
+            }
+          }
+        );
+        this.subs.push(sub);
       })
     );
 
     this.promesas.push(
       new Promise<void>((resolve, reject) => {
-        const sub = grupos$.ObtenerGrupos().subscribe({
-          next: (res) => {
-            this.grupos.push(res);
-          },
-          error: (error: any) => {
-            console.log(error);
-            () => resolve();
-          },
-        });
+        const sub = grupos$.ObtenerGrupos().subscribe(
+          {
+            next: (res) => {
+              this.grupos.push(res);
+            },
+            error: (error: any) => {
+              console.log(error), 
+              console.log('Hubo un fallo al momento de traer los datos');
+            },
+            complete: () => {
+              resolve();
+            }
+          }
+        );
         this.subs.push(sub);
       })
     );
@@ -91,19 +102,20 @@ export class ListadoUsuarioComponent implements OnInit {
           this.router
         )
       ) {
+        this.dataSource = this.usuarios;
+        console.log('estas son los usuarios:', this.dataSource);
         this.isLoaded = true;
-        // this.usuariosServicio.successObten();
+        this.subs.push();
         this.CloseDialog();
-        this.refUsuarios.subscribe((data) => {
-          console.log(data);
-          this.usuarios = [];
-          // data.forEach(el => {
-          //   this.usuarios.push(el);
-          // });
-          this.usuarios = data;
-          this.CloseDialog();
-        });
       }
+    });
+    this.refUsuarios.subscribe((data) => {
+      this.usuarios = data;
+      this.dataSource = [];
+      this.usuarios.forEach((element) => {
+        this.dataSource.push(element);
+      });
+      this.CloseDialog();
     });
   }
 

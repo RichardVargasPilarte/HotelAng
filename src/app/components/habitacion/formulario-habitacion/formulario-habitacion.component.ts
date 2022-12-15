@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
+  FormGroup,
+  FormBuilder,
+  FormControl,
   Validators,
 } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
@@ -29,7 +29,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
   public edit!: boolean;
   subs: Subscription[] = [];
   public selected? = '0';
-  public form!: UntypedFormGroup;
+  public form!: FormGroup;
   public refAloajamiento!: Observable<any>;
 
   EstadoHabitaciones: string[] = [
@@ -43,7 +43,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
     public alojamiento$: AlojamientoService,
     public dialogRef: MatDialogRef<FormularioHabitacionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private fb: UntypedFormBuilder
+    private fb: FormBuilder
   ) {
     this.AlojamientosCargados = this.alojamiento$.list;
     this.refAloajamiento = this.alojamiento$.getList();
@@ -67,53 +67,53 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
   createForm(id?: string): void {
     if (this.data.type === 'c') {
       this.form = this.fb.group({
-        id: new UntypedFormControl(0),
-        nombre: new UntypedFormControl('', [
+        id: new FormControl(0),
+        nombre: new FormControl('', [
           Validators.required,
           Validators.minLength(5),
         ]),
-        descripcion: new UntypedFormControl('', [
+        descripcion: new FormControl('', [
           Validators.required,
           Validators.minLength(15),
         ]),
-        precio: new UntypedFormControl('', [
+        precio: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
         ]),
-        activo: new UntypedFormControl('', Validators.required),
-        numero_personas: new UntypedFormControl('', [
+        activo: new FormControl('', Validators.required),
+        numero_personas: new FormControl('', [
           Validators.required,
           Validators.minLength(1),
         ]),
-        nombre_alojamiento: new UntypedFormControl('', Validators.required),
-        nombre_alojamiento_id: new UntypedFormControl(0),
-        eliminado: new UntypedFormControl('NO'),
+        nombre_alojamiento: new FormControl('', Validators.required),
+        nombre_alojamiento_id: new FormControl(0),
+        eliminado: new FormControl('NO'),
       });
     } else {
       this.form = this.fb.group({
         id: this.data.hab!.id,
-        nombre: new UntypedFormControl(this.data.hab!.nombre, [
+        nombre: new FormControl(this.data.hab!.nombre, [
           Validators.required,
           Validators.minLength(5),
         ]),
-        descripcion: new UntypedFormControl(this.data.hab!.descripcion, [
+        descripcion: new FormControl(this.data.hab!.descripcion, [
           Validators.required,
           Validators.minLength(15),
         ]),
-        precio: new UntypedFormControl(this.data.hab!.precio, [
+        precio: new FormControl(this.data.hab!.precio, [
           Validators.required,
           Validators.minLength(2),
         ]),
-        activo: new UntypedFormControl(this.data.hab!.activo, Validators.required),
-        numero_personas: new UntypedFormControl(this.data.hab!.numero_personas, [
+        activo: new FormControl(this.data.hab!.activo, Validators.required),
+        numero_personas: new FormControl(this.data.hab!.numero_personas, [
           Validators.required,
           Validators.minLength(1),
         ]),
-        nombre_alojamiento: new UntypedFormControl(
+        nombre_alojamiento: new FormControl(
           this.data.hab!.nombre_alojamiento,
           Validators.required
         ),
-        nombre_alojamiento_id: new UntypedFormControl(
+        nombre_alojamiento_id: new FormControl(
           this.data.hab!.nombre_alojamiento
         ),
       });
