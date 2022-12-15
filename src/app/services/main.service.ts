@@ -69,7 +69,7 @@ export class MainService {
     Swal.fire({
       position: 'top-end',
       icon: 'error',
-      title: 'Your work has been saved',
+      title: 'Ah ocurrido un error al momento de traer los datos',
       showConfirmButton: false,
       timer: 1500,
     });
