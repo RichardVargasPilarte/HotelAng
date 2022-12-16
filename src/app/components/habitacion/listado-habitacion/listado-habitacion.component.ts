@@ -9,7 +9,7 @@ import { Alojamiento } from '../../../Models/alojamiento.model';
 import { FormularioHabitacionComponent } from '../formulario-habitacion/formulario-habitacion.component';
 import { RedirIfFailPipe } from '../../../Pipes/redir-if-fail.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-habitacion',
@@ -133,14 +133,24 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   }
 
   // Metodo encargado de eliminar las habitaciones mediante su Id
-  eliminarhabitacion(id: number): any {
+  async eliminarhabitacion(id: number): Promise<void> {
+    const result:SweetAlertResult  = await Swal.fire({
+      title: '¿Esta seguro de eliminar este dato?',
+      text: '¡No se podra recuperar este dato luego de ser eliminado!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+    })
+    console.log(result)
+    if(result.isConfirmed){
     this.habitacionservice.BorrarHabitacion(id).subscribe((data) => {
-      // this.success = true;
-
       console.log('Se elimino la habitación');
       // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
       console.log(data);
     });
+  }
+
   }
 
   CloseDialog(): void {

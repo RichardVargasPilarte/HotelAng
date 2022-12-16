@@ -171,6 +171,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     if (tipo === 'c') {
       this.dialog.open(FormularioUsuarioComponent, {
         data: { type: tipo },
+        width: '70%',
       });
     } else {
       const users = this.usuarios.find((d) => d.id === id);

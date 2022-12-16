@@ -35,7 +35,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
   EstadoHabitaciones: string[] = [
     'Disponible',
     'Reservada',
-    'Fuera de Servicio',
+    'Fuera_de_Servicio',
   ];
 
   constructor(

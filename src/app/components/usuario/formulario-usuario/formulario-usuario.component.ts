@@ -84,7 +84,7 @@ export class FormularioUsuarioComponent implements OnInit {
           Validators.minLength(10),
         ]),
         tipo_usuario: new UntypedFormControl('', Validators.required),
-        estado: new UntypedFormControl('', Validators.required),
+        estado: new UntypedFormControl('Activo', Validators.required),
         telefono: new UntypedFormControl('', Validators.required),
         eliminado: new UntypedFormControl('NO'),
       });
