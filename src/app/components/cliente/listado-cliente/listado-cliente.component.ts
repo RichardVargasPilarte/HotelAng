@@ -2,48 +2,51 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 
-import { AlojamientoService } from '../../../services/alojamiento.service';
-import { Alojamiento } from '../../../Models/alojamiento.model';
-import { FormularioAlojamientoComponent } from '../formulario-alojamiento/formulario-alojamiento.component';
+import { ClienteService } from '../../../services/cliente.service';
+import { Cliente } from '../../../Models/cliente.model';
+import { FormularioClienteComponent } from '../formulario-cliente/formulario-cliente.component';
 
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-listado-alojamiento',
-  templateUrl: './listado-alojamiento.component.html',
-  styleUrls: ['./listado-alojamiento.component.scss'],
+  selector: 'app-listado-cliente',
+  templateUrl: './listado-cliente.component.html',
+  styleUrls: ['./listado-cliente.component.scss']
 })
-export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
-  public alojamientos: Alojamiento[] = [];
-  refAloj: Observable<any>;
+export class ListadoClienteComponent implements OnInit, OnDestroy {
+  public clientes: Cliente[] = [];
+  refClient: Observable<any>;
   subs: Subscription[] = [];
   public isLoaded = false;
   private promesa: Promise<any>;
-  public dataSource: Alojamiento[] = [];
+  public dataSource: Cliente[] = [];
   displayedColumns: string[] = [
     'id',
     'nombre',
-    'descripcion',
-    'tiempo_estadia',
+    'apellido',
+    'telefono',
+    'email',
+    'tipo_identificacion',
+    'num_identificacion',
     'actions',
   ];
   success = false;
 
   constructor(
-    private _alojamientoService: AlojamientoService,
+    private _clienteService: ClienteService,
     private dialog: MatDialog,
     private SpinnerService: NgxSpinnerService
   ) {
     this.promesa = new Promise<void>((resolve) => {
-      const sub = this._alojamientoService.ObtenerAlojamientos().subscribe(
+      const sub = this._clienteService.ObtenerClientes().subscribe(
         // (res) => this.alojamientos.push(res),
         // (error) => console.log('Hubo un fallo al momento de traer los datos'),
         // () => resolve()
 
         {
           next: (res) => {
-            this.alojamientos.push(res);
+            this.clientes.push(res);
           },
           error: (error: any) => {
             console.log(error),
@@ -56,23 +59,23 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       );
       this.subs.push(sub);
     });
-    this.refAloj = this._alojamientoService.getList();
+    this.refClient = this._clienteService.getList();
   }
-  
+
   ngOnInit(): void {
     this.SpinnerService.show();
     this.promesa.then(() => {
-      this.dataSource = this.alojamientos;
+      this.dataSource = this.clientes;
       console.log('Yo traigo los datos y son estos:', this.dataSource);
       this.isLoaded = true;
       this.subs.push();
       this.CloseDialog();
     });
-    this.refAloj.subscribe((data) => {
-      this.alojamientos = data;
+    this.refClient.subscribe((data) => {
+      this.clientes = data;
       // console.log('Hola', data);
       this.dataSource = [];
-      this.alojamientos.forEach((element) => {
+      this.clientes.forEach((element) => {
         this.dataSource.push(element);
       });
       this.CloseDialog();
@@ -80,7 +83,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._alojamientoService.list = [];
+    this._clienteService.list = [];
     this.subs.map((sub) => sub.unsubscribe());
   }
 
@@ -95,11 +98,11 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.value) {
         this.SpinnerService.show();
-        this._alojamientoService.BorrarAlojamiento(id).subscribe((data) => {
+        this._clienteService.BorrarCliente(id).subscribe((data) => {
           this.success = true;
           Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
           this.SpinnerService.hide();
-          console.log('Se elimino el alojamiento');
+          console.log('Se elimino el cliente');
           // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
           console.log(data);
         });
@@ -121,15 +124,16 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
 
   openDialog(tipo: string, id?: number): void {
     if (tipo === 'c') {
-      this.dialog.open(FormularioAlojamientoComponent, {
+      this.dialog.open(FormularioClienteComponent, {
         data: { type: tipo },
       });
     } else {
-      const alojam = this.alojamientos.find((d) => d.id === id);
-      this.dialog.open(FormularioAlojamientoComponent, {
-        // width: '70%',
-        data: { type: tipo, alojam },
+      const habitac = this.clientes.find((d) => d.id === id);
+      this.dialog.open(FormularioClienteComponent, {
+        // width: '80%',
+        data: { type: tipo, hab: habitac },
       });
     }
   }
+
 }

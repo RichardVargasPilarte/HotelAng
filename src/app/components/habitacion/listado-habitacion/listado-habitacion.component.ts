@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { HabitacionService } from '../../../services/habitacion.service';
-import { AlojamientoService } from '../../../services/alojamiento.service';
+
 import { Habitacion } from '../../../Models/habitacion.model';
+import { HabitacionService } from '../../../services/habitacion.service';
 import { Alojamiento } from '../../../Models/alojamiento.model';
+import { AlojamientoService } from '../../../services/alojamiento.service';
+
 import { FormularioHabitacionComponent } from '../formulario-habitacion/formulario-habitacion.component';
 import { RedirIfFailPipe } from '../../../Pipes/redir-if-fail.pipe';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -18,8 +21,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 })
 export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   public habitaciones: Habitacion[] = []; // propiedad encarga de interactuar con el modelo habitaciones
-  public alojamiento: Alojamiento[] = []; // propiedad encarga de interactuar con el modelo alojamientos
-  alerts = true;
+  public alojamientos: Alojamiento[] = []; // propiedad encarga de interactuar con el modelo alojamientos
   public subs: Subscription[] = [];
   sub: Subscription | undefined;
   private promesas: Promise<any>[] = [];
@@ -78,7 +80,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
 
           {
             next: (resp) => {
-              this.alojamiento.push(resp);
+              this.alojamientos.push(resp);
             },
             error: (error) => {
               console.log(error), 
@@ -103,7 +105,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
       if (
         new RedirIfFailPipe().transform(
           'Alojamientos/Listado',
-          this.alojamiento,
+          this.alojamientos,
           this.router
         )
       ) {
@@ -143,14 +145,22 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     })
     console.log(result)
-    if(result.isConfirmed){
-    this.habitacionservice.BorrarHabitacion(id).subscribe((data) => {
-      console.log('Se elimino la habitación');
-      // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
-      console.log(data);
-    });
-  }
-
+    if(result.isConfirmed) {
+      this.habitacionservice.BorrarHabitacion(id).subscribe((data) => {
+        console.log('Se elimino la habitación');
+        Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
+        // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
+        console.log(data);
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      (error: string) =>
+      console.log('Hubo un fallo al momento de eliminar el dato' + error);
+      Swal.fire(
+        'Cancelado',
+        'El dato no fue eliminado y esta seguro :)',
+        'error'
+      );
+    }
   }
 
   CloseDialog(): void {

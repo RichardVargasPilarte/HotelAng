@@ -171,12 +171,12 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     if (tipo === 'c') {
       this.dialog.open(FormularioUsuarioComponent, {
         data: { type: tipo },
-        width: '70%',
+        // width: '40%',
       });
     } else {
       const users = this.usuarios.find((d) => d.id === id);
       this.dialog.open(FormularioUsuarioComponent, {
-        width: '70%',
+        // width: '40%',
         data: { type: tipo, user: users },
       });
     }

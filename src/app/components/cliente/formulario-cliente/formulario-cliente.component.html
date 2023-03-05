@@ -1,0 +1,147 @@
+<form [formGroup]="form" *ngIf="form">
+    <mat-card class="form-card">
+        <mat-card-header>
+            <mat-card-title>Formulario</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombres:</mat-label>
+
+                        <input matInput formControlName="nombre" name="nombre" placeholder="Nombre del Cliente"
+                            autocomplete="off" maxlength="25">
+
+                        <mat-error *ngIf="form.controls['nombre'].hasError('required')">
+                            El nombre es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['nombre'].hasError('minlength')">
+                            El nombre debe de tener minimo 3 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apellidos:</mat-label>
+
+                        <input matInput formControlName="apellido" name="apellido" placeholder="Apellidos del Cliente"
+                            autocomplete="off" maxlength="25">
+
+                        <mat-error *ngIf="form.controls['apellido'].hasError('required')">
+                            El apellido es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['apellido'].hasError('minlength')">
+                            El apellido debe de tener minimo 3 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Telefono</mat-label>
+                        <input matInput type="tel" formControlName="telefono" name="telefono" placeholder="Número de telefono"
+                            autocomplete="off" maxlength="8">
+
+                            <mat-error *ngIf="form.controls['telefono'].hasError('required')">
+                                El telefono es <strong>requerido</strong>
+                            </mat-error>
+    
+                            <mat-error *ngIf="form.controls['telefono'].hasError('minlength')">
+                                El telefono debe de tener minimo 8 digitos
+                            </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email:</mat-label>
+
+                        <input type="email" matInput name="email" formControlName="email"
+                            placeholder="Correo electronico" autocomplete="off">
+
+                        <mat-error *ngIf="form.controls['email'].hasError('required')">
+                            El email es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['email'].hasError('email')">
+                            El email debe ser valido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tipo de Identificación</mat-label>
+                        <mat-select formControlName="tipo_identificacion">
+                            <mat-option *ngFor="let tip_Document of TipoDocumento" [value]="tip_Document">
+                                {{tip_Document}}
+                            </mat-option>
+                        </mat-select>
+                            <mat-error *ngIf="form.controls['tipo_identificacion'].hasError('required')">
+                                El tipo de identificacion es <strong>requerida</strong>
+                            </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Número de Identificacion:</mat-label>
+
+                        <input type="text" matInput name="num_identificacion" formControlName="num_identificacion"
+                            placeholder="Número de Identificacion" autocomplete="off">
+
+                        <mat-error *ngIf="form.controls['num_identificacion'].hasError('required')">
+                            El número de identificacion es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['num_identificacion'].hasError('minlength')">
+                            El número de identificacion debe de tener minimo 16 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" id="direccion">
+                        <mat-label>Dirección</mat-label>
+                        <input type="text" matInput name="direccion" formControlName="direccion"
+                            placeholder="direccion" autocomplete="off">
+
+                        <mat-error *ngIf="form.controls['direccion'].hasError('required')">
+                            La direccion del es <strong>requerida</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['direccion'].hasError('minlength')">
+                            La direccion debe de tener minimo 5 caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+                    (click)="data.type === 'c' ? GuardarCliente():ActualizarCliente()"
+                    [disabled]="form.invalid">
+                    Guardar
+                    <i class="material-icons">save</i>
+                </button>
+
+                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+                    (click)="dialogRef.close()">
+                    Cancelar
+                    <i class="material-icons">cancel</i>
+                </button>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+</form>

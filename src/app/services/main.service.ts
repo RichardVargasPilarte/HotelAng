@@ -53,7 +53,7 @@ export class MainService {
     // }
     console.log('delete: ', id);
     head['Content-Type'] = 'application/json';
-    console.log(head);
+    // console.log(head);
     return this.client.delete(this.getUrl() + id, head);
     // return new Observable();
   }

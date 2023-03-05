@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  FormArray,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
+  FormBuilder,
+  FormControl,
+  FormGroup,
   Validators,
 } from '@angular/forms';
 
@@ -16,20 +15,20 @@ import { JwtService } from '../../services/jwt.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  public loginForm!: UntypedFormGroup;
+  public loginForm!: FormGroup;
   public hide = true;
   public loading = false;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private _JwtService: JwtService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: new UntypedFormControl('', [Validators.required]),
-      password: new UntypedFormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
     });
     if (this._JwtService.isAuthenticated()) {
       this.router.navigate(['/Alojamientos/Listado']);

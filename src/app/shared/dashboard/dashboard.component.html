@@ -50,6 +50,19 @@
 
         <mat-divider></mat-divider>
 
+        <button mat-button matTooltip="Clientes" class="menu-button">
+            <mat-icon>group</mat-icon>
+            <span [routerLink]="['/Clientes/Listado']" routerLinkActive="active">Clientes</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button matTooltip="Reservas" class="menu-button">
+            <mat-icon>family_restroom</mat-icon>
+            <span [routerLink]="['/Reservas/Listado']" routerLinkActive="active">Reservas</span>
+        </button>
+
+        <mat-divider></mat-divider>
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content">

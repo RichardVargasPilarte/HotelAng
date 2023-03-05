@@ -7,8 +7,12 @@ import { ListadoHabitacionComponent } from './components/habitacion/listado-habi
 import { FormularioHabitacionComponent } from './components/habitacion/formulario-habitacion/formulario-habitacion.component';
 import { ListadoUsuarioComponent } from './components/usuario/listado-usuario/listado-usuario.component';
 import { FormularioUsuarioComponent } from './components/usuario/formulario-usuario/formulario-usuario.component';
+import { ListadoClienteComponent } from './components/cliente/listado-cliente/listado-cliente.component';
+import { FormularioClienteComponent } from './components/cliente/formulario-cliente/formulario-cliente.component';
 import { LoginComponent } from './auth/login/login.component';
 import { Error404Component } from './shared/error404/error404.component';
+import { ListadoReservaComponent } from './components/reserva/listado-reserva/listado-reserva.component';
+import { FormularioReservaComponent } from './components/reserva/formulario-reserva/formulario-reserva.component';
 
 const routes: Routes = [
   { path: 'Login', component: LoginComponent, title: 'Login' },
@@ -43,8 +47,40 @@ const routes: Routes = [
     component: ListadoUsuarioComponent,
     title: 'Listado de Usuarios',
   },
-  { path: 'Usuarios/Formularios', component: FormularioUsuarioComponent },
-  { path: 'Usuarios/Formularios/:id', component: FormularioUsuarioComponent },
+  { 
+    path: 'Usuarios/Formularios', 
+    component: FormularioUsuarioComponent 
+  },
+  { 
+    path: 'Usuarios/Formularios/:id', 
+    component: FormularioUsuarioComponent 
+  },
+  {
+    path: 'Clientes/Listado',
+    component: ListadoClienteComponent,
+    title: 'Listado de Clientes',
+  },
+  { 
+    path: 'Clientes/Formularios', 
+    component: FormularioClienteComponent 
+  },
+  { 
+    path: 'Clientes/Formularios/:id', 
+    component: FormularioClienteComponent 
+  },
+  {
+    path: 'Reservas/Listado',
+    component: ListadoReservaComponent,
+    title: 'Listado de Reservas',
+  },
+  { 
+    path: 'Reservas/Formularios', 
+    component: FormularioReservaComponent 
+  },
+  { 
+    path: 'Reservas/Formularios/:id', 
+    component: FormularioReservaComponent 
+  },
   { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: '**', component: Error404Component },
 ];

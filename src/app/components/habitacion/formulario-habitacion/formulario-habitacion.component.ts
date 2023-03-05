@@ -120,7 +120,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
     }
   }
 
-  saveHabitacion(): void {
+  GuardarHabitacion(): void {
     let hab = new Habitacion();
     hab = Object.assign(hab, this.form.value);
     this.subs.push(
@@ -141,7 +141,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
     );
   }
 
-  updateHabitacion(): void {
+  ActualizarHabitacion(): void {
     let hab = new Habitacion();
     hab = Object.assign(hab, this.form.value);
     this.subs.push(
