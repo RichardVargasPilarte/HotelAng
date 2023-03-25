@@ -28,7 +28,7 @@ export class FormularioUsuarioComponent implements OnInit {
   public gruposCargados: Grupos[] = [];
   public edit!: boolean;
   subs: Subscription[] = [];
-  public selected? = '0';
+  public selected = '';
   public form!: FormGroup;
   public refGrupos: Observable<any>;
 
@@ -43,7 +43,7 @@ export class FormularioUsuarioComponent implements OnInit {
   ) {
     this.gruposCargados = this.grupoServicio.list;
     this.refGrupos = this.grupoServicio.getList();
-    this.selected = this.gruposCargados[0].id;
+    // this.selected = this.gruposCargados[0].id;
   }
 
   ngOnInit(): void {
@@ -74,7 +74,7 @@ export class FormularioUsuarioComponent implements OnInit {
           Validators.required,
           Validators.minLength(8),
         ]),
-        confirpassword: new FormControl('', [
+        confirmPassword: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
         ]),
@@ -93,7 +93,7 @@ export class FormularioUsuarioComponent implements OnInit {
         eliminado: new FormControl('NO'),
       },
       {
-        validators: this.MustMatch('password', 'confirpassword')
+        validators: this.MustMatch('password', 'confirmPassword')
       });
     } else {
       this.form = this.fb.group({
@@ -134,6 +134,10 @@ export class FormularioUsuarioComponent implements OnInit {
           this.data.user!.telefono,
           Validators.required
         ),
+        confirmPassword: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
       });
     }
   }
