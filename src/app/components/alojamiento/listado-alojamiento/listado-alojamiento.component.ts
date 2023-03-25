@@ -94,11 +94,11 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        this.SpinnerService.show();
+        // this.SpinnerService.show();
         this._alojamientoService.BorrarAlojamiento(id).subscribe((data) => {
           this.success = true;
           Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
-          this.SpinnerService.hide();
+          // this.SpinnerService.hide();
           console.log('Se elimino el alojamiento');
           // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
           console.log(data);

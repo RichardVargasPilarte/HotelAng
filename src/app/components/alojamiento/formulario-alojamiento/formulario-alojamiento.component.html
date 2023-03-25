@@ -9,7 +9,7 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Nombre Alojamiento</mat-label>
-                        <input matInput placeholder="Nombre Alojamiento" formControlName="nombre">
+                        <input matInput placeholder="Nombre Alojamiento" formControlName="nombre" maxlength="25">
                         <mat-error *ngIf="form.controls['nombre'].hasError('required')">
                             El nombre es <strong>requerido</strong>
                         </mat-error>
@@ -34,9 +34,13 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Descripción</mat-label>
-                        <input matInput placeholder="Descripción" formControlName="descripcion">
+                        <input matInput placeholder="Descripción" formControlName="descripcion" maxlength="150">
                         <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
                             La descripción es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['descripcion'].hasError('minlength')">
+                            La descripción debe de tener minimo 10 caracteres
                         </mat-error>
                     </mat-form-field>
                 </div>

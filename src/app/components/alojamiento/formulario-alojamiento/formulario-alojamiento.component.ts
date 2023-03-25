@@ -46,10 +46,12 @@ export class FormularioAlojamientoComponent implements OnInit {
         nombre: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
+          Validators.maxLength(25)
         ]),
         descripcion: new FormControl('', [
           Validators.required,
           Validators.minLength(10),
+          Validators.maxLength(150)
         ]),
         tiempo_estadia: new FormControl('', [
           Validators.required,
@@ -63,10 +65,12 @@ export class FormularioAlojamientoComponent implements OnInit {
         nombre: new FormControl(this.data.alojam!.nombre, [
           Validators.required,
           Validators.minLength(8),
+          Validators.maxLength(25)
         ]),
         descripcion: new FormControl(this.data.alojam!.descripcion, [
           Validators.required,
           Validators.minLength(10),
+          Validators.maxLength(150)
         ]),
         tiempo_estadia: new FormControl(this.data.alojam!.tiempo_estadia, [
           Validators.required,

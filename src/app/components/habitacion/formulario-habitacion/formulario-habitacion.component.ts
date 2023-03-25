@@ -71,14 +71,15 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
         nombre: new FormControl('', [
           Validators.required,
           Validators.minLength(5),
+          Validators.maxLength(25)
         ]),
         descripcion: new FormControl('', [
           Validators.required,
           Validators.minLength(15),
+          Validators.maxLength(150)
         ]),
         precio: new FormControl('', [
-          Validators.required,
-          Validators.minLength(2),
+          Validators.required
         ]),
         activo: new FormControl('', Validators.required),
         numero_personas: new FormControl('', [
@@ -95,14 +96,15 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
         nombre: new FormControl(this.data.hab!.nombre, [
           Validators.required,
           Validators.minLength(5),
+          Validators.maxLength(25)
         ]),
         descripcion: new FormControl(this.data.hab!.descripcion, [
           Validators.required,
           Validators.minLength(15),
+          Validators.maxLength(150)
         ]),
         precio: new FormControl(this.data.hab!.precio, [
-          Validators.required,
-          Validators.minLength(2),
+          Validators.required
         ]),
         activo: new FormControl(this.data.hab!.activo, Validators.required),
         numero_personas: new FormControl(this.data.hab!.numero_personas, [
