@@ -30,9 +30,10 @@ export class WebsocketService {
       this.contador = 1;
     };
 
-    this.socket.onmessage = (event) => {
-      const action = JSON.parse(event.data);
+    this.socket.onmessage = (event: MessageEvent) => {
       console.log('hola', event);
+      let action = JSON.parse(event.data);
+      action =  action.message
       switch (action.model) {
         case 'Alojamiento':
           this.Aloj$.updateList(action);
