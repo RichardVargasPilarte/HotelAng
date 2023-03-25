@@ -16,6 +16,7 @@ import { Habitacion } from '../../../Models/habitacion.model';
 
 import { ClienteService } from '../../../services/cliente.service';
 import { Cliente } from '../../../Models/cliente.model';
+import { DateAdapter } from '@angular/material/core';
 
 interface DialogData {
   type: string;
@@ -49,13 +50,14 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     public habitacionServicio$: HabitacionService,
     public dialogRef: MatDialogRef<FormularioReservaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private adapter: DateAdapter<any>
   ) {
     this.clientes = this.clienteServicio$.list;
     this.habitaciones = this.habitacionServicio$.list;
     this.refCliente = this.clienteServicio$.getList();
     this.refHabitacion = this.habitacionServicio$.getList();
-    this.selected = this.clientes[0].id;
+    // this.selected = this.clientes[0].id;
     // this.selected = this.habitaciones[0].id;
   }
 
@@ -71,7 +73,12 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
       // )
     );
     this.createForm();
+    // this.changeLocale();
   }
+
+  // changeLocale(){
+  //   this.adapter.setLocale('es');
+  // }
 
   ngOnDestroy(): void {
     this.clientes = [];
@@ -92,7 +99,7 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
           Validators.minLength(6),
         ]),
         pago_choices: new FormControl('', Validators.required),
-        num_tarjeta: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+        num_tarjeta: new FormControl('', [Validators.maxLength(25)]),
         nombre_cliente_id: new FormControl(0),
         nombre_habitacion_id: new FormControl(0),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(15) ,Validators.maxLength(150)]),

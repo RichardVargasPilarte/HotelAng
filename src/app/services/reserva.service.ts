@@ -19,8 +19,8 @@ export class ReservaService extends MainService {
   ListadoReservas(): Observable<Reserva> {
     return new Observable((observer) => {
       this.get().subscribe((data) => {
-        if (!data.detail) {
-          data.reserva.forEach((el: any) => {
+        if (!data.detail ) {
+          data.reservacion.forEach((el: any) => {
             // console.log(el)
             let reserva = new Reserva();
             reserva = Object.assign(reserva, el);

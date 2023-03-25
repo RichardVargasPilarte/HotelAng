@@ -29,6 +29,7 @@ import { WebsocketService } from './services/websocket.service';
 import {UserGuardGuard } from './Guards/user.guard';
 
 import { } from '../environments/environment';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 const Servicios = [
   AlojamientoService,
@@ -53,6 +54,7 @@ const Servicios = [
   ],
   exports: [],
   providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
     Servicios,
     CookieService,
     {

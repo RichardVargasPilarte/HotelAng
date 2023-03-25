@@ -69,10 +69,6 @@ const MaterialComponents = [
     ReactiveFormsModule,
     MatMomentDateModule
   ],
-  providers: [{
-    provide: LOCALE_ID,
-    useValue: 'es'
-  }],
   exports: [MaterialComponents, NgxSpinnerModule],
 })
 export class ComponentsModule {}

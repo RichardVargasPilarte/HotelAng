@@ -64,12 +64,12 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo Pago:</mat-label>
-                        <mat-select formControlName="activo">
+                        <mat-select formControlName="pago_choices">
                             <ng-container *ngFor="let pago of TipoPago">
                                 <mat-option [value]="pago">{{pago}}</mat-option>
                             </ng-container>
                         </mat-select>
-                        <mat-error *ngIf="form.controls['activo'].hasError('required')">
+                        <mat-error *ngIf="form.controls['pago_choices'].hasError('required')">
                             El pago es <strong>requerido</strong>
                         </mat-error>
                     </mat-form-field>
@@ -78,7 +78,7 @@
                 <div class="col">
                     <mat-label>Numero tarjeta:</mat-label>
                     <mat-form-field appearance="outline">
-                        <input matInput formControlName="nombre_cliente" name="nombre_cliente"
+                        <input matInput formControlName="num_tarjeta" name="num_tarjeta"
                             placeholder="Nombre del Cliente" autocomplete="off">
                     </mat-form-field>
                 </div>
