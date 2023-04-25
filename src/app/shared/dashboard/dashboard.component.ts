@@ -4,7 +4,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { delay } from 'rxjs/operators';
 
 import { JwtService } from '../../services/jwt.service';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,11 +17,9 @@ export class DashboardComponent {
   constructor(
     private observer: BreakpointObserver,
     private jwt: JwtService,
-    private cookieService: CookieService
   ) {}
 
   logout() {
-    this.cookieService.delete('access');
     this.jwt.logout();
   }
 

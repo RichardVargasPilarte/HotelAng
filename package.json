@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-eslint/schematics": "^1.0.0",
     "@angular/animations": "^14.0.1",
     "@angular/cdk": "^14.0.1",
     "@angular/common": "^14.0.1",
@@ -23,7 +24,7 @@
     "@angular/router": "^14.0.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
-    "ngx-cookie-service": "^14.0.0",
+    "ngx-cookie-service": "^14.0.1",
     "ngx-spinner": "^14.0.0",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.4.17",

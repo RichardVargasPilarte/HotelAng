@@ -29,9 +29,9 @@
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Alojamientos" class="menu-button">
+        <button mat-button matTooltip="Alojamientos" class="menu-button" [routerLink]="['/Alojamientos/Listado']">
             <mat-icon>home</mat-icon>
-            <span [routerLink]="['/Alojamientos/Listado']" routerLinkActive="active">Alojamientos</span>
+            <span routerLinkActive="active">Alojamientos</span>
         </button>
 
         <mat-divider></mat-divider>

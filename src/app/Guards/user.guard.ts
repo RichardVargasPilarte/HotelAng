@@ -8,27 +8,23 @@ import {
 } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
+import { JwtService } from '../services/jwt.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserGuardGuard implements CanActivate {
-  constructor(private cookieService: CookieService, private router: Router) {}
+export class UserGuard implements CanActivate {
+  constructor(private jwt: JwtService) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    const cookie = this.cookieService.check('access');
-    if (!cookie) {
-      this.router.navigate(['/', 'Alojamientos/Listado']);
-    } else {
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
+    if (this.jwt.loggedIn) {
       return true;
+    } else {
+      console.log('Not authorized')
+      return false;
     }
-    return true;
   }
 }

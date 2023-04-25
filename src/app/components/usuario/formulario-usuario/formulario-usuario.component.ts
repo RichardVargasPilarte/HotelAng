@@ -9,9 +9,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable } from 'rxjs';
 
 import { UsuariosService } from '../../../services/usuarios.service';
-import { Usuario } from '../../../Models/usuario.model';
+import { Usuario } from '../../../models/usuario.model';
 import { GruposService } from '../../../services/grupos.service';
-import { Grupos } from '../../../Models/grupo.model';
+import { Grupos } from '../../../models/grupo.model';
 
 interface DialogData {
   type: string;

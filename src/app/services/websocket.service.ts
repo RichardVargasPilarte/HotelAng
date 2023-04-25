@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { JwtService } from './jwt.service';
 import { AlojamientoService } from './alojamiento.service';
 import { HabitacionService } from './habitacion.service';
-import { ip } from '../Models/api.model';
+import { ip } from '../models/api.model';
+import { UsuariosService } from './usuarios.service';
+import { ClienteService } from './cliente.service';
+import { ReservaService } from './reserva.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +16,10 @@ export class WebsocketService {
   constructor(
     private jwt: JwtService,
     private Aloj$: AlojamientoService,
-    private Habit$: HabitacionService
+    private Habit$: HabitacionService,
+    private User$: UsuariosService,
+    private Client$: ClienteService,
+    private Reserv$: ReservaService
   ) {}
 
   private MAX_RECONNECTION = 5;
@@ -26,6 +33,13 @@ export class WebsocketService {
       console.log('WebSockets connection created for Socket Service');
       if (this.contador > 1) {
         // alertify.success('WebSocket reconectado, si hay multiples usuarios trabajando es recomendable recargar la pagina');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'WebSocket reconectado, si hay multiples usuarios trabajando es recomendable recargar la pagina',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
       this.contador = 1;
     };
@@ -45,6 +59,15 @@ export class WebsocketService {
         case 'Habitacion':
           this.Habit$.updateList(action);
           break;
+        case 'Usuario':
+          this.User$.updateList(action);
+          break;
+        case 'Cliente':
+          this.Client$.updateList(action);
+          break;
+        case 'Reserva':
+          this.Reserv$.updateList(action);
+          break;
       }
     };
     this.socket.onclose = () => {
@@ -56,6 +79,13 @@ export class WebsocketService {
         this.socket = undefined;
         const p3 = new Promise<void>((resolve) => {
           // alertify.error(`reconectando ws intento ${this.contador} de ${this.MAX_RECONNECTION}`);
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Reconectando websocket intento ${this.contador} de ${this.MAX_RECONNECTION}`',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.contador++;
           setTimeout(() => {
             this.setsock();
@@ -68,6 +98,8 @@ export class WebsocketService {
         //   window.location.reload();
         // })
         // .set({ title: 'Error de conexion' });
+
+        
       }
     };
     if (this.socket.readyState === WebSocket.OPEN) {

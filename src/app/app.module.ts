@@ -4,8 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
-import { JwtInterceptorInterceptor } from './Interceptores/jwt.interceptor';
-import { RedirIfFailPipe } from './Pipes/redir-if-fail.pipe';
+import { JwtInterceptorInterceptor } from './interceptors/jwt.interceptor';
+import { RedirIfFailPipe } from './pipes/redir-if-fail.pipe';
 
 // rutas
 import { AppRoutingModule } from './app-routing.module';
@@ -26,7 +26,7 @@ import { MainService } from './services/main.service';
 import { UsuariosService } from './services/usuarios.service';
 import { WebsocketService } from './services/websocket.service';
 
-import {UserGuardGuard } from './Guards/user.guard';
+import {UserGuard } from './guards/user.guard';
 
 import { } from '../environments/environment';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -62,7 +62,7 @@ const Servicios = [
       useClass: JwtInterceptorInterceptor,
       multi: true,
     },
-    UserGuardGuard
+    UserGuard
   ],
   bootstrap: [AppComponent],
 })

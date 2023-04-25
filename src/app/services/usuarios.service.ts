@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
-import { Usuario } from '../Models/usuario.model';
-import { wsModel } from '../Models/webSocket.model';
+import { Usuario } from '../models/usuario.model';
+import { wsModel } from '../models/webSocket.model';
 
 @Injectable({
   providedIn: 'root',

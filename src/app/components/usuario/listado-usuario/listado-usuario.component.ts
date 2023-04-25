@@ -5,14 +5,16 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { UsuariosService } from '../../../services/usuarios.service';
 import { GruposService } from '../../../services/grupos.service';
-import { Usuario } from '../../../Models/usuario.model';
-import { Grupos } from '../../../Models/grupo.model';
+import { Usuario } from '../../../models/usuario.model';
+import { Grupos } from '../../../models/grupo.model';
 
 import { FormularioUsuarioComponent } from '../formulario-usuario/formulario-usuario.component';
 
-import { RedirIfFailPipe } from '../../../Pipes/redir-if-fail.pipe';
+import { RedirIfFailPipe } from '../../../pipes/redir-if-fail.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { RoleName } from 'src/app/shared/types/Roles.types';
+import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
   selector: 'app-listado-usuario',
@@ -30,7 +32,6 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   refUsuarios!: Observable<any[]>;
   refGrupos!: Observable<any[]>;
   socket!: WebSocket;
-
   displayedColumns: string[] = [
     'id',
     'first_name',
@@ -47,7 +48,8 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     private grupos$: GruposService,
     public dialog: MatDialog,
     private router: Router,
-    private SpinnerService: NgxSpinnerService
+    private SpinnerService: NgxSpinnerService,
+    private jwtService: JwtService
   ) {
     this.promesas.push(
       new Promise<void>((resolve) => {
@@ -77,8 +79,8 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
               this.grupos.push(res);
             },
             error: (error: any) => {
-              console.log(error), 
-              console.log('Hubo un fallo al momento de traer los datos');
+              console.log(error),
+                console.log('Hubo un fallo al momento de traer los datos');
             },
             complete: () => {
               resolve();
@@ -90,6 +92,9 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     );
     this.refUsuarios = this.usuariosServicio.getList();
     this.refGrupos = this.grupos$.getList();
+    if (!this.canModify) {
+      this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions')
+    }
   }
 
   async ngOnInit(): Promise<void> {
@@ -180,5 +185,8 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
         data: { type: tipo, user: users },
       });
     }
+  }
+  get canModify() {
+    return this.jwtService.userhaveRole(RoleName.Administrador)
   }
 }

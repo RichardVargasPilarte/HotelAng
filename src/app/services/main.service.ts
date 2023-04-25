@@ -3,8 +3,8 @@ import { Observable, of, Subject, observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
-import { Api } from '../Models/api.model';
-import { wsModel } from '../Models/webSocket.model';
+import { Api } from '../models/api.model';
+import { wsModel } from '../models/webSocket.model';
 @Injectable({
   providedIn: 'root',
 })

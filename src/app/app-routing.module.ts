@@ -13,76 +13,80 @@ import { LoginComponent } from './auth/login/login.component';
 import { Error404Component } from './shared/error404/error404.component';
 import { ListadoReservaComponent } from './components/reserva/listado-reserva/listado-reserva.component';
 import { FormularioReservaComponent } from './components/reserva/formulario-reserva/formulario-reserva.component';
+import { UserGuard } from './guards/user.guard';
 
 const routes: Routes = [
   { path: 'Login', component: LoginComponent, title: 'Login' },
-  {
-    path: 'Alojamientos/Listado',
-    component: ListadoAlojamientoComponent,
-    title: 'Listado de Alojamientos',
-  },
-  {
-    path: 'Alojamientos/Formularios',
-    component: FormularioAlojamientoComponent,
-  },
-  {
-    path: 'Alojamientos/Formularios/:id',
-    component: FormularioAlojamientoComponent,
-  },
-  {
-    path: 'Habitaciones/Listado',
-    component: ListadoHabitacionComponent,
-    title: 'Listado de Habitaciones',
-  },
-  {
-    path: 'Habitaciones/Formularios',
-    component: FormularioHabitacionComponent,
-  },
-  {
-    path: 'Habitaciones/Formularios/:id',
-    component: FormularioHabitacionComponent,
-  },
-  {
-    path: 'Usuarios/Listado',
-    component: ListadoUsuarioComponent,
-    title: 'Listado de Usuarios',
-  },
-  { 
-    path: 'Usuarios/Formularios', 
-    component: FormularioUsuarioComponent 
-  },
-  { 
-    path: 'Usuarios/Formularios/:id', 
-    component: FormularioUsuarioComponent 
-  },
-  {
-    path: 'Clientes/Listado',
-    component: ListadoClienteComponent,
-    title: 'Listado de Clientes',
-  },
-  { 
-    path: 'Clientes/Formularios', 
-    component: FormularioClienteComponent 
-  },
-  { 
-    path: 'Clientes/Formularios/:id', 
-    component: FormularioClienteComponent 
-  },
-  {
-    path: 'Reservas/Listado',
-    component: ListadoReservaComponent,
-    title: 'Listado de Reservas',
-  },
-  { 
-    path: 'Reservas/Formularios', 
-    component: FormularioReservaComponent 
-  },
-  { 
-    path: 'Reservas/Formularios/:id', 
-    component: FormularioReservaComponent 
-  },
-  { path: '', component: LoginComponent, pathMatch: 'full' },
-  { path: '**', component: Error404Component },
+  { path: '',
+    canActivate: [UserGuard],
+    children:[
+    {
+      path: 'Alojamientos/Listado',
+      component: ListadoAlojamientoComponent,
+      title: 'Listado de Alojamientos'
+    },
+    {
+      path: 'Alojamientos/Formularios',
+      component: FormularioAlojamientoComponent,
+    },
+    {
+      path: 'Alojamientos/Formularios/:id',
+      component: FormularioAlojamientoComponent,
+    },
+    {
+      path: 'Habitaciones/Listado',
+      component: ListadoHabitacionComponent,
+      title: 'Listado de Habitaciones',
+    },
+    {
+      path: 'Habitaciones/Formularios',
+      component: FormularioHabitacionComponent,
+    },
+    {
+      path: 'Habitaciones/Formularios/:id',
+      component: FormularioHabitacionComponent,
+    },
+    {
+      path: 'Usuarios/Listado',
+      component: ListadoUsuarioComponent,
+      title: 'Listado de Usuarios',
+    },
+    { 
+      path: 'Usuarios/Formularios', 
+      component: FormularioUsuarioComponent 
+    },
+    { 
+      path: 'Usuarios/Formularios/:id', 
+      component: FormularioUsuarioComponent 
+    },
+    {
+      path: 'Clientes/Listado',
+      component: ListadoClienteComponent,
+      title: 'Listado de Clientes',
+    },
+    { 
+      path: 'Clientes/Formularios', 
+      component: FormularioClienteComponent 
+    },
+    { 
+      path: 'Clientes/Formularios/:id', 
+      component: FormularioClienteComponent 
+    },
+    {
+      path: 'Reservas/Listado',
+      component: ListadoReservaComponent,
+      title: 'Listado de Reservas',
+    },
+    { 
+      path: 'Reservas/Formularios', 
+      component: FormularioReservaComponent 
+    },
+    { 
+      path: 'Reservas/Formularios/:id', 
+      component: FormularioReservaComponent 
+    },
+    { path: '**', component: Error404Component },
+  ] },
 ];
 
 @NgModule({

@@ -9,13 +9,13 @@ import { Subscription, Observable } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ReservaService } from '../../../services/reserva.service';
-import { Reserva } from '../../../Models/reserva.model';
+import { Reserva } from '../../../models/reserva.model';
 
 import { HabitacionService } from '../../../services/habitacion.service';
-import { Habitacion } from '../../../Models/habitacion.model';
+import { Habitacion } from '../../../models/habitacion.model';
 
 import { ClienteService } from '../../../services/cliente.service';
-import { Cliente } from '../../../Models/cliente.model';
+import { Cliente } from '../../../models/cliente.model';
 import { DateAdapter } from '@angular/material/core';
 
 interface DialogData {

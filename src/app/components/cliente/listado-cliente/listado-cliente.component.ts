@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 
 import { ClienteService } from '../../../services/cliente.service';
-import { Cliente } from '../../../Models/cliente.model';
+import { Cliente } from '../../../models/cliente.model';
 import { FormularioClienteComponent } from '../formulario-cliente/formulario-cliente.component';
 
 import Swal from 'sweetalert2';

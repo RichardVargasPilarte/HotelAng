@@ -3,11 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 
 import { AlojamientoService } from '../../../services/alojamiento.service';
-import { Alojamiento } from '../../../Models/alojamiento.model';
+import { Alojamiento } from '../../../models/alojamiento.model';
 import { FormularioAlojamientoComponent } from '../formulario-alojamiento/formulario-alojamiento.component';
 
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+
+import { RoleName } from 'src/app/shared/types/Roles.types';
+import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
   selector: 'app-listado-alojamiento',
@@ -33,7 +36,8 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
   constructor(
     private _alojamientoService: AlojamientoService,
     private dialog: MatDialog,
-    private SpinnerService: NgxSpinnerService
+    private SpinnerService: NgxSpinnerService,
+    private jwtService: JwtService
   ) {
     this.promesa = new Promise<void>((resolve) => {
       const sub = this._alojamientoService.ObtenerAlojamientos().subscribe(
@@ -57,6 +61,9 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       this.subs.push(sub);
     });
     this.refAloj = this._alojamientoService.getList();
+    if (!this.canModify) {
+      this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions')
+    }
   }
   
   ngOnInit(): void {
@@ -131,5 +138,9 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
         data: { type: tipo, alojam },
       });
     }
+  }
+
+  get canModify() {
+    return this.jwtService.userhaveRole(RoleName.Común)
   }
 }
