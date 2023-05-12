@@ -23,7 +23,7 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
 
-        <button mat-button matTooltip="Menu" class="text-center">
+        <button mat-button matTooltip="Menu" class="text-center" [routerLink]="['/Menu']">
             <span>Menu</span>
         </button>
 
@@ -36,30 +36,30 @@
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Habitaciones" class="menu-button">
+        <button mat-button matTooltip="Habitaciones" class="menu-button" [routerLink]="['/Habitaciones/Listado']">
             <mat-icon>bedroom_parent</mat-icon>
-            <span [routerLink]="['/Habitaciones/Listado']" routerLinkActive="active">Habitaciones</span>
+            <span routerLinkActive="active">Habitaciones</span>
         </button>
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Usuarios" class="menu-button">
-            <mat-icon>person</mat-icon>
-            <span [routerLink]="['/Usuarios/Listado']" routerLinkActive="active">Usuarios</span>
-        </button>
-
-        <mat-divider></mat-divider>
-
-        <button mat-button matTooltip="Clientes" class="menu-button">
+        <button mat-button matTooltip="Clientes" class="menu-button" [routerLink]="['/Clientes/Listado']">
             <mat-icon>group</mat-icon>
-            <span [routerLink]="['/Clientes/Listado']" routerLinkActive="active">Clientes</span>
+            <span routerLinkActive="active">Clientes</span>
         </button>
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Reservas" class="menu-button">
+        <button mat-button matTooltip="Reservas" class="menu-button" [routerLink]="['/Reservas/Listado']">
             <mat-icon>family_restroom</mat-icon>
-            <span [routerLink]="['/Reservas/Listado']" routerLinkActive="active">Reservas</span>
+            <span routerLinkActive="active">Reservas</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button matTooltip="Usuarios" class="menu-button" [routerLink]="['/Usuarios/Listado']">
+            <mat-icon>person</mat-icon>
+            <span routerLinkActive="active">Usuarios</span>
         </button>
 
         <mat-divider></mat-divider>

@@ -12,7 +12,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
 import { Error404Component } from './error404/error404.component';
+import { MenuComponent } from './menu/menu.component';
 
 const MaterialComponents = [
   MatSidenavModule,
@@ -23,11 +25,12 @@ const MaterialComponents = [
   MatGridListModule,
   MatTooltipModule,
   MatDialogModule,
+  MatCardModule
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, Error404Component],
-  imports: [CommonModule, MaterialComponents, RouterModule],
+  declarations: [DashboardComponent, Error404Component, MenuComponent],
+  imports: [CommonModule, MaterialComponents, RouterModule,],
   exports: [MaterialComponents, DashboardComponent, Error404Component],
 })
 export class SharedModule {}

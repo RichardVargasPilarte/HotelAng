@@ -14,6 +14,7 @@ import { Error404Component } from './shared/error404/error404.component';
 import { ListadoReservaComponent } from './components/reserva/listado-reserva/listado-reserva.component';
 import { FormularioReservaComponent } from './components/reserva/formulario-reserva/formulario-reserva.component';
 import { UserGuard } from './guards/user.guard';
+import { MenuComponent } from './shared/menu/menu.component';
 
 const routes: Routes = [
   { path: 'Login', component: LoginComponent, title: 'Login' },
@@ -84,6 +85,11 @@ const routes: Routes = [
     { 
       path: 'Reservas/Formularios/:id', 
       component: FormularioReservaComponent 
+    },
+    {
+      path: 'Menu',
+      component: MenuComponent,
+      title: 'Menu',
     },
     { path: '**', component: Error404Component },
   ] },
