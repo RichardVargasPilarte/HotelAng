@@ -78,24 +78,11 @@ export class JwtService {
     return groups;
   }
 
-  getUserPermissions() {
-    const decodedToken = this.getDecodedToken();
-    if (!decodedToken) return []
-    const groups = decodedToken.permissions;
-    return groups;
-  }
-
-  hasRole(roleId: number) {
+  userhaveRole(role: string) {
     const decoded = this.getDecodedToken() as JwtCustomInterface;
     if (decoded?.user_id === 1) return true;
     const userGrups = this.getUserRoles()
-    return userGrups.includes(roleId)
+    return userGrups.includes(role)
   }
 
-  hasPermission(roleId: number) {
-    const decoded = this.getDecodedToken() as JwtCustomInterface;
-    if (decoded?.user_id === 1) return true;
-    const userGrups = this.getUserPermissions()
-    return userGrups.includes(roleId)
-  }
 }
