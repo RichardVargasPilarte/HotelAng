@@ -13,7 +13,8 @@ import { FormularioUsuarioComponent } from '../formulario-usuario/formulario-usu
 import { RedirIfFailPipe } from '../../../pipes/redir-if-fail.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
-import { RoleName } from 'src/app/shared/types/Roles.types';
+import { RoleId } from 'src/app/shared/types/roles.types';
+import { Permission } from 'src/app/shared/types/permissions.types'; 
 import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
@@ -42,6 +43,9 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     'groups',
     'actions',
   ];
+
+  roleIds = RoleId
+  permissions = new Permission();
 
   constructor(
     private usuariosServicio: UsuariosService,
@@ -92,9 +96,6 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     );
     this.refUsuarios = this.usuariosServicio.getList();
     this.refGrupos = this.grupos$.getList();
-    if (!this.canModify) {
-      this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions')
-    }
   }
 
   async ngOnInit(): Promise<void> {
@@ -186,7 +187,12 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
       });
     }
   }
-  get canModify() {
-    return this.jwtService.userhaveRole(RoleName.Administrador)
+
+  hasRole(roleId: number) {
+    return this.jwtService.hasRole(roleId);
+  }
+
+  hasPermission(permissionId: number) {
+    return this.jwtService.hasPermission(permissionId);
   }
 }

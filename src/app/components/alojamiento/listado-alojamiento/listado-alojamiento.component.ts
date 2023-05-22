@@ -6,10 +6,11 @@ import { AlojamientoService } from '../../../services/alojamiento.service';
 import { Alojamiento } from '../../../models/alojamiento.model';
 import { FormularioAlojamientoComponent } from '../formulario-alojamiento/formulario-alojamiento.component';
 
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { RoleName } from 'src/app/shared/types/Roles.types';
+import { RoleId } from 'src/app/shared/types/roles.types';
+import { Permission } from 'src/app/shared/types/permissions.types'; 
 import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
@@ -32,6 +33,8 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     'actions',
   ];
   success = false;
+  roleIds = RoleId
+  permissions = new Permission();
 
   constructor(
     private _alojamientoService: AlojamientoService,
@@ -61,9 +64,6 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       this.subs.push(sub);
     });
     this.refAloj = this._alojamientoService.getList();
-    if (!this.canModify) {
-      this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions')
-    }
   }
   
   ngOnInit(): void {
@@ -140,7 +140,11 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     }
   }
 
-  get canModify() {
-    return this.jwtService.userhaveRole(RoleName.Común)
+  hasRole(roleId: number) {
+    return this.jwtService.hasRole(roleId);
+  }
+
+  hasPermission(permissionId: number) {
+    return this.jwtService.hasPermission(permissionId);
   }
 }
