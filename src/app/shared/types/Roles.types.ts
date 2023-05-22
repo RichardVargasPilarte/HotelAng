@@ -4,3 +4,9 @@ export enum RoleName {
     Supervisor = 'Supervisor',
 
 }
+
+export enum RoleId {
+    Administrador = 1,
+    Comun = 2,
+    Supervisor = 3
+}

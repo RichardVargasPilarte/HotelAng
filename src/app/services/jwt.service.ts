@@ -78,11 +78,31 @@ export class JwtService {
     return groups;
   }
 
-  userhaveRole(role: string) {
+  // userhaveRole(role: string) {
+  //   const decoded = this.getDecodedToken() as JwtCustomInterface;
+  //   if (decoded?.user_id === 1) return true;
+  //   const userGrups = this.getUserRoles()
+  //   return userGrups.includes(role)
+  // }
+
+  getUserPermissions() {
+    const decodedToken = this.getDecodedToken();
+    if (!decodedToken) return []
+    const groups = decodedToken.permissions;
+    return groups;
+  }
+
+  hasRole(roleId: number) {
     const decoded = this.getDecodedToken() as JwtCustomInterface;
     if (decoded?.user_id === 1) return true;
     const userGrups = this.getUserRoles()
-    return userGrups.includes(role)
+    return userGrups.includes(roleId)
   }
 
+  hasPermission(roleId: number) {
+    const decoded = this.getDecodedToken() as JwtCustomInterface;
+    if (decoded?.user_id === 1) return true;
+    const userGrups = this.getUserPermissions()
+    return userGrups.includes(roleId)
+  }
 }
