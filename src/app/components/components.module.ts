@@ -30,6 +30,7 @@ import { ListadoClienteComponent } from './cliente/listado-cliente/listado-clien
 import { FormularioClienteComponent } from './cliente/formulario-cliente/formulario-cliente.component';
 import { FormularioReservaComponent } from './reserva/formulario-reserva/formulario-reserva.component';
 import { ListadoReservaComponent } from './reserva/listado-reserva/listado-reserva.component';
+import { SharedModule } from '../shared/shared.module';
 
 const MaterialComponents = [
   MatSidenavModule,
@@ -63,6 +64,7 @@ const MaterialComponents = [
   ],
   imports: [
     CommonModule,
+    SharedModule,
     MaterialComponents,
     NgxSpinnerModule,
     FormsModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ClienteService } from './services/cliente.service';
 import { JwtService } from './services/jwt.service';
 import { WebsocketService } from './services/websocket.service';
 @Component({
@@ -11,7 +12,11 @@ export class AppComponent implements OnInit {
 
   public verified = false;
 
-  constructor(private JwtService: JwtService, private ws: WebsocketService) {}
+  constructor(
+    private JwtService: JwtService,
+    private ws: WebsocketService,
+    private readonly clienteService: ClienteService
+  ) { }
 
   ngOnInit(): void {
     this.token();
@@ -30,6 +35,7 @@ export class AppComponent implements OnInit {
         (res) => {
           if (this.JwtService.isAuthenticated() && this.JwtService.loggedIn) {
             this.ws.setsock();
+            this.loadData();
           }
         },
         (err) => this.JwtService.logout()
@@ -37,5 +43,9 @@ export class AppComponent implements OnInit {
     } else {
       alert('No hay token');
     }
+  }
+  async loadData() {
+    const customers = await this.clienteService.getCustomers()
+    console.log(customers)
   }
 }

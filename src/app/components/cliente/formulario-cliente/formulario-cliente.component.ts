@@ -72,7 +72,7 @@ export class FormularioClienteComponent implements OnInit {
           Validators.required,
           Validators.minLength(16),
         ]),
-        email: new FormControl('', [Validators.required,Validators.email]),
+        email: new FormControl('', [Validators.email]),
         eliminado: new FormControl('NO'),
       });
     } else {

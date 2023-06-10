@@ -7,28 +7,19 @@
         <mat-card-content>
             <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombre Cliente:</mat-label>
-
-                        <input matInput formControlName="nombre_cliente" name="nombre_cliente"
-                            placeholder="Nombre del Cliente" autocomplete="off">
-
-                        <mat-error *ngIf="form.controls['nombre_cliente'].hasError('required')">
-                            El nombre es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
+                    <ng-select [items]="clientes" bindLabel="nombre" bindValue="id" formControlName="cliente_id"></ng-select>
                 </div>
 
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Habitacion</mat-label>
-                        <mat-select formControlName="nombre_habitacion">
+                        <mat-select formControlName="habitacion_id">
                             <mat-option *ngFor="let habitacion of habitaciones" [value]="habitacion.id">
                                 {{habitacion.nombre}}
                             </mat-option>
                         </mat-select>
 
-                        <mat-error *ngIf="form.controls['nombre_habitacion'].hasError('required')">
+                        <mat-error *ngIf="form.controls['habitacion_id'].hasError('required')">
                             La habitacion es <strong>requerid</strong>
 
                         </mat-error>
@@ -51,8 +42,7 @@
                 <div class="col">
                     <mat-form-field appearance="fill">
                         <mat-label>Fecha Fin:</mat-label>
-                        <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin"
-                            name="fecha_fin">
+                        <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin" name="fecha_fin">
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matSuffix [for]="fecha_fin"></mat-datepicker-toggle>
                         <mat-datepicker #fecha_fin></mat-datepicker>
@@ -72,14 +62,6 @@
                         <mat-error *ngIf="form.controls['pago_choices'].hasError('required')">
                             El pago es <strong>requerido</strong>
                         </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-label>Numero tarjeta:</mat-label>
-                    <mat-form-field appearance="outline">
-                        <input matInput formControlName="num_tarjeta" name="num_tarjeta"
-                            placeholder="Nombre del Cliente" autocomplete="off">
                     </mat-form-field>
                 </div>
             </div>

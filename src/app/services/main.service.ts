@@ -27,6 +27,9 @@ export class MainService {
   get(): Observable<any> {
     return this.client.get<any>(this.getUrl());
   }
+  getAsync<T>(): Promise<T> {
+    return this.client.get<T>(this.getUrl()).toPromise() as Promise<T>;
+  }
 
   getByID(id: number | string): Observable<any> {
     return this.client.get<any>(`${this.getUrl()}${id}`);
@@ -62,7 +65,7 @@ export class MainService {
     return this.list$.asObservable();
   }
 
-  updateList(data: wsModel) {}
+  updateList(data: wsModel) { }
 
   errorObten(err: string) {
     // alertify.error(`${err}`);

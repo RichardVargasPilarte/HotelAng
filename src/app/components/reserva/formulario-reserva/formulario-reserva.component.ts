@@ -29,11 +29,18 @@ interface DialogData {
   styleUrls: ['./formulario-reserva.component.scss']
 })
 export class FormularioReservaComponent implements OnInit, OnDestroy {
-  public reservas: Reserva = new Reserva();
-  public clientes: Cliente[] = [];
-  public habitaciones: Habitacion[] =[];
+  public reserva: Reserva = new Reserva();
+  public clientes: any[] = [{
+    nombre: 'nombre',
+    id: 'nomb'
+  },
+  {
+    nombre: 'nombre2',
+    id: 'nomb2'
+  }];
+  public habitaciones: Habitacion[] = [];
   subs: Subscription[] = [];
-  public selected? = '0';
+  public selected?= '0';
   public form!: FormGroup;
   public refCliente!: Observable<any>;
   public refHabitacion!: Observable<any>;
@@ -53,7 +60,7 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private adapter: DateAdapter<any>
   ) {
-    this.clientes = this.clienteServicio$.list;
+    // this.clientes = this.clienteServicio$.list;
     this.habitaciones = this.habitacionServicio$.list;
     this.refCliente = this.clienteServicio$.getList();
     this.refHabitacion = this.habitacionServicio$.getList();
@@ -90,8 +97,8 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     if (this.data.type === 'c') {
       this.form = this.fb.group({
         id: new FormControl(0),
-        nombre_cliente: new FormControl('', Validators.required),
-        nombre_habitacion: new FormControl('', Validators.required),
+        cliente_id: new FormControl('', Validators.required),
+        habitacion_id: new FormControl('', Validators.required),
         fecha_inicio: new FormControl('', Validators.required),
         fecha_fin: new FormControl('', Validators.required),
         tipo_pago: new FormControl('', [
@@ -99,21 +106,18 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
           Validators.minLength(6),
         ]),
         pago_choices: new FormControl('', Validators.required),
-        num_tarjeta: new FormControl('', [Validators.maxLength(25)]),
-        nombre_cliente_id: new FormControl(0),
-        nombre_habitacion_id: new FormControl(0),
-        descripcion: new FormControl('', [Validators.required, Validators.minLength(15) ,Validators.maxLength(150)]),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(15), Validators.maxLength(150)]),
         eliminado: new FormControl('NO'),
       });
     } else {
       this.form = this.fb.group({
         id: this.data.resv!.id,
         nombre_cliente: new FormControl(
-          this.data.resv!.nombre_cliente,
+          this.data.resv!.cliente_id,
           Validators.required
         ),
-        nombre_habitacion: new FormControl(
-          this.data.resv!.nombre_habitacion,
+        habitacion_id: new FormControl(
+          this.data.resv!.habitacion_id,
           Validators.required
         ),
         fecha_inicio: new FormControl(this.data.resv!.fecha_inicio, Validators.required),
@@ -123,14 +127,10 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
           Validators.minLength(6),
         ]),
         pago_choices: new FormControl(this.data.resv!.pago_choices, Validators.required),
-        num_tarjeta: new FormControl(this.data.resv!.num_tarjeta, [Validators.required, Validators.maxLength(25)]),
-        nombre_cliente_id: new FormControl(
-          this.data.resv!.nombre_cliente
+        habitacion_id_id: new FormControl(
+          this.data.resv!.habitacion_id
         ),
-        nombre_habitacion_id: new FormControl(
-          this.data.resv!.nombre_habitacion
-        ),
-        descripcion: new FormControl(this.data.resv!.descripcion, [Validators.required, Validators.minLength(15) ,Validators.maxLength(150)]),
+        descripcion: new FormControl(this.data.resv!.descripcion, [Validators.required, Validators.minLength(15), Validators.maxLength(150)]),
       });
     }
   }
@@ -160,7 +160,7 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
           next: (res) => {
             this.dialogRef.close();
             console.log(res),
-            (error: any) => console.error(error);
+              (error: any) => console.error(error);
           },
         }
       )

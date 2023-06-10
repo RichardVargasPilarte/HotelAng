@@ -6,6 +6,7 @@ import { Cliente } from '../models/cliente.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { MainService } from './main.service';
+import { IClientesResponseDto } from '../dtos/Cliente.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,9 @@ export class ClienteService extends MainService {
   // Metodo GET - Listar todos los clientes
   ObtenerClientes(): Observable<Cliente> {
     return new Observable((observer) => {
-      this.get().subscribe((data) => {
-        if (!data.detail) {
-          data.cliente.forEach((el: any) => {
+      this.get().subscribe((response) => {
+        if (response.code == 200) {
+          response.data.forEach((el: any) => {
             // console.log(el)
             let cliente = new Cliente();
             cliente = Object.assign(cliente, el);
@@ -30,11 +31,18 @@ export class ClienteService extends MainService {
             observer.next(cliente);
           });
         } else {
-          this.errorObten(data.detail);
+          this.errorObten(response.detail);
         }
         observer.complete();
       });
     });
+  }
+
+  async getCustomers(): Promise<Array<Cliente>> {
+    const response: IClientesResponseDto = await this.getAsync<IClientesResponseDto>()
+    this.list = response.data
+    this.list$.next(this.list);
+    return response.data
   }
 
   // Metodo POST - Agregar un nuevo cliente
@@ -43,7 +51,7 @@ export class ClienteService extends MainService {
     const body = { cliente };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (!response.detail) {
+        if (response.code == 200) {
           this.realizado();
           observer.next(response);
         } else {
@@ -70,15 +78,15 @@ export class ClienteService extends MainService {
     return this.delete(id);
   }
 
-  override updateList(data: wsModel) {
+  override updateList(socketEvent: wsModel) {
     // console.log(data)
     let cliente = new Cliente();
-    cliente = Object.assign(cliente, data.data);
-    console.log(data);
-    switch (data.event) {
+    cliente = Object.assign(cliente, socketEvent.data);
+    console.log(socketEvent);
+    switch (socketEvent.event) {
       case 'c':
         // console.log("Crear")
-        data.data = cliente;
+        socketEvent.data = cliente;
         this.list.push(cliente);
         this.list$.next(this.list);
         break;
