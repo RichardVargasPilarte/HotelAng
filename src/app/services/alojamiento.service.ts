@@ -6,6 +6,8 @@ import { Alojamiento } from '../models/alojamiento.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { MainService } from './main.service';
+import { IAlojamientosResponseDto } from '../dtos/Alojamiento.dto';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,9 +21,9 @@ export class AlojamientoService extends MainService {
   // Metodo GET - Listar todos los alojamientos
   ObtenerAlojamientos(): Observable<Alojamiento> {
     return new Observable((observer) => {
-      this.get().subscribe((data) => {
-        if (!data.detail) {
-          data.alojamiento.forEach((el: any) => {
+      this.get().subscribe((response) => {
+        if (response.code === 200) {
+          response.data.forEach((el: any) => {
             // console.log(el)
             let alojamiento = new Alojamiento();
             alojamiento = Object.assign(alojamiento, el);
@@ -29,11 +31,18 @@ export class AlojamientoService extends MainService {
             observer.next(alojamiento);
           });
         } else {
-          this.errorObten(data.detail);
+          this.errorObten(response.detail);
         }
         observer.complete();
       });
     });
+  }
+
+  async getAlojamientos(): Promise<Array<Alojamiento>> {
+    const response: IAlojamientosResponseDto = await this.getAsync<IAlojamientosResponseDto>()
+    this.list = response.data
+    this.list$.next(this.list);
+    return response.data
   }
 
   // Metodo POST - Agregar un nuevo alojamiento
@@ -42,7 +51,7 @@ export class AlojamientoService extends MainService {
     const body = { alojamiento };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (!response.detail) {
+        if (response.code == 200) {
           this.realizado();
           observer.next(response);
         } else {
