@@ -82,19 +82,19 @@ export class FormularioUsuarioComponent implements OnInit {
           Validators.required,
           Validators.minLength(5),
         ]),
-        email: new FormControl('', [Validators.required, Validators.email] ),
+        email: new FormControl('', [Validators.required, Validators.email]),
         direccion: new FormControl('', [
           Validators.required,
           Validators.minLength(10),
         ]),
-        tipo_usuario: new FormControl('', Validators.required),
+        groups: new FormControl('', Validators.required),
         estado: new FormControl('Activo', Validators.required),
         telefono: new FormControl('', Validators.required),
         eliminado: new FormControl('NO'),
       },
-      {
-        validators: this.MustMatch('password', 'confirmPassword')
-      });
+        {
+          validators: this.MustMatch('password', 'confirmPassword')
+        });
     } else {
       this.form = this.fb.group({
         id: this.data.user!.id,
@@ -122,8 +122,8 @@ export class FormularioUsuarioComponent implements OnInit {
           Validators.required,
           Validators.minLength(10),
         ]),
-        tipo_usuario: new FormControl(
-          this.data.user!.tipo_usuario,
+        groups: new FormControl(
+          this.data?.user?.groups,
           Validators.required
         ),
         estado: new FormControl(
@@ -173,18 +173,29 @@ export class FormularioUsuarioComponent implements OnInit {
   get Form(): any {
     return this.form.controls;
   }
+  get selectedGroups(): number[] {
+    const selectedGroups = this.data?.user?.groups?.map(group => group.id) || [];
+    return selectedGroups
+  }
+  set selectedGroups(item){
+    
+    this.data?.user?.groups.push(
+      
+    )
+  }
+
 
   MustMatch(controlName: string, matchingControlName: string) {
-    return(formGroup:FormGroup) => {
+    return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
 
-      if(matchingControl.errors && !matchingControl.errors['MustMatch']) {
+      if (matchingControl.errors && !matchingControl.errors['MustMatch']) {
         return
       }
 
-      if(control.value !== matchingControl.value) {
-        matchingControl.setErrors({MustMatch: true});
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ MustMatch: true });
       } else {
         matchingControl.setErrors(null);
       }

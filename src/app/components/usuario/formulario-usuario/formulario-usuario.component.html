@@ -129,13 +129,13 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo de usuario:</mat-label>
-                        <mat-select formControlName="tipo_usuario" [(ngModel)]="selected">
-                            <mat-option *ngFor="let tipo_usuario of gruposCargados" [value]="tipo_usuario.id">
-                                {{tipo_usuario.name}}
+                        <mat-select formControlName="groups" multiple [(value)]="selectedGroups">
+                            <mat-option *ngFor="let grupo of gruposCargados" [value]="grupo.id">
+                                {{grupo.name}}
                             </mat-option>
                         </mat-select>
 
-                        <mat-error *ngIf="form.controls['tipo_usuario'].hasError('required')">
+                        <mat-error *ngIf="form.controls['groups'].hasError('required')">
                             <strong>El tipo usuario es requerido</strong>
                         </mat-error>
                     </mat-form-field>

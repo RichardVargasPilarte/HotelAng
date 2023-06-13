@@ -1,5 +1,5 @@
 export class Grupos {
-  id: string | undefined;
-  name: string | undefined;
-  permissions: number | undefined;
+  id: number = -1;
+  name: string = '';
+  permissions: number[] = [];
 }
