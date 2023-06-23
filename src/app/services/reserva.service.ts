@@ -6,6 +6,8 @@ import { MainService } from './main.service';
 import { Reserva } from '../models/reserva.model';
 import { wsModel } from '../models/webSocket.model';
 
+import { IReservasResponseDto } from '../dtos/Reserva.dto';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,9 +20,9 @@ export class ReservaService extends MainService {
 
   ListadoReservas(): Observable<Reserva> {
     return new Observable((observer) => {
-      this.get().subscribe((data) => {
-        if (!data.detail ) {
-          data.reservacion.forEach((el: any) => {
+      this.get().subscribe((response) => {
+        if (response.code == 200 ) {
+          response.data.forEach((el: any) => {
             // console.log(el)
             let reserva = new Reserva();
             reserva = Object.assign(reserva, el);
@@ -28,11 +30,18 @@ export class ReservaService extends MainService {
             observer.next(reserva);
           });
         } else {
-          this.errorObten(data.detail);
+          this.errorObten(response.detail);
         }
         observer.complete();
       });
     });
+  }
+
+  async getReservas(): Promise<Array<Reserva>> {
+    const response: IReservasResponseDto = await this.getAsync<IReservasResponseDto>()
+    this.list = response.data
+    this.list$.next(this.list);
+    return response.data
   }
 
   Agregar(reservacion: Reserva): Observable<any> {
@@ -40,7 +49,7 @@ export class ReservaService extends MainService {
     const body = { reservacion };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (!response.detail) {
+        if (response.code == 201) {
           this.realizado();
           observer.next(response);
         } else {

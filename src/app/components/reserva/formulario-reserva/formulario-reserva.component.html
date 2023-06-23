@@ -7,11 +7,12 @@
         <mat-card-content>
             <div class="row">
                 <div class="col">
-                    <ng-select [items]="clientes" bindLabel="nombre" bindValue="id" formControlName="cliente_id"></ng-select>
+                    <ng-select [items]="clientes" bindLabel="nombre" bindValue="id"
+                    formControlName="cliente_id"></ng-select>
                 </div>
 
                 <div class="col">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Habitacion</mat-label>
                         <mat-select formControlName="habitacion_id">
                             <mat-option *ngFor="let habitacion of habitaciones" [value]="habitacion.id">
@@ -29,7 +30,7 @@
 
             <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Fecha Inicio:</mat-label>
                         <input matInput [matDatepicker]="fecha_inicio" formControlName="fecha_inicio"
                             name="fecha_inicio">
@@ -40,7 +41,7 @@
                 </div>
 
                 <div class="col">
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Fecha Fin:</mat-label>
                         <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin" name="fecha_fin">
                         <mat-hint>DD/MM/YYYY</mat-hint>
@@ -52,7 +53,7 @@
 
             <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="legacy">
                         <mat-label>Tipo Pago:</mat-label>
                         <mat-select formControlName="pago_choices">
                             <ng-container *ngFor="let pago of TipoPago">
@@ -68,7 +69,7 @@
 
             <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="outline" id="descripcion">
+                    <mat-form-field appearance="legacy" id="descripcion">
                         <mat-label>Descripcion</mat-label>
                         <input type="text" matInput name="descripcion" formControlName="descripcion"
                             placeholder="descripcion" autocomplete="off">
