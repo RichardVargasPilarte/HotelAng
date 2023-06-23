@@ -51,7 +51,7 @@ export class ClienteService extends MainService {
     const body = { cliente };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (response.code == 200) {
+        if (response.code == 201) {
           this.realizado();
           observer.next(response);
         } else {

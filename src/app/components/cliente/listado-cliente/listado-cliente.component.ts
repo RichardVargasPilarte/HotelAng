@@ -9,6 +9,10 @@ import { FormularioClienteComponent } from '../formulario-cliente/formulario-cli
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+import { RoleId } from '../../../shared/types/Roles.types';
+import { Permission } from '../../../shared/types/permissions.types';
+import { JwtService } from '../../../services/jwt.service';
+
 @Component({
   selector: 'app-listado-cliente',
   templateUrl: './listado-cliente.component.html',
@@ -32,11 +36,14 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     'actions',
   ];
   success = false;
+  roleIds = RoleId
+  permissions = new Permission();
 
   constructor(
     private _clienteService: ClienteService,
     private dialog: MatDialog,
-    private SpinnerService: NgxSpinnerService
+    private SpinnerService: NgxSpinnerService,
+    private jwtService: JwtService
   ) {
     this.promesa = new Promise<void>((resolve) => {
       const sub = this._clienteService.ObtenerClientes().subscribe(
@@ -136,4 +143,11 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     }
   }
 
+  hasRole(roleId: number) {
+    return this.jwtService.hasRole(roleId);
+  }
+
+  hasPermission(permissionId: number) {
+    return this.jwtService.hasPermission(permissionId);
+  }
 }

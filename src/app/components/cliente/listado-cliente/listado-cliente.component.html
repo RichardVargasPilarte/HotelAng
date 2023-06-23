@@ -56,7 +56,8 @@
                     <mat-icon appTooltip="Editar">create</mat-icon>
                 </button>
 
-                <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="eliminarAlojamiento(element.id)">
+                <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="eliminarAlojamiento(element.id)"
+                *ngIf="hasPermission(permissions.Cliente.Delete)">
                     <mat-icon appTooltip="Eliminar">delete_forever</mat-icon>
                 </button>
             </td>
