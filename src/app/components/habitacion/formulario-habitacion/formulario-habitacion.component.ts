@@ -47,7 +47,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
   ) {
     this.AlojamientosCargados = this.alojamiento$.list;
     this.refAloajamiento = this.alojamiento$.getList();
-    this.selected = this.AlojamientosCargados[0].id;
+    // this.selected = this.AlojamientosCargados[0].id;
   }
 
   ngOnInit(): void {
@@ -86,8 +86,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(1),
         ]),
-        nombre_alojamiento: new FormControl('', Validators.required),
-        nombre_alojamiento_id: new FormControl(0),
+        alojamiento_id: new FormControl('', Validators.required),
         eliminado: new FormControl('NO'),
       });
     } else {
@@ -111,12 +110,9 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(1),
         ]),
-        nombre_alojamiento: new FormControl(
-          this.data.hab!.nombre_alojamiento,
+        alojamiento_id: new FormControl(
+          this.data.hab!.alojamiento_id,
           Validators.required
-        ),
-        nombre_alojamiento_id: new FormControl(
-          this.data.hab!.nombre_alojamiento
         ),
       });
     }

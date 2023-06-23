@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { MainService } from './main.service';
 import { Habitacion } from '../models/habitacion.model';
 import { wsModel } from '../models/webSocket.model';
+
+import { IHabitacionesResponseDto } from '../dtos/Habitacion.dto';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,9 +20,9 @@ export class HabitacionService extends MainService {
   // Metodo GET - Listar todos las habitaciones
   ListadoHabitaciones(): Observable<Habitacion> {
     return new Observable((observer) => {
-      this.get().subscribe((data) => {
-        if (!data.detail) {
-          data.habitacion.forEach((el: any) => {
+      this.get().subscribe((response) => {
+        if (response.code == 200) {
+          response.data.forEach((el: any) => {
             // console.log(el)
             let habitacion = new Habitacion();
             habitacion = Object.assign(habitacion, el);
@@ -28,11 +30,18 @@ export class HabitacionService extends MainService {
             observer.next(habitacion);
           });
         } else {
-          this.errorObten(data.detail);
+          this.errorObten(response.detail);
         }
         observer.complete();
       });
     });
+  }
+
+  async getHabitaciones(): Promise<Array<Habitacion>> {
+    const response: IHabitacionesResponseDto = await this.getAsync<IHabitacionesResponseDto>()
+    this.list = response.data
+    this.list$.next(this.list);
+    return response.data
   }
 
   // Metodo POST - Agregar una nueva habitacion
@@ -41,7 +50,7 @@ export class HabitacionService extends MainService {
     const body = { habitacion };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (!response.detail) {
+        if (response.code == 201) {
           this.realizado();
           observer.next(response);
         } else {

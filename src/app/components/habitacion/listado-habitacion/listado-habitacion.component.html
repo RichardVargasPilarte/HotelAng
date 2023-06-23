@@ -2,7 +2,7 @@
     <span>Habitaciones</span>
     <span class="spacer"></span>
     <button mat-flat-button color="warn" 
-        id="nuevo" (click)="openDialog('c')">
+        id="nuevo" (click)="openDialog('c')" *ngIf="hasPermission(permissions.Alojamiento.Create)">
         <span>Nuevo</span>
         <mat-icon>add</mat-icon>
     </button>
@@ -25,7 +25,7 @@
         <!-- Columna del nombre alojamiento -->
         <ng-container matColumnDef="nombre_alojamiento">
             <th mat-header-cell *matHeaderCellDef> Alojamiento </th>
-            <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.nombre_alojamiento.nombre}} </td>
+            <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.alojamiento_id.nombre}} </td>
         </ng-container>
 
         <!-- Columna de numero personas -->
@@ -50,11 +50,12 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let habitaciones">
-                <button mat-mini-fab color="primary" class="mr-2 mb-2 mt-2" (click)="openDialog('u', habitaciones.id)">
+                <button mat-mini-fab color="primary" class="mr-2 mb-2 mt-2" (click)="openDialog('u', habitaciones.id)" *ngIf="hasPermission(permissions.Habitacion.Update)">
                     <mat-icon appTooltip="Editar">create</mat-icon>
                 </button>
 
-                <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="eliminarhabitacion(habitaciones.id)">
+                <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="eliminarhabitacion(habitaciones.id)"
+                *ngIf="hasPermission(permissions.Habitacion.Delete)">
                     <mat-icon appTooltip="Eliminar">delete_forever</mat-icon>
                 </button>
             </td>

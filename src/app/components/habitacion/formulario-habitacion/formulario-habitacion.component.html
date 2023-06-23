@@ -41,13 +41,13 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo de Alojamiento</mat-label>
-                        <mat-select formControlName="nombre_alojamiento">
+                        <mat-select formControlName="alojamiento_id">
                             <mat-option *ngFor="let alojamiento of AlojamientosCargados" [value]="alojamiento.id">
                                 {{alojamiento.nombre}}
                             </mat-option>
                         </mat-select>
 
-                        <mat-error *ngIf="form.controls['nombre_alojamiento'].hasError('required')">
+                        <mat-error *ngIf="form.controls['alojamiento_id'].hasError('required')">
                             El tipo de alojamiento es <strong>requerido</strong>
 
                         </mat-error>

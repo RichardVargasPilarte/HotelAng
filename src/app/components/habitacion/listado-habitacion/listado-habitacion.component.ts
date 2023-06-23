@@ -14,6 +14,10 @@ import { RedirIfFailPipe } from '../../../pipes/redir-if-fail.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
+import { JwtService } from '../../../services/jwt.service';
+import { RoleId } from '../../../shared/types/Roles.types';
+import { Permission } from '../../../shared/types/permissions.types';
+
 @Component({
   selector: 'app-listado-habitacion',
   templateUrl: './listado-habitacion.component.html',
@@ -41,12 +45,16 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     'actions',
   ];
 
+  roleIds = RoleId
+  permissions = new Permission();
+
   constructor(
     private habitacionservice: HabitacionService,
     private alojamiento$: AlojamientoService,
     private dialog: MatDialog,
     private router: Router,
-    private SpinnerService: NgxSpinnerService
+    private SpinnerService: NgxSpinnerService,
+    private jwtService: JwtService
   ) {
     this.promesas.push(
       new Promise<void>((resolve) => {
@@ -179,5 +187,13 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
         data: { type: tipo, hab: habitac },
       });
     }
+  }
+
+  hasRole(roleId: number) {
+    return this.jwtService.hasRole(roleId);
+  }
+
+  hasPermission(permissionId: number) {
+    return this.jwtService.hasPermission(permissionId);
   }
 }
