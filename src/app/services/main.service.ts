@@ -73,8 +73,8 @@ export class MainService {
       position: 'top-end',
       icon: 'error',
       title: 'Ah ocurrido un error al momento de traer los datos',
-      showConfirmButton: false,
-      timer: 1500,
+      showConfirmButton: true,
+      // timer: 1500,
     });
   }
 

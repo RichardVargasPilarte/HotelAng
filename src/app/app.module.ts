@@ -23,7 +23,7 @@ import { GruposService } from './services/grupos.service';
 import { HabitacionService } from './services/habitacion.service';
 import { JwtService } from './services/jwt.service';
 import { MainService } from './services/main.service';
-import { UsuariosService } from './services/usuarios.service';
+import { UsuarioService } from './services/usuario.service';
 import { WebsocketService } from './services/websocket.service';
 
 import {UserGuard } from './guards/user.guard';
@@ -37,7 +37,7 @@ const Servicios = [
   HabitacionService,
   JwtService,
   MainService,
-  UsuariosService,
+  UsuarioService,
   WebsocketService,
 ];
 

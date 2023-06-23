@@ -3,7 +3,7 @@ import { JwtService } from './jwt.service';
 import { AlojamientoService } from './alojamiento.service';
 import { HabitacionService } from './habitacion.service';
 import { ip } from '../models/api.model';
-import { UsuariosService } from './usuarios.service';
+import { UsuarioService } from './usuario.service';
 import { ClienteService } from './cliente.service';
 import { ReservaService } from './reserva.service';
 import Swal from 'sweetalert2';
@@ -17,7 +17,7 @@ export class WebsocketService {
     private jwt: JwtService,
     private Aloj$: AlojamientoService,
     private Habit$: HabitacionService,
-    private User$: UsuariosService,
+    private User$: UsuarioService,
     private Client$: ClienteService,
     private Reserv$: ReservaService
   ) {}
@@ -37,8 +37,8 @@ export class WebsocketService {
           position: 'top-end',
           icon: 'success',
           title: 'WebSocket reconectado, si hay multiples usuarios trabajando es recomendable recargar la pagina',
-          showConfirmButton: false,
-          timer: 1500
+          showConfirmButton: true,
+          // timer: 2500
         })
       }
       this.contador = 1;
@@ -82,9 +82,9 @@ export class WebsocketService {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Reconectando websocket intento ${this.contador} de ${this.MAX_RECONNECTION}`',
-            showConfirmButton: false,
-            timer: 1500
+            title: `Reconectando websocket intento ${this.contador} de ${this.MAX_RECONNECTION}`,
+            showConfirmButton: true,
+            // timer: 1500
           })
           this.contador++;
           setTimeout(() => {
@@ -98,7 +98,13 @@ export class WebsocketService {
         //   window.location.reload();
         // })
         // .set({ title: 'Error de conexion' });
-
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Error de conexion, por favor verificar su conexion a internet o recargar la pagina',
+          showConfirmButton: true,
+          // timer: 1500
+        })
         
       }
     };
