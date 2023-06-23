@@ -9,9 +9,9 @@ import { FormularioAlojamientoComponent } from '../formulario-alojamiento/formul
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { RoleId } from 'src/app/shared/types/roles.types';
-import { Permission } from 'src/app/shared/types/permissions.types'; 
-import { JwtService } from 'src/app/services/jwt.service';
+import { RoleId } from '../../../shared/types/Roles.types';
+import { Permission } from '../../../shared/types/permissions.types';
+import { JwtService } from '../../../services/jwt.service';
 
 @Component({
   selector: 'app-listado-alojamiento',

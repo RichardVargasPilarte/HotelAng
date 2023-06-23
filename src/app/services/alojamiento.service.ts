@@ -22,7 +22,7 @@ export class AlojamientoService extends MainService {
   ObtenerAlojamientos(): Observable<Alojamiento> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
-        if (response.code === 200) {
+        if (response.code == 200) {
           response.data.forEach((el: any) => {
             // console.log(el)
             let alojamiento = new Alojamiento();
@@ -51,7 +51,7 @@ export class AlojamientoService extends MainService {
     const body = { alojamiento };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (response.code == 200) {
+        if (response.code == 201) {
           this.realizado();
           observer.next(response);
         } else {
