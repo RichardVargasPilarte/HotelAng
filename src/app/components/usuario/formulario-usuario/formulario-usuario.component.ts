@@ -8,7 +8,7 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable } from 'rxjs';
 
-import { UsuariosService } from '../../../services/usuarios.service';
+import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/usuario.model';
 import { GruposService } from '../../../services/grupos.service';
 import { Grupos } from '../../../models/grupo.model';
@@ -36,7 +36,7 @@ export class FormularioUsuarioComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private usuarioServicio: UsuariosService,
+    private usuarioServicio: UsuarioService,
     private grupoServicio: GruposService,
     public dialogRef: MatDialogRef<FormularioUsuarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData

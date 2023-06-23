@@ -6,10 +6,12 @@ import { MainService } from './main.service';
 import { Usuario } from '../models/usuario.model';
 import { wsModel } from '../models/webSocket.model';
 
+import { IUsuariosResponseDto } from '../dtos/Usuario.dto';
+
 @Injectable({
   providedIn: 'root',
 })
-export class UsuariosService extends MainService {
+export class UsuarioService extends MainService {
   public override resource = 'usuarios';
 
   constructor(httpclient: HttpClient) {
@@ -19,9 +21,9 @@ export class UsuariosService extends MainService {
   // Metodo GET - Listar todos los usuarios
   ObtenerUsuarios(): Observable<any> {
     return new Observable((observer) => {
-      this.get().subscribe((data) => {
-        if (!data.detail) {
-          data.usuario.forEach((el: any) => {
+      this.get().subscribe((response) => {
+        if (response.code == 200) {
+          response.data.forEach((el: any) => {
             // console.log(el)
             let usuario = new Usuario();
             usuario = Object.assign(usuario, el);
@@ -29,11 +31,18 @@ export class UsuariosService extends MainService {
             observer.next(usuario);
           });
         } else {
-          this.errorObten(data.detail);
+          this.errorObten(response.detail);
         }
         observer.complete();
       });
     });
+  }
+
+  async getUsuarios(): Promise<Array<Usuario>> {
+    const response: IUsuariosResponseDto = await this.getAsync<IUsuariosResponseDto>()
+    this.list = response.data
+    this.list$.next(this.list);
+    return response.data
   }
 
   // Metodo POST - Agregar un nuevo usuario
@@ -41,7 +50,7 @@ export class UsuariosService extends MainService {
     const body = { usuario };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (!response.detail) {
+        if (response.code == 201) {
           this.realizado();
           observer.next(response);
         } else {

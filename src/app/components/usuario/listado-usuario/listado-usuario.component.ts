@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
-import { UsuariosService } from '../../../services/usuarios.service';
+import { UsuarioService } from '../../../services/usuario.service';
 import { GruposService } from '../../../services/grupos.service';
 import { Usuario } from '../../../models/usuario.model';
 import { Grupos } from '../../../models/grupo.model';
@@ -13,7 +13,7 @@ import { FormularioUsuarioComponent } from '../formulario-usuario/formulario-usu
 import { RedirIfFailPipe } from '../../../pipes/redir-if-fail.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
-import { RoleId } from 'src/app/shared/types/roles.types';
+import { RoleId } from '../../../shared/types/Roles.types';
 import { Permission } from 'src/app/shared/types/permissions.types'; 
 import { JwtService } from 'src/app/services/jwt.service';
 
@@ -48,7 +48,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   permissions = new Permission();
 
   constructor(
-    private usuariosServicio: UsuariosService,
+    private usuariosServicio: UsuarioService,
     private grupos$: GruposService,
     public dialog: MatDialog,
     private router: Router,
