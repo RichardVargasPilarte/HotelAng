@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
 
   constructor() {
     this.lista = menu;
-    console.log(this.lista);
+    // console.log(this.lista);
   }
 
   ngOnInit(): void {
