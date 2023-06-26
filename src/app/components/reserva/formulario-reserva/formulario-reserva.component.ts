@@ -9,18 +9,18 @@ import { Subscription, Observable } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ReservaService } from '../../../services/reserva.service';
-import { Reserva } from '../../../models/reserva.model';
 
 import { HabitacionService } from '../../../services/habitacion.service';
 import { Habitacion } from '../../../models/habitacion.model';
 
 import { ClienteService } from '../../../services/cliente.service';
 import { Cliente } from '../../../models/cliente.model';
-import { DateAdapter } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
+import { IReservaResponse, Reserva } from 'src/app/models/reserva.model';
 
 interface DialogData {
   type: string;
-  resv?: Reserva;
+  reserv?: Reserva | IReservaResponse;
 }
 
 @Component({
@@ -30,20 +30,21 @@ interface DialogData {
 })
 export class FormularioReservaComponent implements OnInit, OnDestroy {
   public reserva: Reserva = new Reserva();
-  public clientes: any[] = [{
-    nombre: 'nombre',
-    id: 'nomb'
-  },
-  {
-    nombre: 'nombre2',
-    id: 'nomb2'
-  }];
+  // public clientes: any[] = [{
+  //   nombre: 'nombre',
+  //   id: 'nomb'
+  // },
+  // {
+  //   nombre: 'nombre2',
+  //   id: 'nomb2'
+  // }];
   public habitaciones: Habitacion[] = [];
   subs: Subscription[] = [];
   public selected?= '0';
   public form!: FormGroup;
   public refCliente!: Observable<any>;
   public refHabitacion!: Observable<any>;
+  public clientes: Cliente[] = [];
 
   TipoPago: string[] = [
     ("Tarjeta Debito"),
@@ -58,9 +59,9 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<FormularioReservaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private fb: FormBuilder,
-    private adapter: DateAdapter<any>
+    private datePipe: DatePipe
   ) {
-    // this.clientes = this.clienteServicio$.list;
+    this.clientes = this.clienteServicio$.list;
     this.habitaciones = this.habitacionServicio$.list;
     this.refCliente = this.clienteServicio$.getList();
     this.refHabitacion = this.habitacionServicio$.getList();
@@ -96,50 +97,50 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
   createForm(id?: string): void {
     if (this.data.type === 'c') {
       this.form = this.fb.group({
-        id: new FormControl(0),
-        cliente_id: new FormControl('', Validators.required),
-        habitacion_id: new FormControl('', Validators.required),
+        id: new FormControl(-1),
+        cliente_id: new FormControl(-1, Validators.required),
+        habitacion_id: new FormControl(-1, Validators.required),
         fecha_inicio: new FormControl('', Validators.required),
         fecha_fin: new FormControl('', Validators.required),
         tipo_pago: new FormControl('', [
           Validators.required,
           Validators.minLength(6),
         ]),
-        pago_choices: new FormControl('', Validators.required),
+        // pago_choices: new FormControl('', Validators.required),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(15), Validators.maxLength(150)]),
         eliminado: new FormControl('NO'),
       });
     } else {
+      const reserva: IReservaResponse = this.data.reserv as IReservaResponse;
       this.form = this.fb.group({
-        id: this.data.resv!.id,
-        nombre_cliente: new FormControl(
-          this.data.resv!.cliente_id,
+        id: reserva.id,
+        cliente_id: new FormControl(
+          reserva.cliente_id.id,
           Validators.required
         ),
         habitacion_id: new FormControl(
-          this.data.resv!.habitacion_id,
+          reserva.habitacion_id.id,
           Validators.required
         ),
-        fecha_inicio: new FormControl(this.data.resv!.fecha_inicio, Validators.required),
-        fecha_fin: new FormControl(this.data.resv!.fecha_fin, Validators.required),
-        tipo_pago: new FormControl(this.data.resv!.tipo_pago, [
+        fecha_inicio: new FormControl(reserva.fecha_inicio, Validators.required),
+        fecha_fin: new FormControl(reserva.fecha_fin, Validators.required),
+        tipo_pago: new FormControl(reserva.tipo_pago, [
           Validators.required,
           Validators.minLength(6),
         ]),
-        pago_choices: new FormControl(this.data.resv!.pago_choices, Validators.required),
-        habitacion_id_id: new FormControl(
-          this.data.resv!.habitacion_id
-        ),
-        descripcion: new FormControl(this.data.resv!.descripcion, [Validators.required, Validators.minLength(15), Validators.maxLength(150)]),
+        // pago_choices: new FormControl(rserva.pago_choices, Validators.required),
+        descripcion: new FormControl(reserva.descripcion, [Validators.required, Validators.minLength(15), Validators.maxLength(150)]),
       });
     }
   }
 
   GuardarReserva(): void {
-    let reserv = new Reserva();
-    reserv = Object.assign(reserv, this.form.value);
+    let reserva = new Reserva();
+    reserva = Object.assign(reserva, this.form.value);
+    reserva.fecha_inicio = this.dateFormat(reserva.fecha_inicio);
+    reserva.fecha_fin = this.dateFormat(reserva.fecha_fin)
     this.subs.push(
-      this.reservaServicio.Agregar(reserv).subscribe(
+      this.reservaServicio.Agregar(reserva).subscribe(
         {
           next: (res) => {
             this.dialogRef.close();
@@ -165,6 +166,10 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
         }
       )
     );
+  }
+
+  dateFormat(date: string, format = 'yyyy-MM-dd'): string {
+    return this.datePipe.transform(date, format) || '';
   }
 
   get Form(): any {

@@ -19,12 +19,12 @@
     <!-- Name Column -->
     <ng-container matColumnDef="nombre_cliente">
         <th mat-header-cell *matHeaderCellDef> Cliente </th>
-        <td mat-cell *matCellDef="let element"> {{element.nombre_cliente}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.cliente_id.nombre}} </td>
     </ng-container>
 
     <ng-container matColumnDef="nombre_habitacion">
         <th mat-header-cell *matHeaderCellDef> Habitacion </th>
-        <td mat-cell *matCellDef="let element"> {{element.nombre_habitacion}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.habitacion_id.nombre}} </td>
     </ng-container>
 
     <!-- descripcion Column -->

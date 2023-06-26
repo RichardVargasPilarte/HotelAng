@@ -30,6 +30,7 @@ import {UserGuard } from './guards/user.guard';
 
 import { } from '../environments/environment';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 
 const Servicios = [
   AlojamientoService,
@@ -55,6 +56,7 @@ const Servicios = [
   exports: [],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
+    DatePipe,
     Servicios,
     CookieService,
     {

@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col">
                     <ng-select [items]="clientes" bindLabel="nombre" bindValue="id"
-                    formControlName="cliente_id"></ng-select>
+                        formControlName="cliente_id"></ng-select>
                 </div>
 
                 <div class="col">
@@ -16,13 +16,12 @@
                         <mat-label>Habitacion</mat-label>
                         <mat-select formControlName="habitacion_id">
                             <mat-option *ngFor="let habitacion of habitaciones" [value]="habitacion.id">
-                                {{habitacion.nombre}}
+                                {{ habitacion.nombre }}
                             </mat-option>
                         </mat-select>
 
                         <mat-error *ngIf="form.controls['habitacion_id'].hasError('required')">
                             La habitacion es <strong>requerid</strong>
-
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -32,18 +31,17 @@
                 <div class="col">
                     <mat-form-field appearance="legacy">
                         <mat-label>Fecha Inicio:</mat-label>
-                        <input matInput [matDatepicker]="fecha_inicio" formControlName="fecha_inicio"
-                            name="fecha_inicio">
+                        <input matInput [matDatepicker]="picker" formControlName="fecha_inicio" name="fecha_inicio" />
                         <mat-hint>DD/MM/YYYY</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="fecha_inicio"></mat-datepicker-toggle>
-                        <mat-datepicker #fecha_inicio></mat-datepicker>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </div>
 
                 <div class="col">
                     <mat-form-field appearance="legacy">
                         <mat-label>Fecha Fin:</mat-label>
-                        <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin" name="fecha_fin">
+                        <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin" name="fecha_fin" />
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matSuffix [for]="fecha_fin"></mat-datepicker-toggle>
                         <mat-datepicker #fecha_fin></mat-datepicker>
@@ -55,12 +53,12 @@
                 <div class="col">
                     <mat-form-field appearance="legacy">
                         <mat-label>Tipo Pago:</mat-label>
-                        <mat-select formControlName="pago_choices">
+                        <mat-select formControlName="tipo_pago">
                             <ng-container *ngFor="let pago of TipoPago">
-                                <mat-option [value]="pago">{{pago}}</mat-option>
+                                <mat-option [value]="pago">{{ pago }}</mat-option>
                             </ng-container>
                         </mat-select>
-                        <mat-error *ngIf="form.controls['pago_choices'].hasError('required')">
+                        <mat-error *ngIf="form.controls['tipo_pago'].hasError('required')">
                             El pago es <strong>requerido</strong>
                         </mat-error>
                     </mat-form-field>
@@ -72,7 +70,7 @@
                     <mat-form-field appearance="legacy" id="descripcion">
                         <mat-label>Descripcion</mat-label>
                         <input type="text" matInput name="descripcion" formControlName="descripcion"
-                            placeholder="descripcion" autocomplete="off">
+                            placeholder="descripcion" autocomplete="off" />
                         <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
                             La descripción es <strong>requerido</strong>
                         </mat-error>
@@ -81,8 +79,9 @@
             </div>
 
             <div class="row">
-                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
-                    (click)="data.type === 'c' ? GuardarReserva():ActualizarHabitacion()" [disabled]="form.invalid">
+                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar" (click)="
+            data.type === 'c' ? GuardarReserva() : ActualizarHabitacion()
+          " [disabled]="form.invalid">
                     Guardar
                     <i class="material-icons">save</i>
                 </button>
@@ -93,7 +92,6 @@
                     <i class="material-icons">cancel</i>
                 </button>
             </div>
-
         </mat-card-content>
     </mat-card>
 </form>
