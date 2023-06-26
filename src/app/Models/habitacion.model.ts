@@ -1,3 +1,5 @@
+import { Alojamiento } from "./alojamiento.model";
+
 export interface IHabitacion {
   id: number;
   nombre: string;
@@ -18,3 +20,14 @@ export class Habitacion implements IHabitacion {
   numero_personas = -1;
   alojamiento_id = -1;
 }
+
+export interface IHabitacionResponse {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  activo: string;
+  numero_personas: number;
+  alojamiento_id: Alojamiento;
+}
+

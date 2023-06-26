@@ -9,13 +9,13 @@ import { Subscription, Observable } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { HabitacionService } from '../../../services/habitacion.service';
-import { Habitacion } from '../../../models/habitacion.model';
+import { Habitacion, IHabitacionResponse } from '../../../models/habitacion.model';
 import { AlojamientoService } from '../../../services/alojamiento.service';
 import { Alojamiento } from '../../../models/alojamiento.model';
 
 interface DialogData {
   type: string;
-  hab?: Habitacion;
+  hab?: Habitacion | IHabitacionResponse;
 }
 
 @Component({
@@ -47,7 +47,6 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
   ) {
     this.AlojamientosCargados = this.alojamiento$.list;
     this.refAloajamiento = this.alojamiento$.getList();
-    // this.selected = this.AlojamientosCargados[0].id;
   }
 
   ngOnInit(): void {
@@ -67,7 +66,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
   createForm(id?: string): void {
     if (this.data.type === 'c') {
       this.form = this.fb.group({
-        id: new FormControl(0),
+        id: new FormControl(-1),
         nombre: new FormControl('', [
           Validators.required,
           Validators.minLength(5),
@@ -86,32 +85,33 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(1),
         ]),
-        alojamiento_id: new FormControl('', Validators.required),
+        alojamiento_id: new FormControl(-1, Validators.required),
         eliminado: new FormControl('NO'),
       });
     } else {
+      const habitacion: IHabitacionResponse = this.data.hab as IHabitacionResponse;
       this.form = this.fb.group({
-        id: this.data.hab!.id,
-        nombre: new FormControl(this.data.hab!.nombre, [
+        id: habitacion.id,
+        nombre: new FormControl(habitacion.nombre, [
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(25)
         ]),
-        descripcion: new FormControl(this.data.hab!.descripcion, [
+        descripcion: new FormControl(habitacion.descripcion, [
           Validators.required,
           Validators.minLength(15),
           Validators.maxLength(150)
         ]),
-        precio: new FormControl(this.data.hab!.precio, [
+        precio: new FormControl(habitacion.precio, [
           Validators.required
         ]),
-        activo: new FormControl(this.data.hab!.activo, Validators.required),
-        numero_personas: new FormControl(this.data.hab!.numero_personas, [
+        activo: new FormControl(habitacion.activo, Validators.required),
+        numero_personas: new FormControl(habitacion.numero_personas, [
           Validators.required,
           Validators.minLength(1),
         ]),
         alojamiento_id: new FormControl(
-          this.data.hab!.alojamiento_id,
+          habitacion.alojamiento_id.id,
           Validators.required
         ),
       });
@@ -130,11 +130,6 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
           },
           error: (error: any) => console.log(error)
         }
-        // (res) => {
-        //   this.dialogRef.close();
-        //   console.log(res);
-        // },
-        // (error) => console.error(error)
       )
     );
   }
@@ -151,8 +146,6 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
             (error: any) => console.error(error);
           },
         }
-        // res => this.dialogRef.close(),
-        // error => console.error(error),
       )
     );
   }
