@@ -7,6 +7,7 @@ import { wsModel } from '../models/webSocket.model';
 
 import { MainService } from './main.service';
 import { IClientesResponseDto } from '../dtos/Cliente.dto';
+import { HttpResponseId } from '../../app/shared/types/httpResponse.types';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,13 @@ export class ClienteService extends MainService {
     super(httpclient);
   }
 
+  httpIds = HttpResponseId
+
   // Metodo GET - Listar todos los clientes
   ObtenerClientes(): Observable<Cliente> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
-        if (response.code == 200) {
+        if (response.code == this.httpIds.OK) {
           response.data.forEach((el: any) => {
             // console.log(el)
             let cliente = new Cliente();
@@ -51,7 +54,7 @@ export class ClienteService extends MainService {
     const body = { cliente };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (response.code == 201) {
+        if (response.code == this.httpIds.Created) {
           this.realizado();
           observer.next(response);
         } else {

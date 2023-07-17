@@ -7,6 +7,7 @@ import { Usuario } from '../models/usuario.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { IUsuariosResponseDto } from '../dtos/Usuario.dto';
+import { HttpResponseId } from '../../app/shared/types/httpResponse.types';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +19,13 @@ export class UsuarioService extends MainService {
     super(httpclient);
   }
 
+  httpIds = HttpResponseId
+
   // Metodo GET - Listar todos los usuarios
   ObtenerUsuarios(): Observable<any> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
-        if (response.code == 200) {
+        if (response.code == this.httpIds.OK) {
           response.data.forEach((el: any) => {
             // console.log(el)
             let usuario = new Usuario();
@@ -50,7 +53,7 @@ export class UsuarioService extends MainService {
     const body = { usuario };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (response.code == 201) {
+        if (response.code == this.httpIds.Created) {
           this.realizado();
           observer.next(response);
         } else {
