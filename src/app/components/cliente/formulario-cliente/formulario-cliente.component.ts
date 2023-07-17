@@ -9,11 +9,11 @@ import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ClienteService } from '../../../services/cliente.service';
-import { Cliente } from '../../../models/cliente.model';
+import { Cliente, IClientResponse } from '../../../models/cliente.model';
 
 interface DialogData {
   type: string;
-  client?: Cliente;
+  client?: Cliente | IClientResponse;
 }
 
 @Component({
@@ -76,29 +76,30 @@ export class FormularioClienteComponent implements OnInit {
         eliminado: new FormControl('NO'),
       });
     } else {
+      const cliente: IClientResponse = this.data.client as IClientResponse;
       this.form = this.fb.group({
-        id: this.data.client!.id,
-        nombre: new FormControl(this.data.client!.nombre, [
+        id: cliente.id,
+        nombre: new FormControl(cliente.nombre, [
           Validators.required,
           Validators.minLength(3),
         ]),
-        apellido: new FormControl(this.data.client!.apellido, [
+        apellido: new FormControl(cliente.apellido, [
           Validators.required,
           Validators.minLength(5),
         ]),
-        telefono: new FormControl(this.data.client!.telefono, [
+        telefono: new FormControl(cliente.telefono, [
           Validators.required,
           Validators.minLength(9),
         ]),
-        tipo_identificacion: new FormControl(this.data.client!.tipo_identificacion, [
+        tipo_identificacion: new FormControl(cliente.tipo_identificacion, [
           Validators.required,
           Validators.minLength(9),
         ]),
-        num_identificacion: new FormControl(this.data.client!.num_identificacion, [
+        num_identificacion: new FormControl(cliente.num_identificacion, [
           Validators.required,
           Validators.minLength(16),
         ]),
-        email: new FormControl(this.data.client!.email, [Validators.required,Validators.email]),
+        email: new FormControl(cliente.email, [Validators.email]),
         eliminado: new FormControl('NO'),
       });
     }

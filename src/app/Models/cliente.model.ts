@@ -20,3 +20,14 @@ export class Cliente implements ICliente {
   tipo_identificacion = 0;
   num_identificacion = '';
 }
+
+export interface IClientResponse {
+  id: number;
+  nombre: string;
+  apellido: string;
+  direccion: string;
+  telefono: string;
+  email: string;
+  tipo_identificacion: number;
+  num_identificacion: string;
+}
