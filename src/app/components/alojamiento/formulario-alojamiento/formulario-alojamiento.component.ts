@@ -9,11 +9,11 @@ import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { AlojamientoService } from '../../../services/alojamiento.service';
-import { Alojamiento } from '../../../models/alojamiento.model';
+import { Alojamiento, IAlojamientoResponse } from '../../../models/alojamiento.model';
 
 interface DialogData {
   type: string;
-  alojam?: Alojamiento;
+  alojam?: Alojamiento | IAlojamientoResponse;
 }
 
 @Component({
@@ -60,19 +60,20 @@ export class FormularioAlojamientoComponent implements OnInit {
         eliminado: new FormControl('NO'),
       });
     } else {
+      const alojamiento: IAlojamientoResponse = this.data.alojam as IAlojamientoResponse;
       this.form = this.fb.group({
-        id: this.data.alojam!.id,
-        nombre: new FormControl(this.data.alojam!.nombre, [
+        id: alojamiento.id,
+        nombre: new FormControl(alojamiento.nombre, [
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(25)
         ]),
-        descripcion: new FormControl(this.data.alojam!.descripcion, [
+        descripcion: new FormControl(alojamiento.descripcion, [
           Validators.required,
           Validators.minLength(10),
           Validators.maxLength(150)
         ]),
-        tiempo_estadia: new FormControl(this.data.alojam!.tiempo_estadia, [
+        tiempo_estadia: new FormControl(alojamiento.tiempo_estadia, [
           Validators.required,
           Validators.minLength(1),
         ]),
