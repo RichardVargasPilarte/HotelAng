@@ -129,7 +129,7 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo de usuario:</mat-label>
-                        <mat-select formControlName="groups" multiple [(value)]="selectedGroups">
+                        <mat-select formControlName="groups">
                             <mat-option *ngFor="let grupo of gruposCargados" [value]="grupo.id">
                                 {{grupo.name}}
                             </mat-option>

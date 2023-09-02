@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable } from 'rxjs';
 
 import { UsuarioService } from '../../../services/usuario.service';
-import { Usuario } from '../../../models/usuario.model';
+import { CreateUser, Usuario } from '../../../models/usuario.model';
 import { GruposService } from '../../../services/grupos.service';
 import { Grupos } from '../../../models/grupo.model';
 
@@ -143,8 +143,9 @@ export class FormularioUsuarioComponent implements OnInit {
   }
 
   saveUsuario(): void {
-    let user = new Usuario();
+    let user = new CreateUser();
     user = Object.assign(user, this.form.value);
+    user.groups 
     this.subs.push(
       this.usuarioServicio.Agregar(user).subscribe({
         next: (res) => {
@@ -172,16 +173,6 @@ export class FormularioUsuarioComponent implements OnInit {
 
   get Form(): any {
     return this.form.controls;
-  }
-  get selectedGroups(): number[] {
-    const selectedGroups = this.data?.user?.groups?.map(group => group.id) || [];
-    return selectedGroups
-  }
-  set selectedGroups(item){
-    
-    this.data?.user?.groups.push(
-      
-    )
   }
 
 

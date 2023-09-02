@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
-import { Usuario } from '../models/usuario.model';
+import { CreateUser, Usuario } from '../models/usuario.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { IUsuariosResponseDto } from '../dtos/Usuario.dto';
@@ -49,7 +49,7 @@ export class UsuarioService extends MainService {
   }
 
   // Metodo POST - Agregar un nuevo usuario
-  Agregar(usuario: Usuario): Observable<object> {
+  Agregar(usuario: CreateUser): Observable<object> {
     const body = { usuario };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {

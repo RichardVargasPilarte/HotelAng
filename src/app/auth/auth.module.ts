@@ -9,6 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
+// import { ReestablecerPasswordComponent } from './reestablecer-password/reestablecer-password.component';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -20,7 +21,9 @@ const MaterialComponents = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, 
+    // ReestablecerPasswordComponent
+  ],
   imports: [CommonModule, MaterialComponents, FormsModule, ReactiveFormsModule],
   exports: [MaterialComponents, LoginComponent],
 })

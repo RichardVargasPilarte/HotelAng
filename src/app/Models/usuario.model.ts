@@ -29,3 +29,29 @@ export class Usuario implements IUsuario {
 }
 
 
+
+export interface ICreateUser {
+  first_name:string
+  last_name:string
+  password:string
+  username:string
+  email:string
+  direccion:string
+  estado:number;
+  telefono:string
+  groups:number;
+}
+
+
+export class CreateUser implements ICreateUser{
+  id = -1;
+  first_name = ''
+  last_name = ''
+  password = ''
+  username = ''
+  email = ''
+  direccion = ''
+  estado = -1;
+  telefono = ''
+  groups =-1;
+}
