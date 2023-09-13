@@ -1,5 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  Validators,
+  FormGroup,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CreateUser, RestorePasswordUser, Usuario } from '../../models/usuario.model';
 import { ReestablecerPasswordService } from '../../services/reestablecer-password.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+
+interface DialogData {
+  type: string;
+  user?: CreateUser;
+}
 
 @Component({
   selector: 'app-reestablecer-password',
@@ -7,12 +22,79 @@ import { ReestablecerPasswordService } from '../../services/reestablecer-passwor
   styleUrls: ['./reestablecer-password.component.scss']
 })
 export class ReestablecerPasswordComponent implements OnInit {
+  subs: Subscription[] = [];
 
-  email!: string;
+  token!: string;
+  newPassword!: string;
+  confirmPassword!: string;
+  resetSuccessful = false;
+
+  public form!: FormGroup;
   
-  constructor(private passwordService: ReestablecerPasswordService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private reestablecerContraseñaService: ReestablecerPasswordService,
+    private router: Router,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<ReestablecerPasswordComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {
+    this.createForm()
+  }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.token = params['token'];
+    });
+
+    this.createForm();
+  }
+
+  createForm(id?: string): void {
+    if (this.data.type === 'c') {
+      this.form = this.fb.group({
+        email: new FormControl('', [
+          Validators.required,
+          Validators.email
+        ]),
+      });
+    }
+  }
+
+  // enviarCorreo() {
+  //   let email = new CreateUser();
+  //   email = Object.assign(email, this,this.form.value);
+  //   this.reestablecerContraseñaService.sendEmailPassword(email).subscribe(
+  //     {
+  //       next: (res) => {
+
+  //       },
+  //       error: (error: any) => console.log('Hubo un error' + error)
+  //     }
+  //   )
+  // }
+
+  resetearContraseña() {
+    if (this.newPassword === this.confirmPassword) {
+      // Call the password reset service
+      this.reestablecerContraseñaService.restaurarContraseña(this.token, this.newPassword)
+        .subscribe(
+          {
+            next: () => {
+              this.resetSuccessful = true;
+            },
+            error: (error: any) => console.log('Password reset error:', error)
+          }
+        );
+    } else {
+      // Handle password mismatch error
+      console.error('Passwords do not match.');
+    }
+  }
+
+  navigateToLogin() {
+    // Redirect the user to the login page after a successful password reset
+    this.router.navigate(['/Login']);
   }
 
 }

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {RouterModule} from '@angular/router';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 
@@ -9,7 +11,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
-// import { ReestablecerPasswordComponent } from './reestablecer-password/reestablecer-password.component';
+import { ReestablecerPasswordComponent } from './reestablecer-password/reestablecer-password.component';
+import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
+import { ContrasenaOlvidadaComponent } from './contrasena-olvidada/contrasena-olvidada.component';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -22,9 +26,9 @@ const MaterialComponents = [
 
 @NgModule({
   declarations: [LoginComponent, 
-    // ReestablecerPasswordComponent
+    ReestablecerPasswordComponent, CambioContrasenaComponent, ContrasenaOlvidadaComponent
   ],
-  imports: [CommonModule, MaterialComponents, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, MaterialComponents, FormsModule, ReactiveFormsModule],
   exports: [MaterialComponents, LoginComponent],
 })
 export class AuthModule {}
