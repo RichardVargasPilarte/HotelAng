@@ -13,6 +13,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatMenuModule} from '@angular/material/menu';
+
+
 import { Error404Component } from './error404/error404.component';
 import { MenuComponent } from './menu/menu.component';
 
@@ -27,7 +32,10 @@ const MaterialComponents = [
   MatGridListModule,
   MatTooltipModule,
   MatDialogModule,
-  MatCardModule
+  MatCardModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatMenuModule
 ];
 
 @NgModule({

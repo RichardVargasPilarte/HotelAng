@@ -1,6 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,  } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
+
+
 import { delay } from 'rxjs/operators';
 
 import { JwtService } from '../../services/jwt.service';
@@ -11,13 +13,15 @@ import { JwtService } from '../../services/jwt.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+
+  panelOpenState = false;
 
   constructor(
     private observer: BreakpointObserver,
     private jwt: JwtService,
   ) {}
+  
 
   logout() {
     this.jwt.logout();

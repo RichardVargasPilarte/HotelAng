@@ -51,3 +51,14 @@ mat-divider {
   margin-bottom: 16px;
   background-color: rgba(255, 255, 255, 0.5);
 }
+
+/* CSS for the menu button */
+.mat-icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+}
+
+/* CSS for the menu content */
+.mat-menu-panel:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
