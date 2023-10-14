@@ -33,11 +33,10 @@ export class ReestablecerPasswordComponent implements OnInit {
   
   constructor(
     private route: ActivatedRoute,
-    private reestablecerContraseñaService: ReestablecerPasswordService,
+    private reestablecerContrasenaService: ReestablecerPasswordService,
     private router: Router,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<ReestablecerPasswordComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialogRef: MatDialogRef<ReestablecerPasswordComponent>
   ) {
     this.createForm()
   }
@@ -50,21 +49,19 @@ export class ReestablecerPasswordComponent implements OnInit {
     this.createForm();
   }
 
-  createForm(id?: string): void {
-    if (this.data.type === 'c') {
+  createForm(): void {
       this.form = this.fb.group({
         email: new FormControl('', [
           Validators.required,
           Validators.email
         ]),
       });
-    }
   }
 
   // enviarCorreo() {
   //   let email = new CreateUser();
   //   email = Object.assign(email, this,this.form.value);
-  //   this.reestablecerContraseñaService.sendEmailPassword(email).subscribe(
+  //   this.reestablecerContrasenaService.sendEmailPassword(email).subscribe(
   //     {
   //       next: (res) => {
 
@@ -77,7 +74,7 @@ export class ReestablecerPasswordComponent implements OnInit {
   resetearContraseña() {
     if (this.newPassword === this.confirmPassword) {
       // Call the password reset service
-      this.reestablecerContraseñaService.restaurarContraseña(this.token, this.newPassword)
+      this.reestablecerContrasenaService.restaurarContraseña(this.token, this.newPassword)
         .subscribe(
           {
             next: () => {

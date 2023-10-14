@@ -43,10 +43,10 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="row">
-                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar" (click)="data.type === 'c' ? saveUsuario():changePassword()"
-                [disabled]="form.invalid">
-                Guardar
-                <i class="material-icons">save</i>
+                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+                    (click)="changePassword()" [disabled]="form.invalid">
+                    Guardar
+                    <i class="material-icons">save</i>
                 </button>
 
                 <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"

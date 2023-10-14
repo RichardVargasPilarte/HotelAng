@@ -64,14 +64,14 @@
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Password" class="menu-button" [routerLink]="['/RestablecerContrasena']">
+        <button mat-button matTooltip="Password" class="menu-button" (click)="openPasswordReset()">
             <mat-icon>key</mat-icon>
             <span routerLinkActive="active">Password</span>
         </button>
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Password" class="menu-button" [routerLink]="['/app/CambioContrasena']">
+        <button mat-button matTooltip="Password" class="menu-button" (click)="openUserPasswordReset()">
             <mat-icon>key</mat-icon>
             <span routerLinkActive="active">Cambios Password</span>
         </button>

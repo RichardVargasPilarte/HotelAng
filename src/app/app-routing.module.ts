@@ -36,11 +36,6 @@ const routes: Routes = [
     title: 'Login'
   },
   {
-    path: 'RestablecerContrasena',
-    component: ReestablecerPasswordComponent,
-    title: 'Restauración de contraseña'
-  },
-  {
     path: 'app',
     canActivate: [UserGuard],
     component: DashboardComponent,
@@ -109,10 +104,6 @@ const routes: Routes = [
       {
         path: 'Reservas/Formularios/:id',
         component: FormularioReservaComponent
-      },
-      {
-        path: 'CambioContrasena',
-        component: CambioContrasenaComponent
       },
       {
         path: 'Menu',

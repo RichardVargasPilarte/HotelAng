@@ -1,4 +1,4 @@
-import { Component, ViewChild,  } from '@angular/core';
+import { Component, ViewChild, } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 
@@ -6,6 +6,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { delay } from 'rxjs/operators';
 
 import { JwtService } from '../../services/jwt.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ReestablecerPasswordComponent } from 'src/app/auth/reestablecer-password/reestablecer-password.component';
+import { CambioContrasenaComponent } from 'src/app/auth/cambio-contrasena/cambio-contrasena.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,8 +23,9 @@ export class DashboardComponent {
   constructor(
     private observer: BreakpointObserver,
     private jwt: JwtService,
-  ) {}
-  
+    private readonly dialog: MatDialog
+  ) { }
+
 
   logout() {
     this.jwt.logout();
@@ -46,4 +50,12 @@ export class DashboardComponent {
         }
       });
   }
+
+  openPasswordReset() {
+    this.dialog.open(ReestablecerPasswordComponent, {})
+  }
+  openUserPasswordReset() {
+    this.dialog.open(CambioContrasenaComponent, {})
+  }
 }
+

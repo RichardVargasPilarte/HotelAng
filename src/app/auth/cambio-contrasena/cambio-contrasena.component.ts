@@ -7,11 +7,11 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription, Observable } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
-import { CreateUser, Usuario  } from '../../models/usuario.model';
+import { CreateUser, Usuario } from '../../models/usuario.model';
 
 interface DialogData {
   type: string;
@@ -32,7 +32,6 @@ export class CambioContrasenaComponent implements OnInit {
     private fb: FormBuilder,
     private usuarioServicio: UsuarioService,
     public dialogRef: MatDialogRef<CambioContrasenaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { }
 
   ngOnInit(): void {
@@ -40,21 +39,19 @@ export class CambioContrasenaComponent implements OnInit {
   }
 
   createForm(id?: string): void {
-    if (this.data.type === 'c') {
-      this.form = this.fb.group({
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(8),
-        ]),
-        confirmPassword: new FormControl('', [
-          Validators.required,
-          Validators.minLength(8),
-        ])
-      },
-        {
-          validators: this.MustMatch('password', 'confirmPassword')
-        });
-    }
+    this.form = this.fb.group({
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ])
+    },
+      {
+        validators: this.MustMatch('password', 'confirmPassword')
+      });
   }
   saveUsuario(): void {
     let user = new CreateUser();
