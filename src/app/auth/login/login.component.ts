@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
     });
     if (this._JwtService.isAuthenticated()) {
-      this.router.navigate(['/Alojamientos/Listado']);
+      this.router.navigate(['/app/Alojamientos/Listado']);
     }
   }
 

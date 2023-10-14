@@ -7,7 +7,7 @@ import { Habitacion } from '../models/habitacion.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { IHabitacionesResponseDto } from '../dtos/Habitacion.dto';
-import { HttpResponseId } from '../../app/shared/types/httpResponse.types';
+import { HttpCode } from '../../app/shared/types/httpResponse.types';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +19,13 @@ export class HabitacionService extends MainService {
     super(httpclient);
   }
 
-  httpIds = HttpResponseId
+
 
   // Metodo GET - Listar todos las habitaciones
   ListadoHabitaciones(): Observable<Habitacion> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
-        if (response.code == this.httpIds.OK) {
+        if (response.code == HttpCode.OK) {
           response.data.forEach((el: any) => {
             // console.log(el)
             let habitacion = new Habitacion();
@@ -54,7 +54,7 @@ export class HabitacionService extends MainService {
     const body = { habitacion };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (response.code == this.httpIds.Created) {
+        if (response.code == HttpCode.Created) {
           this.realizado();
           observer.next(response);
         } else {

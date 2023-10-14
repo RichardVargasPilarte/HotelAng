@@ -2,39 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { MainService } from './main.service';
-import { HttpResponseId } from '../../app/shared/types/httpResponse.types';
+import { HttpCode } from '../../app/shared/types/httpResponse.types';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReestablecerPasswordService extends MainService {
-  public override resource = 'reestablecerPassword';
+export class ReestablecerPasswordService {
 
-  constructor(httpclient: HttpClient) {
-    super(httpclient);
-  }
+  constructor(private http: HttpClient) { }
 
-  httpIds = HttpResponseId
+  base_url = 'http://localhost:8000/api/password_reset/';
 
-  Reestablecer(email: string): Observable<any> {
-    console.log(email);
-    const body = { email };
-    return new Observable((observer) => {
-      this.create(body).subscribe((response) => {
-        if (response.code == this.httpIds.OK) {
-          this.realizado();
-            observer.next(response);
-        } else {
-            this.errorObten(response.detail);
-        }
-      });
-    });
-  }
-
-  confirmPasswordReset(token: string, newPassword: string) {
-    const url = `${this.baseUrl}/api/password/reset/confirm/${token}/`;
-    return this.http.post(url, { new_password: newPassword });
+  initiatePasswordReset(email: string) {
+    const url = this.base_url;
+    return this.http.post(url, { email });
   }
   
+  restaurarContraseña(token: string, newPassword: string): Observable<any> {
+    const apiUrl = this.base_url;
+    const resetData = { token, newPassword };
+    return this.http.post(apiUrl, resetData);
+  }
+
+  sendEmailPassword(email:string) {
+    const url = this.base_url;
+    return this.http.post(url, { email });
+  }
 }
+
+
+

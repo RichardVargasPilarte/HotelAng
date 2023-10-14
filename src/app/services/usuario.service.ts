@@ -7,7 +7,7 @@ import { CreateUser, Usuario } from '../models/usuario.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { IUsuariosResponseDto } from '../dtos/Usuario.dto';
-import { HttpResponseId } from '../../app/shared/types/httpResponse.types';
+import { HttpCode } from '../../app/shared/types/httpResponse.types';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +19,13 @@ export class UsuarioService extends MainService {
     super(httpclient);
   }
 
-  httpIds = HttpResponseId
+
 
   // Metodo GET - Listar todos los usuarios
   ObtenerUsuarios(): Observable<any> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
-        if (response.code == this.httpIds.OK) {
+        if (response.code == HttpCode.OK) {
           response.data.forEach((el: any) => {
             // console.log(el)
             let usuario = new Usuario();
@@ -53,7 +53,7 @@ export class UsuarioService extends MainService {
     const body = { usuario };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (response.code == this.httpIds.Created) {
+        if (response.code == HttpCode.Created) {
           this.realizado();
           observer.next(response);
         } else {
@@ -78,6 +78,11 @@ export class UsuarioService extends MainService {
   // Metodo DELETE - Para eliminar un dato mediante su Id
   BorrarUsuario(id: string | number) {
     return this.delete(id);
+  }
+
+  cambiarContraseña(id: string | number, object: any) {
+    const body = { object };
+    return this.updatePasswordUser(body, id);
   }
 
   override updateList(data: wsModel) {

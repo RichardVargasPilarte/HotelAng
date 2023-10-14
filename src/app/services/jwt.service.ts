@@ -31,7 +31,7 @@ export class JwtService {
   }
 
   public get loggedIn(): boolean {
-    return this.cookie.get('access') !== null;
+    return !!this.cookie.get('access')
   }
 
   getDecodedToken() {

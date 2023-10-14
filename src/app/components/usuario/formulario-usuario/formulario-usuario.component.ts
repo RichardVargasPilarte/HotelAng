@@ -145,7 +145,6 @@ export class FormularioUsuarioComponent implements OnInit {
   saveUsuario(): void {
     let user = new CreateUser();
     user = Object.assign(user, this.form.value);
-    user.groups 
     this.subs.push(
       this.usuarioServicio.Agregar(user).subscribe({
         next: (res) => {

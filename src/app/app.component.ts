@@ -7,6 +7,7 @@ import { AlojamientoService } from './services/alojamiento.service';
 import { HabitacionService } from './services/habitacion.service';
 import { ReservaService } from './services/reserva.service';
 import { UsuarioService } from './services/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
     private readonly habitacionService: HabitacionService,
     private readonly reservaService: ReservaService,
     private readonly usuarioService: UsuarioService,
+    private readonly router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +54,7 @@ export class AppComponent implements OnInit {
       );
     } else {
       alert('No hay token');
+      this.router.navigate(['/login']);
     }
   }
   async loadData() {

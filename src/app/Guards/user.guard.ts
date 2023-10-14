@@ -14,7 +14,7 @@ import { JwtService } from '../services/jwt.service';
   providedIn: 'root',
 })
 export class UserGuard implements CanActivate {
-  constructor(private jwt: JwtService) {}
+  constructor(private jwt: JwtService) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,

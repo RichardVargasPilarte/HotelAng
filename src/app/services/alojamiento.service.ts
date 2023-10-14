@@ -7,7 +7,7 @@ import { wsModel } from '../models/webSocket.model';
 
 import { MainService } from './main.service';
 import { IAlojamientosResponseDto } from '../dtos/Alojamiento.dto';
-import { HttpResponseId } from '../../app/shared/types/httpResponse.types';
+import { HttpCode } from '../../app/shared/types/httpResponse.types';
 
 @Injectable({
   providedIn: 'root',
@@ -19,14 +19,12 @@ export class AlojamientoService extends MainService {
     super(httpclient);
   }
 
-  httpIds = HttpResponseId
-
   // Metodo GET - Listar todos los alojamientos
   ObtenerAlojamientos(): Observable<Alojamiento> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
         // if (response.code == 200) {
-        if (response.code == this.httpIds.OK) {
+        if (response.code == HttpCode.OK) {
           response.data.forEach((el: any) => {
             // console.log(el)
             let alojamiento = new Alojamiento();
@@ -56,7 +54,7 @@ export class AlojamientoService extends MainService {
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
         // if (response.code == 201) {
-        if (response.code == this.httpIds.Created) {
+        if (response.code == HttpCode.Created) {
           this.realizado();
           observer.next(response);
         } else {

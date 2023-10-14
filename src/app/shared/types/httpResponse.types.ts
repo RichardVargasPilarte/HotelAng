@@ -7,7 +7,7 @@ export enum HttpResponse {
     InternalServerError = 'Internal Server Error'
 }
 
-export enum HttpResponseId {
+export enum HttpCode {
     OK = 200,
     Created = 201,
     NoContent = 204,

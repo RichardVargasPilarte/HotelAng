@@ -7,7 +7,7 @@ import { Reserva } from '../models/reserva.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { IReservasResponseDto } from '../dtos/Reserva.dto';
-import { HttpResponseId } from '../../app/shared/types/httpResponse.types';
+import { HttpCode } from '../../app/shared/types/httpResponse.types';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +19,12 @@ export class ReservaService extends MainService {
     super(httpclient);
   }
 
-  httpIds = HttpResponseId
+
 
   ListadoReservas(): Observable<Reserva> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
-        if (response.code == this.httpIds.OK ) {
+        if (response.code == HttpCode.OK ) {
           response.data.forEach((el: any) => {
             // console.log(el)
             let reserva = new Reserva();
@@ -53,7 +53,7 @@ export class ReservaService extends MainService {
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
         // if (response.code == 201) {
-        if (response.code == this.httpIds.Created) {
+        if (response.code == HttpCode.Created) {
           this.realizado();
           observer.next(response);
         } else {

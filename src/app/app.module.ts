@@ -46,12 +46,12 @@ const Servicios = [
   declarations: [AppComponent, RedirIfFailPipe],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
     AuthModule,
-    ComponentsModule
+    ComponentsModule,
+    AppRoutingModule,
   ],
   exports: [],
   providers: [

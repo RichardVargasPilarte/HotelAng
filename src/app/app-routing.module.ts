@@ -21,18 +21,29 @@ import { ReestablecerPasswordComponent } from './auth/reestablecer-password/rees
 import { CambioContrasenaComponent } from './auth/cambio-contrasena/cambio-contrasena.component';
 
 import { ContrasenaOlvidadaComponent } from './auth/contrasena-olvidada/contrasena-olvidada.component';
+import { DashboardComponent } from './shared/dashboard/dashboard.component';
 
 
 const routes: Routes = [
-  { path: 'Login', component: LoginComponent, title: 'Login' },
   {
-    path: 'RestablecerContraseña',
-    component:ReestablecerPasswordComponent,
+    path: '',
+    redirectTo: 'Menu',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login'
+  },
+  {
+    path: 'RestablecerContrasena',
+    component: ReestablecerPasswordComponent,
     title: 'Restauración de contraseña'
   },
   {
-    path: '',
+    path: 'app',
     canActivate: [UserGuard],
+    component: DashboardComponent,
     children: [
       {
         path: 'Alojamientos/Listado',
@@ -100,7 +111,7 @@ const routes: Routes = [
         component: FormularioReservaComponent
       },
       {
-        path: 'CambioContraseña',
+        path: 'CambioContrasena',
         component: CambioContrasenaComponent
       },
       {
@@ -108,9 +119,10 @@ const routes: Routes = [
         component: MenuComponent,
         title: 'Menu',
       },
-      { path: '**', component: Error404Component },
     ]
+
   },
+  { path: '**', component: Error404Component },
 
 ];
 

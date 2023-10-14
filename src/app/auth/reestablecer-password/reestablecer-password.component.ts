@@ -6,7 +6,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CreateUser, RestorePasswordUser, Usuario } from '../../models/usuario.model';
+import { CreateUser, Usuario } from '../../models/usuario.model';
 import { ReestablecerPasswordService } from '../../services/reestablecer-password.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
