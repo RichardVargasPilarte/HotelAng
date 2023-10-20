@@ -9,6 +9,9 @@ import {
 } from '@angular/forms';
 
 import { JwtService } from '../../services/jwt.service';
+import { MatDialog } from '@angular/material/dialog';
+
+import { ContrasenaOlvidada2Component } from 'src/app/auth/contrasena-olvidada2/contrasena-olvidada2.component';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +26,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private _JwtService: JwtService,
-    private router: Router
+    private router: Router,
+    private readonly dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +36,7 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
     });
     if (this._JwtService.isAuthenticated()) {
-      this.router.navigate(['/app/Alojamientos/Listado']);
+      this.router.navigate(['/app/Menu']);
     }
   }
 
@@ -67,5 +71,9 @@ export class LoginComponent implements OnInit {
           }
         }
       );
+  }
+
+  openPasswordReset() {
+    this.dialog.open(ContrasenaOlvidada2Component, {})
   }
 }
