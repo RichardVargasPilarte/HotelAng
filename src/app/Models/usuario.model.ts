@@ -55,3 +55,16 @@ export class CreateUser implements ICreateUser{
   telefono = ''
   groups =-1;
 }
+
+
+export class SendEmail {
+  email!: string;
+}
+
+export interface IChangeForgottenPassword {
+  password:string;
+}
+
+export class ChangeForgottenPassword implements IChangeForgottenPassword {
+  password = ''
+}

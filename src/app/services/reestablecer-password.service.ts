@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { SendEmail } from '../models/usuario.model';
+
 import { Observable } from 'rxjs';
-import { HttpCode } from '../../app/shared/types/httpResponse.types';
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +12,20 @@ export class ReestablecerPasswordService {
 
   constructor(private http: HttpClient) { }
 
-  base_url = 'http://localhost:8000/api/password_reset/';
-
-  initiatePasswordReset(email: string) {
-    const url = this.base_url;
-    return this.http.post(url, { email });
-  }
+  base_url = 'http://127.0.0.1:8000/api/password_reset/';
+  resetPasswordUrl = 'http://localhost:8000/api/password_reset/confirm/?token'
   
-  restaurarContraseña(token: string, newPassword: string): Observable<any> {
-    const apiUrl = this.base_url;
-    const resetData = { token, newPassword };
-    return this.http.post(apiUrl, resetData);
+  // Se envia un correo con un enlace para cambiar contrasena
+  sendEmailPassword(email:SendEmail): Observable<object> {
+    const url = this.base_url;
+    return this.http.post(url, email );
   }
 
-  sendEmailPassword(email:string) {
-    const url = this.base_url;
-    return this.http.post(url, { email });
+  // Enlace recibido por correo para cambiar contrasena
+  resetPassword(password: string, token: string ): Observable<any> {
+    const apiUrl = this.resetPasswordUrl;
+    const resetData = { password, token };
+    return this.http.post(apiUrl, resetData);
   }
 }
 

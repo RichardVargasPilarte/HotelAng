@@ -7,7 +7,7 @@ import { delay } from 'rxjs/operators';
 
 import { JwtService } from '../../services/jwt.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ReestablecerPasswordComponent } from 'src/app/auth/reestablecer-password/reestablecer-password.component';
+import { ContrasenaOlvidada2Component } from 'src/app/auth/contrasena-olvidada2/contrasena-olvidada2.component';
 import { CambioContrasenaComponent } from 'src/app/auth/cambio-contrasena/cambio-contrasena.component';
 
 @Component({
@@ -52,7 +52,7 @@ export class DashboardComponent {
   }
 
   openPasswordReset() {
-    this.dialog.open(ReestablecerPasswordComponent, {})
+    this.dialog.open(ContrasenaOlvidada2Component, {})
   }
   openUserPasswordReset() {
     this.dialog.open(CambioContrasenaComponent, {})
