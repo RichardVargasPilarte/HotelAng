@@ -19,8 +19,6 @@ export class ClienteService extends MainService {
     super(httpclient);
   }
 
-
-
   // Metodo GET - Listar todos los clientes
   ObtenerClientes(): Observable<Cliente> {
     return new Observable((observer) => {

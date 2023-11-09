@@ -62,3 +62,38 @@ mat-divider {
 .mat-menu-panel:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
+
+/* sdasdasda */
+.custom-dropdown {
+  position: relative;
+  background-color: gray;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border: 1px solid #ccc;
+}
+
+.dropdown-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-options button {
+  text-align: left;
+  width: 100%;
+}
+
+.dropdown-options button:hover {
+  background-color: #f0f0f0;
+}
+
+.custom-dropdown button:focus + .dropdown-content,
+.dropdown-content:hover {
+  display: block;
+}

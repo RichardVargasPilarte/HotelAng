@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
-import { CreateUser, Usuario } from '../models/usuario.model';
+import { ChangePassword, CreateUser, Usuario } from '../models/usuario.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { IUsuariosResponseDto } from '../dtos/Usuario.dto';
@@ -75,14 +75,14 @@ export class UsuarioService extends MainService {
     return this.update(body, id);
   }
 
+  cambiarContraseña(id: string | number, userPassword: any) {
+    const body = { userPassword };
+    return this.updatePasswordUser(body, id);
+  }
+
   // Metodo DELETE - Para eliminar un dato mediante su Id
   BorrarUsuario(id: string | number) {
     return this.delete(id);
-  }
-
-  cambiarContraseña(id: string | number, object: any) {
-    const body = { object };
-    return this.updatePasswordUser(body, id);
   }
 
   override updateList(data: wsModel) {

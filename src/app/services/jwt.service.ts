@@ -25,8 +25,8 @@ export class JwtService {
   }
 
   logout() {
-    // this.cookie.delete('access','/');
-    this.cookie.deleteAll('');
+    this.cookie.delete('access','/');
+    // this.cookie.deleteAll('');
     window.location.reload();
   }
 

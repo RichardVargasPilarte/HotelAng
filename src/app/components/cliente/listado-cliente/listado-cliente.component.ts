@@ -31,8 +31,8 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     'apellido',
     'telefono',
     'email',
-    'tipo_identificacion',
-    'num_identificacion',
+    // 'tipo_identificacion',
+    // 'num_identificacion',
     'actions',
   ];
   success = false;

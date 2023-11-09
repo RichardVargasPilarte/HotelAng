@@ -14,10 +14,27 @@
 
     <span class="spacer"></span>
 
-    <button mat-flat-button color="warn" (click)="logout()">
-        Salir
-        <mat-icon>logout</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="profilemenu" aria-label="Notifications">
+        <img src="/assets/user-1.jpg" class="rounded-circle object-cover" width="35" />
     </button>
+    <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
+        <button mat-menu-item (click)="openUserPasswordReset()">
+            <span routerLinkActive="active">Cambio Pass</span>
+        </button>
+        <button mat-menu-item>
+            >My Account
+        </button>
+        <button mat-menu-item>
+            My Task
+        </button>
+
+        <div class="p-x-12 m-t-12">
+            <a mat-stroked-button color="primary" class="w-100" (click)="logout()">
+                Salir
+            </a>
+        </div>
+
+    </mat-menu>
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -63,18 +80,6 @@
         </button>
 
         <mat-divider></mat-divider>
-
-        <button mat-button matTooltip="Password" class="menu-button" (click)="openPasswordReset()">
-            <mat-icon>key</mat-icon>
-            <span routerLinkActive="active">Password</span>
-        </button>
-
-        <mat-divider></mat-divider>
-
-        <button mat-button matTooltip="Password" class="menu-button" (click)="openUserPasswordReset()">
-            <mat-icon>key</mat-icon>
-            <span routerLinkActive="active">Cambios Password</span>
-        </button>
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content">

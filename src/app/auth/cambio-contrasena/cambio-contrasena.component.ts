@@ -11,7 +11,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
-import { CreateUser, Usuario } from '../../models/usuario.model';
+import { ChangePassword, Usuario } from '../../models/usuario.model';
 
 interface DialogData {
   type: string;
@@ -40,7 +40,12 @@ export class CambioContrasenaComponent implements OnInit {
 
   createForm(id?: string): void {
     this.form = this.fb.group({
-      password: new FormControl('', [
+      id: new FormControl(0),
+      old_password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      new_password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
       ]),
@@ -50,30 +55,19 @@ export class CambioContrasenaComponent implements OnInit {
       ])
     },
       {
-        validators: this.MustMatch('password', 'confirmPassword')
+        validators: this.MustMatch('new_password', 'confirmPassword')
       });
   }
-  saveUsuario(): void {
-    let user = new CreateUser();
-    user = Object.assign(user, this.form.value);
-    this.subs.push(
-      this.usuarioServicio.Agregar(user).subscribe({
-        next: (res) => {
-          this.dialogRef.close();
-          console.log(res);
-        },
-        error: (error: any) => console.error(error),
-      })
-    );
-  }
+
   changePassword(): void {
-    let user = new Usuario();
-    user = Object.assign(user, this.form.value);
+    let userPassword = new ChangePassword();
+    userPassword = Object.assign(userPassword, this.form.value);
     this.subs.push(
-      this.usuarioServicio.cambiarContraseña(user.id!, user).subscribe({
+      this.usuarioServicio.cambiarContraseña(userPassword.id!, userPassword).subscribe({
         next: (res) => {
+          console.log(userPassword)
+          console.log(res)
           this.dialogRef.close();
-          console.log(res);
         },
         error: (error: any) => console.error(error),
       })

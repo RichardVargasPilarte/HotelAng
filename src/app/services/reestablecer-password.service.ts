@@ -22,9 +22,9 @@ export class ReestablecerPasswordService {
   }
 
   // Enlace recibido por correo para cambiar contrasena
-  resetPassword(password: string, token: string ): Observable<any> {
+  resetPassword(token: string, password: string ): Observable<any> {
     const apiUrl = this.resetPasswordUrl;
-    const resetData = { password, token };
+    const resetData = { token, password };
     return this.http.post(apiUrl, resetData);
   }
 }

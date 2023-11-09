@@ -56,15 +56,29 @@ export class CreateUser implements ICreateUser{
   groups =-1;
 }
 
-
+/* Se envia enlace al correo del usuario */
 export class SendEmail {
   email!: string;
 }
 
+/* Usuario cambia su contraseña desde enlace del correo */
 export interface IChangeForgottenPassword {
   password:string;
 }
 
 export class ChangeForgottenPassword implements IChangeForgottenPassword {
   password = ''
+}
+
+/* Usuario cambia su contraseña por una nueva */
+export class IChangePassword{
+  id!:number;
+  old_password!: string;
+  new_password!: string;
+}
+
+export class ChangePassword implements IChangePassword{
+  id = -1;
+  old_password = '';
+  new_password = '';
 }

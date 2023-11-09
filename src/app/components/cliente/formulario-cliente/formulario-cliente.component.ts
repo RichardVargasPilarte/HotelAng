@@ -55,7 +55,7 @@ export class FormularioClienteComponent implements OnInit {
         ]),
         apellido: new FormControl('', [
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(3),
         ]),
         direccion: new FormControl('', [
           Validators.required,

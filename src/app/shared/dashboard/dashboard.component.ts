@@ -7,7 +7,6 @@ import { delay } from 'rxjs/operators';
 
 import { JwtService } from '../../services/jwt.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ContrasenaOlvidada2Component } from 'src/app/auth/contrasena-olvidada2/contrasena-olvidada2.component';
 import { CambioContrasenaComponent } from 'src/app/auth/cambio-contrasena/cambio-contrasena.component';
 
 @Component({
@@ -26,6 +25,11 @@ export class DashboardComponent {
     private readonly dialog: MatDialog
   ) { }
 
+  isDropdownOpen = false;
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
 
   logout() {
     this.jwt.logout();
@@ -51,9 +55,6 @@ export class DashboardComponent {
       });
   }
 
-  openPasswordReset() {
-    this.dialog.open(ContrasenaOlvidada2Component, {})
-  }
   openUserPasswordReset() {
     this.dialog.open(CambioContrasenaComponent, {})
   }

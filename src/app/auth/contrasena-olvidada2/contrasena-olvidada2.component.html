@@ -5,6 +5,14 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Correo electrónico</mat-label>
                     <input type="email" matInput name="email" formControlName="email">
+
+                    <mat-error *ngIf="form.controls['email'].hasError('required')">
+                        <strong>El email es requerido</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="form.controls['email'].hasError('email')">
+                        <strong>El email no es valido</strong>
+                    </mat-error>
                 </mat-form-field>
                 <br>
                 <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Enviar</button>

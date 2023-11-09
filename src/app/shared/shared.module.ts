@@ -17,6 +17,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatMenuModule} from '@angular/material/menu';
 
+import {MatListModule} from '@angular/material/list';
 
 import { Error404Component } from './error404/error404.component';
 import { MenuComponent } from './menu/menu.component';
@@ -35,7 +36,8 @@ const MaterialComponents = [
   MatCardModule,
   MatExpansionModule,
   MatFormFieldModule,
-  MatMenuModule
+  MatMenuModule,
+  MatListModule
 ];
 
 @NgModule({

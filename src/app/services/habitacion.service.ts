@@ -19,8 +19,6 @@ export class HabitacionService extends MainService {
     super(httpclient);
   }
 
-
-
   // Metodo GET - Listar todos las habitaciones
   ListadoHabitaciones(): Observable<Habitacion> {
     return new Observable((observer) => {
