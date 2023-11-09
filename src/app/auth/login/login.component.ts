@@ -11,7 +11,7 @@ import {
 import { JwtService } from '../../services/jwt.service';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ContrasenaOlvidadaComponent } from 'src/app/auth/contrasena-olvidada/contrasena-olvidada.component';
+import { RestablecerContrasenaComponent } from 'src/app/auth/restablecer-contrasena/restablecer-contrasena.component';
 
 @Component({
   selector: 'app-login',
@@ -74,6 +74,6 @@ export class LoginComponent implements OnInit {
   }
 
   openPasswordReset() {
-    this.dialog.open(ContrasenaOlvidadaComponent, {})
+    this.dialog.open(RestablecerContrasenaComponent, {})
   }
 }

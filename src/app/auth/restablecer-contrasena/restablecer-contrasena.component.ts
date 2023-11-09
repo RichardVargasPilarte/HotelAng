@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import {
   FormBuilder,
   FormControl,
@@ -12,11 +13,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-contrasena-olvidada2',
-  templateUrl: './contrasena-olvidada2.component.html',
-  styleUrls: ['./contrasena-olvidada2.component.scss']
+  selector: 'app-restablecer-contrasena',
+  templateUrl: './restablecer-contrasena.component.html',
+  styleUrls: ['./restablecer-contrasena.component.scss']
 })
-export class ContrasenaOlvidada2Component implements OnInit {
+export class RestablecerContrasenaComponent implements OnInit {
 
   public form!: FormGroup;
 
@@ -25,13 +26,12 @@ export class ContrasenaOlvidada2Component implements OnInit {
     private reestablecerContrasenaService: ReestablecerPasswordService,
     private router: Router,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<ContrasenaOlvidada2Component>
+    public dialogRef: MatDialogRef<RestablecerContrasenaComponent>
   ) {
-    this.createForm()
+    this.createForm();
   }
 
   ngOnInit(): void {
-    // this.enviarCorreo()
   }
 
   createForm(): void {
@@ -57,4 +57,5 @@ export class ContrasenaOlvidada2Component implements OnInit {
     //   timer: 1500
     // })
   }
+
 }

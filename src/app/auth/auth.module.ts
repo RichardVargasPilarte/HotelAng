@@ -13,11 +13,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
-import { ContrasenaOlvidada2Component } from './contrasena-olvidada2/contrasena-olvidada2.component';
 import { CambiarContrasenaOlvidadaComponent } from './cambiar-contrasena-olvidada/cambiar-contrasena-olvidada.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { ContrasenaOlvidadaComponent } from './contrasena-olvidada/contrasena-olvidada.component';
+import { RestablecerContrasenaComponent } from './restablecer-contrasena/restablecer-contrasena.component';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -31,8 +30,9 @@ const MaterialComponents = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, CambioContrasenaComponent,ContrasenaOlvidada2Component, ContrasenaOlvidadaComponent,
-    CambiarContrasenaOlvidadaComponent
+  declarations: [LoginComponent, CambioContrasenaComponent,
+    CambiarContrasenaOlvidadaComponent,
+    RestablecerContrasenaComponent
   ],
   imports: [CommonModule, RouterModule, MaterialComponents, FormsModule, ReactiveFormsModule],
   exports: [MaterialComponents, LoginComponent],
