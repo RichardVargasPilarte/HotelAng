@@ -15,22 +15,36 @@ import { CambiarContrasenaOlvidadaComponent } from './auth/cambiar-contrasena-ol
 
 import { DashboardComponent } from './shared/dashboard/dashboard.component';
 
+export interface IRouteData {
+  isPublic: boolean;
+}
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'Menu',
-    pathMatch: 'full'
+    redirectTo: 'app/Menu',
+    pathMatch: 'full',
+    data: <IRouteData>{
+      isPublic: true,
+    }
   },
   {
     path: 'resetpassword/:token',
     component: CambiarContrasenaOlvidadaComponent,
-    title: 'Cambiar Contraseña'
+    title: 'Cambiar Contraseña',
+    canActivate: [UserGuard],
+    data: <IRouteData>{
+      isPublic: true,
+    }
   },
   {
     path: 'login',
     component: LoginComponent,
-    title: 'Login'
+    canActivate: [UserGuard],
+    title: 'Login',
+    data: <IRouteData>{
+      isPublic: true,
+    }
   },
   {
     path: 'app',
@@ -40,32 +54,50 @@ const routes: Routes = [
       {
         path: 'Alojamientos/Listado',
         component: ListadoAlojamientoComponent,
-        title: 'Listado de Alojamientos'
+        title: 'Listado de Alojamientos',
+        data: <IRouteData>{
+          isPublic: false,
+        }
       },
       {
         path: 'Habitaciones/Listado',
         component: ListadoHabitacionComponent,
         title: 'Listado de Habitaciones',
+        data: <IRouteData>{
+          isPublic: false,
+        }
       },
       {
         path: 'Usuarios/Listado',
         component: ListadoUsuarioComponent,
         title: 'Listado de Usuarios',
+        data: <IRouteData>{
+          isPublic: false,
+        }
       },
       {
         path: 'Clientes/Listado',
         component: ListadoClienteComponent,
         title: 'Listado de Clientes',
+        data: <IRouteData>{
+          isPublic: false,
+        }
       },
       {
         path: 'Reservas/Listado',
         component: ListadoReservaComponent,
         title: 'Listado de Reservas',
+        data: <IRouteData>{
+          isPublic: false,
+        }
       },
       {
         path: 'Menu',
         component: MenuComponent,
         title: 'Menu',
+        data: <IRouteData>{
+          isPublic: false,
+        }
       },
     ]
 
