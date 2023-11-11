@@ -75,7 +75,7 @@ export class UsuarioService extends MainService {
     return this.update(body, id);
   }
 
-  cambiarContraseña(id: string | number, userPassword: any) {
+  cambiarContrasena(id: string | number, userPassword: any) {
     const body = { userPassword };
     return this.updatePasswordUser(body, id);
   }

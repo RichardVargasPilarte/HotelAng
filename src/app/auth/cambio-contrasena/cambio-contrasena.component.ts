@@ -10,8 +10,10 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { JwtService } from 'src/app/services/jwt.service';
 
 import { ChangePassword, Usuario } from '../../models/usuario.model';
+import JwtCustomInterface from 'src/app/models/jwtInterface';
 
 interface DialogData {
   type: string;
@@ -32,6 +34,7 @@ export class CambioContrasenaComponent implements OnInit {
     private fb: FormBuilder,
     private usuarioServicio: UsuarioService,
     public dialogRef: MatDialogRef<CambioContrasenaComponent>,
+    public jwtService: JwtService
   ) { }
 
   ngOnInit(): void {
@@ -39,8 +42,10 @@ export class CambioContrasenaComponent implements OnInit {
   }
 
   createForm(id?: string): void {
+
+    const user = this.jwtService.getDecodedToken() as JwtCustomInterface;
     this.form = this.fb.group({
-      id: new FormControl(0),
+      id: new FormControl(user.user_id),
       old_password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -63,7 +68,7 @@ export class CambioContrasenaComponent implements OnInit {
     let userPassword = new ChangePassword();
     userPassword = Object.assign(userPassword, this.form.value);
     this.subs.push(
-      this.usuarioServicio.cambiarContraseña(userPassword.id!, userPassword).subscribe({
+      this.usuarioServicio.cambiarContrasena(userPassword.id!, userPassword).subscribe({
         next: (res) => {
           console.log(userPassword)
           console.log(res)
