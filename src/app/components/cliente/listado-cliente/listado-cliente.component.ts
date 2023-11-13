@@ -94,7 +94,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     this.subs.map((sub) => sub.unsubscribe());
   }
 
-  eliminarAlojamiento(id: number): any {
+  deleteClient(id: number): any {
     Swal.fire({
       title: '¿Esta seguro de eliminar este dato?',
       text: '¡No se podra recuperar este dato luego de ser eliminado!',

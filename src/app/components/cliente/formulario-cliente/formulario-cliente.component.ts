@@ -105,7 +105,7 @@ export class FormularioClienteComponent implements OnInit {
     }
   }
 
-  GuardarCliente(): void {
+  saveCustomer(): void {
     let client = new Cliente();
     client = Object.assign(client, this.form.value);
     this.subs.push(
