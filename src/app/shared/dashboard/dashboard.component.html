@@ -14,22 +14,22 @@
 
     <span class="spacer"></span>
 
+    <h5>
+        {{obtenerNombre.name}}
+    </h5>
+
     <button mat-icon-button [matMenuTriggerFor]="profilemenu" aria-label="Notifications">
-        <img src="/assets/user-1.jpg" class="rounded-circle object-cover" width="35" />
+        <img src="/assets/user-1.jpg" class="circle"/>
     </button>
     <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
         <button mat-menu-item (click)="openUserPasswordReset()">
+            <mat-icon>password</mat-icon>
             <span routerLinkActive="active">Cambio Pass</span>
-        </button>
-        <button mat-menu-item>
-            >My Account
-        </button>
-        <button mat-menu-item>
-            My Task
         </button>
 
         <div class="p-x-12 m-t-12">
-            <a mat-stroked-button color="primary" class="w-100" (click)="logout()">
+            <a mat-stroked-button color="primary" (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
                 Salir
             </a>
         </div>

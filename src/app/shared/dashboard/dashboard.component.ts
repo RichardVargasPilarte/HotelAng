@@ -8,6 +8,7 @@ import { delay } from 'rxjs/operators';
 import { JwtService } from '../../services/jwt.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CambioContrasenaComponent } from 'src/app/auth/cambio-contrasena/cambio-contrasena.component';
+import JwtCustomInterface from '../../models/jwtInterface';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,8 +23,11 @@ export class DashboardComponent {
   constructor(
     private observer: BreakpointObserver,
     private jwt: JwtService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    public jwtService: JwtService
   ) { }
+
+  public obtenerNombre = this.jwt.getDecodedToken() as JwtCustomInterface;
 
   isDropdownOpen = false;
 

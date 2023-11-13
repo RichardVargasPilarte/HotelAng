@@ -97,3 +97,13 @@ mat-divider {
 .dropdown-content:hover {
   display: block;
 }
+
+
+.circle { 
+  width: 35px;
+  height: 35px;
+  background: blue; 
+  -moz-border-radius: 70px; 
+  -webkit-border-radius: 70px; 
+  border-radius: 70px;
+}
