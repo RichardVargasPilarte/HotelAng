@@ -62,7 +62,7 @@
                     <mat-icon>create</mat-icon>
                 </button>
 
-                <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="eliminarUsuario(usuarios.id)"
+                <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="deleteUser(usuarios.id)"
                     *ngIf="hasPermission(permissions.Usuario.Delete)">
                     <mat-icon>delete_forever</mat-icon>
                 </button>

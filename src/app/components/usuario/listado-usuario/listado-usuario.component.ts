@@ -132,7 +132,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     }
   }
 
-  eliminarUsuario(id: number): any {
+  deleteUser(id: number): any {
     Swal.fire({
       title: '¿Esta seguro de eliminar este dato?',
       text: '¡No se podra recuperar este dato luego de ser eliminado!',

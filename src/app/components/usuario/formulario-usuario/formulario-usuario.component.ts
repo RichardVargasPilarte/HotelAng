@@ -142,7 +142,7 @@ export class FormularioUsuarioComponent implements OnInit {
     }
   }
 
-  saveUsuario(): void {
+  saveUser(): void {
     let user = new CreateUser();
     user = Object.assign(user, this.form.value);
     this.subs.push(
@@ -156,7 +156,7 @@ export class FormularioUsuarioComponent implements OnInit {
     );
   }
 
-  updateUsuario(): void {
+  updateUser(): void {
     let user = new Usuario();
     user = Object.assign(user, this.form.value);
     this.subs.push(
