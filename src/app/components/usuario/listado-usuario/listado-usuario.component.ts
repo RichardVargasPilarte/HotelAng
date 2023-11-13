@@ -57,7 +57,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   ) {
     this.promesas.push(
       new Promise<void>((resolve) => {
-        const sub = this.usuariosServicio.ObtenerUsuarios().subscribe(
+        const sub = this.usuariosServicio.GetUser().subscribe(
           {
             next: (res) => {
               this.usuarios.push(res);
@@ -77,7 +77,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
 
     this.promesas.push(
       new Promise<void>((resolve, reject) => {
-        const sub = grupos$.ObtenerGrupos().subscribe(
+        const sub = grupos$.getGroups().subscribe(
           {
             next: (res) => {
               this.grupos.push(res);
@@ -143,7 +143,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.value) {
         this.SpinnerService.show();
-        this.usuariosServicio.BorrarUsuario(id).subscribe({
+        this.usuariosServicio.deleteUser(id).subscribe({
           next: (data) => {
             Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
             this.SpinnerService.hide();

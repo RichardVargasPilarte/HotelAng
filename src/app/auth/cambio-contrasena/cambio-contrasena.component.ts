@@ -68,7 +68,7 @@ export class CambioContrasenaComponent implements OnInit {
     let userPassword = new ChangePassword();
     userPassword = Object.assign(userPassword, this.form.value);
     this.subs.push(
-      this.usuarioServicio.cambiarContrasena(userPassword.id!, userPassword).subscribe({
+      this.usuarioServicio.changeUserPassword(userPassword.id!, userPassword).subscribe({
         next: (res) => {
           console.log(userPassword)
           console.log(res)

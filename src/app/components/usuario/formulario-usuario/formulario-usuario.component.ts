@@ -146,7 +146,7 @@ export class FormularioUsuarioComponent implements OnInit {
     let user = new CreateUser();
     user = Object.assign(user, this.form.value);
     this.subs.push(
-      this.usuarioServicio.Agregar(user).subscribe({
+      this.usuarioServicio.addUsers(user).subscribe({
         next: (res) => {
           this.dialogRef.close();
           console.log(res);
@@ -160,7 +160,7 @@ export class FormularioUsuarioComponent implements OnInit {
     let user = new Usuario();
     user = Object.assign(user, this.form.value);
     this.subs.push(
-      this.usuarioServicio.ActualizarUsuario(user.id!, user).subscribe({
+      this.usuarioServicio.updateUser(user.id!, user).subscribe({
         next: (res) => {
           this.dialogRef.close();
           console.log(res);

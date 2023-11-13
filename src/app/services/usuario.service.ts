@@ -19,10 +19,8 @@ export class UsuarioService extends MainService {
     super(httpclient);
   }
 
-
-
   // Metodo GET - Listar todos los usuarios
-  ObtenerUsuarios(): Observable<any> {
+  GetUser(): Observable<any> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
         if (response.code == HttpCode.OK) {
@@ -41,15 +39,15 @@ export class UsuarioService extends MainService {
     });
   }
 
-  async getUsuarios(): Promise<Array<Usuario>> {
+  async getAsynchronousUsers(): Promise<Array<Usuario>> {
     const response: IUsuariosResponseDto = await this.getAsync<IUsuariosResponseDto>()
     this.list = response.data
     this.list$.next(this.list);
     return response.data
   }
 
-  // Metodo POST - Agregar un nuevo usuario
-  Agregar(usuario: CreateUser): Observable<object> {
+  // Metodo POST - addUsers un nuevo usuario
+  addUsers(usuario: CreateUser): Observable<object> {
     const body = { usuario };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
@@ -64,24 +62,24 @@ export class UsuarioService extends MainService {
   }
 
   // Metodo GET - Para obtener un solo dato mediante su Id
-  ObtenerUnUsuario(id: number | string) {
+  getAUser(id: number | string) {
     console.log(id);
     return this.getByID(id);
   }
 
   // Metodo PUT - Para actualizar un dato mediante su Id
-  ActualizarUsuario(id: string | number, usuario: any) {
+  updateUser(id: string | number, usuario: any) {
     const body = { usuario };
     return this.update(body, id);
   }
 
-  cambiarContrasena(id: string | number, userPassword: any) {
+  changeUserPassword(id: string | number, userPassword: any) {
     const body = { userPassword };
     return this.updatePasswordUser(body, id);
   }
 
   // Metodo DELETE - Para eliminar un dato mediante su Id
-  BorrarUsuario(id: string | number) {
+  deleteUser(id: string | number) {
     return this.delete(id);
   }
 

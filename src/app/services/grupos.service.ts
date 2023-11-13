@@ -16,7 +16,7 @@ export class GruposService extends MainService {
   }
 
   // Metodo GET - Listar todos los alojamientos
-  ObtenerGrupos(): Observable<Grupos> {
+  getGroups(): Observable<Grupos> {
     return new Observable((observer) => {
       this.get().subscribe((data) => {
         if (!data.detail) {
