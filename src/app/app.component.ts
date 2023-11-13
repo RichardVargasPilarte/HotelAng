@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
     const customers = await this.clienteService.getClientsAsynchronous()
     const alojamientos = await this.alojamientoService.getAccommodationsAsynchronous()
     const habitaciones = await this.habitacionService.getRoomsAsynchronous()
-    const reservas = await this.reservaService.getReservas()
+    const reservas = await this.reservaService.getAsynchronousReservations()
     const usuarios = await this.usuarioService.getAsynchronousUsers()
     console.log(customers, alojamientos, habitaciones, reservas, usuarios)
   }

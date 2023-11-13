@@ -50,7 +50,7 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
     private SpinnerService: NgxSpinnerService
   ) { this.promesas.push(
     new Promise<void>((resolve) => {
-      const sub = this.reservaService.ListadoReservas().subscribe(
+      const sub = this.reservaService.listingReservations().subscribe(
         {
           next: (resp) => {
             this.reservas.push(resp);
@@ -138,7 +138,7 @@ async ngOnInit(): Promise<void> {
     })
     console.log(result)
     if(result.isConfirmed) {
-      this.reservaService.BorrarRerserva(id).subscribe((data) => {
+      this.reservaService.deleteReserve(id).subscribe((data) => {
         console.log('Se elimino la habitación');
         // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
         console.log(data);

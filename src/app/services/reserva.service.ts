@@ -19,9 +19,7 @@ export class ReservaService extends MainService {
     super(httpclient);
   }
 
-
-
-  ListadoReservas(): Observable<Reserva> {
+  listingReservations(): Observable<Reserva> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
         if (response.code == HttpCode.OK ) {
@@ -40,14 +38,15 @@ export class ReservaService extends MainService {
     });
   }
 
-  async getReservas(): Promise<Array<Reserva>> {
+  // Metodo GET - Listar todos las reservas de manera asincrona desde el inicio
+  async getAsynchronousReservations(): Promise<Array<Reserva>> {
     const response: IReservasResponseDto = await this.getAsync<IReservasResponseDto>()
     this.list = response.data
     this.list$.next(this.list);
     return response.data
   }
 
-  Agregar(reservacion: Reserva): Observable<any> {
+  AddReservations(reservacion: Reserva): Observable<any> {
     console.log(reservacion);
     const body = { reservacion };
     return new Observable((observer) => {
@@ -63,17 +62,17 @@ export class ReservaService extends MainService {
     });
   }
 
-  ObtenerUnaReserva(id: number | string) {
+  getAReservation(id: number | string) {
     console.log(id);
     return this.getByID(id);
   }
 
-  ActualizarReserva(id: string | number, reservaciones: any) {
+  updateReservation(id: string | number, reservaciones: any) {
     const body = { reservaciones };
     return this.update(body, id);
   }
 
-  BorrarRerserva(id: number | string) {
+  deleteReserve(id: number | string) {
     return this.delete(id);
   }
 

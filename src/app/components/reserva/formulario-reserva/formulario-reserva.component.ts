@@ -140,7 +140,7 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     reserva.fecha_inicio = this.dateFormat(reserva.fecha_inicio);
     reserva.fecha_fin = this.dateFormat(reserva.fecha_fin)
     this.subs.push(
-      this.reservaServicio.Agregar(reserva).subscribe(
+      this.reservaServicio.AddReservations(reserva).subscribe(
         {
           next: (res) => {
             this.dialogRef.close();
@@ -156,7 +156,7 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     let reserv = new Reserva();
     reserv = Object.assign(reserv, this.form.value);
     this.subs.push(
-      this.reservaServicio.ActualizarReserva(reserv.id!, reserv).subscribe(
+      this.reservaServicio.updateReservation(reserv.id!, reserv).subscribe(
         {
           next: (res) => {
             this.dialogRef.close();
