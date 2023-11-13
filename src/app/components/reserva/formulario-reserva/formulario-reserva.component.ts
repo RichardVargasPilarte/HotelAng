@@ -134,7 +134,7 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     }
   }
 
-  GuardarReserva(): void {
+  saveReserve(): void {
     let reserva = new Reserva();
     reserva = Object.assign(reserva, this.form.value);
     reserva.fecha_inicio = this.dateFormat(reserva.fecha_inicio);
@@ -152,7 +152,7 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     );
   }
 
-  ActualizarHabitacion(): void {
+  updateReservation(): void {
     let reserv = new Reserva();
     reserv = Object.assign(reserv, this.form.value);
     this.subs.push(

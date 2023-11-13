@@ -127,7 +127,7 @@ async ngOnInit(): Promise<void> {
     }
   }
 
-  async eliminarRerserva(id: number): Promise<void> {
+  async deleteReserve(id: number): Promise<void> {
     const result:SweetAlertResult  = await Swal.fire({
       title: '¿Esta seguro de eliminar este dato?',
       text: '¡No se podra recuperar este dato luego de ser eliminado!',

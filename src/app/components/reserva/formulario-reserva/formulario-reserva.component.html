@@ -81,7 +81,7 @@
 
             <div class="row">
                 <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar" (click)="
-            data.type === 'c' ? GuardarReserva() : ActualizarHabitacion()
+            data.type === 'c' ? saveReserve() : updateReservation()
           " [disabled]="form.invalid">
                     Guardar
                     <i class="material-icons">save</i>
