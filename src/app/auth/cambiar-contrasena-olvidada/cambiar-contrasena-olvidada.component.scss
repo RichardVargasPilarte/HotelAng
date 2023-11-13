@@ -1,0 +1,22 @@
+.example-card {
+    max-width: 220px;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Adjust the height as needed */
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Add this if you want to center the button horizontally within the row */
+//   .col {
+//     display: flex;
+//     justify-content: center;
+//   }

@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { delay } from 'rxjs/operators';
-import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { ChangeForgottenPassword } from '../../models/usuario.model';
 
@@ -31,7 +29,6 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
   public form!: FormGroup;
   
   constructor(
-    private observer: BreakpointObserver,
     private route: ActivatedRoute,
     private reestablecerContrasenaService: ReestablecerPasswordService,
     private router: Router,
@@ -40,20 +37,6 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
     this.createForm();
   }
 
-  ngAfterViewInit() {
-    this.observer
-      .observe(['(max-width: 800px)'])
-      .pipe(delay(1))
-      .subscribe((res) => {
-        if (res.matches) {
-          this.sidenav.mode = 'over';
-          this.sidenav.close();
-        } else {
-          this.sidenav.mode = 'side';
-          this.sidenav.open();
-        }
-      });
-  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -67,11 +50,11 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
     this.form = this.fb.group({
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(8)
       ]),
       confirmPassword: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(8)
       ])
     },
     {
@@ -79,7 +62,7 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
     });
   }
 
-  resetearContrasena() {
+  resetUserPassword() {
     if (this.password === this.confirmPassword) {
       // Call the password reset service
       this.reestablecerContrasenaService.resetPassword(this.password, this.token )

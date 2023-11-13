@@ -40,7 +40,7 @@ export class RestablecerContrasenaComponent implements OnInit {
     });
   }
 
-  enviarCorreo() {
+  sendMail() {
     const { email } = this.form.value;
 
     this.reestablecerContrasenaService.sendEmailPassword(this.form.value).subscribe((resp: any) => {

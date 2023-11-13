@@ -1,16 +1,8 @@
-<mat-toolbar class="mat-elevation-z8">
-    <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
-        <mat-icon *ngIf="!sidenav.opened">
-            menu
-        </mat-icon>
-        <mat-icon *ngIf="sidenav.opened">
-            close
-        </mat-icon>
-    </button>
-
+<mat-toolbar color="primary">
     <span>
-        Responsive side navigation
+        Cambio de contraseña
     </span>
+    <span class="example-spacer"></span>
 </mat-toolbar>
 
 <div class="card-container">
@@ -23,7 +15,7 @@
                 <div class="row">
                     <div class="col">
                         <mat-form-field appearance="outline">
-                            <mat-label>Contraseña Anterior</mat-label>
+                            <mat-label>Contraseña</mat-label>
                             <input matInput type="password" formControlName="password"
                                 placeholder="Ingrese su contraseña" required autocomplete="off">
 
@@ -37,17 +29,22 @@
                         </mat-form-field>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col">
                         <mat-form-field appearance="outline">
-                            <mat-label>Nueva Contraseña</mat-label>
-                            <input matInput type="password" formControlName="confirmPassword"
-                                placeholder="Confirme su contraseña" required autocomplete="off">
-
+                            <mat-label>Confirmar Contraseña:</mat-label>
+                            <input matInput type="password" formControlName="confirmPassword" placeholder="Confirme su contraseña"
+                                required autocomplete="off">
+    
                             <mat-error *ngIf="form.controls['confirmPassword'].hasError('required')">
                                 <strong>La contraseña es requerida</strong>
                             </mat-error>
-
+    
+                            <mat-error *ngIf="form.controls['confirmPassword'].hasError('minlength')">
+                                <strong>La contraseña debe de tener minimo 8 caracteres</strong>
+                            </mat-error>
+                            
                             <mat-error *ngIf="form.controls['confirmPassword'].hasError('MustMatch')">
                                 <strong>La contraseña no coinciden</strong>
                             </mat-error>
@@ -59,11 +56,11 @@
         <mat-card-actions>
             <div class="row">
                 <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
-                    (click)="resetearContrasena()" [disabled]="form.invalid">
+                    (click)="resetUserPassword()" [disabled]="form.invalid">
                     Guardar
                     <i class="material-icons">save</i>
                 </button>
-<!-- 
+                <!-- 
                 <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
                     (click)="dialogRef.close()">
                     Cancelar
