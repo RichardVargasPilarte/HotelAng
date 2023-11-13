@@ -122,7 +122,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
     let hab = new Habitacion();
     hab = Object.assign(hab, this.form.value);
     this.subs.push(
-      this.habitacionServicio.Agregar(hab).subscribe(
+      this.habitacionServicio.addRoom(hab).subscribe(
         {
           next: (res) => {
             this.dialogRef.close();
@@ -134,11 +134,11 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
     );
   }
 
-  ActualizarHabitacion(): void {
+  UpdateRoom(): void {
     let hab = new Habitacion();
     hab = Object.assign(hab, this.form.value);
     this.subs.push(
-      this.habitacionServicio.ActualizarHabitacion(hab.id!, hab).subscribe(
+      this.habitacionServicio.UpdateRoom(hab.id!, hab).subscribe(
         {
           next: (res) => {
             this.dialogRef.close();

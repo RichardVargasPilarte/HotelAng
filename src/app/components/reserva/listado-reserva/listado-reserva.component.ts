@@ -70,7 +70,7 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
 
   this.promesas.push(
     new Promise<void>((resolve) => {
-      const sub = this.habitacionservice$.ListadoHabitaciones().subscribe(
+      const sub = this.habitacionservice$.listingRooms().subscribe(
         {
           next: (resp) => {
             this.habitaciones.push(resp);

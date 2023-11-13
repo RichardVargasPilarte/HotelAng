@@ -58,7 +58,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   ) {
     this.promesas.push(
       new Promise<void>((resolve) => {
-        const sub = this.habitacionservice.ListadoHabitaciones().subscribe(
+        const sub = this.habitacionservice.listingRooms().subscribe(
           // (resp) => this.habitaciones.push(resp),
           // (error) => console.log(error),
           // () => resolve()
@@ -154,7 +154,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     })
     console.log(result)
     if(result.isConfirmed) {
-      this.habitacionservice.BorrarHabitacion(id).subscribe((data) => {
+      this.habitacionservice.deleteRoom(id).subscribe((data) => {
         console.log('Se elimino la habitación');
         Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
         // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados

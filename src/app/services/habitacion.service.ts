@@ -20,7 +20,7 @@ export class HabitacionService extends MainService {
   }
 
   // Metodo GET - Listar todos las habitaciones
-  ListadoHabitaciones(): Observable<Habitacion> {
+  listingRooms(): Observable<Habitacion> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
         if (response.code == HttpCode.OK) {
@@ -39,15 +39,16 @@ export class HabitacionService extends MainService {
     });
   }
 
-  async getHabitaciones(): Promise<Array<Habitacion>> {
+  // Metodo GET - Listar todos las habitaciones de manera asincrona desde el inicio
+  async getRoomsAsynchronous(): Promise<Array<Habitacion>> {
     const response: IHabitacionesResponseDto = await this.getAsync<IHabitacionesResponseDto>()
     this.list = response.data
     this.list$.next(this.list);
     return response.data
   }
 
-  // Metodo POST - Agregar una nueva habitacion
-  Agregar(habitacion: Habitacion): Observable<any> {
+  // Metodo POST - addRoom una nueva habitacion
+  addRoom(habitacion: Habitacion): Observable<any> {
     console.log(habitacion);
     const body = { habitacion };
     return new Observable((observer) => {
@@ -63,19 +64,19 @@ export class HabitacionService extends MainService {
   }
 
   // Metodo GET - Para obtener un solo dato mediante su Id
-  ObtenerUnaHabitacion(id: number | string) {
+  getARoom(id: number | string) {
     console.log(id);
     return this.getByID(id);
   }
 
   // Metodo PUT - Para actualizar un dato mediante su Id
-  ActualizarHabitacion(id: string | number, habitaciones: any) {
+  UpdateRoom(id: string | number, habitaciones: any) {
     const body = { habitaciones };
     return this.update(body, id);
   }
 
   // Metodo DELETE - Para eliminar un dato mediante su Id
-  BorrarHabitacion(id: number | string) {
+  deleteRoom(id: number | string) {
     return this.delete(id);
   }
 
