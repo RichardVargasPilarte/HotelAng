@@ -82,7 +82,7 @@ export class FormularioAlojamientoComponent implements OnInit {
     }
   }
 
-  GuardarAlojamiento(): void {
+  saveAccommodation(): void {
     let alojam = new Alojamiento();
     alojam = Object.assign(alojam, this.form.value);
     this.subs.push(
