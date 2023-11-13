@@ -46,7 +46,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     private jwtService: JwtService
   ) {
     this.promesa = new Promise<void>((resolve) => {
-      const sub = this._clienteService.ObtenerClientes().subscribe(
+      const sub = this._clienteService.getCustomers().subscribe(
         // (res) => this.alojamientos.push(res),
         // (error) => console.log('Hubo un fallo al momento de traer los datos'),
         // () => resolve()
@@ -105,7 +105,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.value) {
         this.SpinnerService.show();
-        this._clienteService.BorrarCliente(id).subscribe((data) => {
+        this._clienteService.deleteClient(id).subscribe((data) => {
           this.success = true;
           Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
           this.SpinnerService.hide();

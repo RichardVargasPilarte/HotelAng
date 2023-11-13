@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
     }
   }
   async loadData() {
-    const customers = await this.clienteService.getCustomers()
+    const customers = await this.clienteService.getClientsAsynchronous()
     const alojamientos = await this.alojamientoService.getAccommodationsAsynchronous()
     const habitaciones = await this.habitacionService.getRoomsAsynchronous()
     const reservas = await this.reservaService.getReservas()

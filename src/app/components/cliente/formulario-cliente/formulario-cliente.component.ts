@@ -109,7 +109,7 @@ export class FormularioClienteComponent implements OnInit {
     let client = new Cliente();
     client = Object.assign(client, this.form.value);
     this.subs.push(
-      this.clienteServicio.Agregar(client).subscribe(
+      this.clienteServicio.addCustomer(client).subscribe(
         // (res) => this.dialogRef.close(),
         // (error) => console.log('Hubo un error' + error)
 
@@ -123,12 +123,12 @@ export class FormularioClienteComponent implements OnInit {
     );
   }
 
-  ActualizarCliente(): void {
+  updateClient(): void {
     let client = new Cliente();
     client = Object.assign(client, this.form.value);
     this.subs.push(
       this.clienteServicio
-        .ActualizarCliente(client.id!, client)
+        .updateClient(client.id!, client)
         .subscribe(
           // (res) => this.dialogRef.close(),
           // (error) => console.log('Hubo un error' + error)

@@ -20,7 +20,7 @@ export class ClienteService extends MainService {
   }
 
   // Metodo GET - Listar todos los clientes
-  ObtenerClientes(): Observable<Cliente> {
+  getCustomers(): Observable<Cliente> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
         if (response.code == HttpCode.OK) {
@@ -39,7 +39,8 @@ export class ClienteService extends MainService {
     });
   }
 
-  async getCustomers(): Promise<Array<Cliente>> {
+  // Metodo GET - Listar todos los clientes de manera asincrona desde el inicio
+  async getClientsAsynchronous(): Promise<Array<Cliente>> {
     const response: IClientesResponseDto = await this.getAsync<IClientesResponseDto>()
     this.list = response.data
     this.list$.next(this.list);
@@ -47,7 +48,7 @@ export class ClienteService extends MainService {
   }
 
   // Metodo POST - Agregar un nuevo cliente
-  Agregar(cliente: Cliente): Observable<any> {
+  addCustomer(cliente: Cliente): Observable<any> {
     console.log(cliente);
     const body = { cliente };
     return new Observable((observer) => {
@@ -63,19 +64,19 @@ export class ClienteService extends MainService {
   }
 
   // Metodo GET - Para obtener un solo dato mediante su Id
-  ObtenerUnCliente(id: number | string) {
+  getACustomer(id: number | string) {
     console.log(id);
     return this.getByID(id);
   }
 
   // Metodo PUT - Para actualizar un dato mediante su Id
-  ActualizarCliente(id: string | number, clientes: Cliente) {
+  updateClient(id: string | number, clientes: Cliente) {
     const body = { clientes };
     return this.update(body, id);
   }
 
   // Metodo DELETE - Para eliminar un dato mediante su Id
-  BorrarCliente(id: number | string) {
+  deleteClient(id: number | string) {
     return this.delete(id);
   }
 
