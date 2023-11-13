@@ -43,7 +43,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     private jwtService: JwtService
   ) {
     this.promesa = new Promise<void>((resolve) => {
-      const sub = this._alojamientoService.ObtenerAlojamientos().subscribe(
+      const sub = this._alojamientoService.GetAccommodations().subscribe(
         // (res) => this.alojamientos.push(res),
         // (error) => console.log('Hubo un fallo al momento de traer los datos'),
         // () => resolve()
@@ -102,7 +102,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.value) {
         // this.SpinnerService.show();
-        this._alojamientoService.BorrarAlojamiento(id).subscribe((data) => {
+        this._alojamientoService.deleteAccommodation(id).subscribe((data) => {
           this.success = true;
           Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
           // this.SpinnerService.hide();

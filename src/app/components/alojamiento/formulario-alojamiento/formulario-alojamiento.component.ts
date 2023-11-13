@@ -86,7 +86,7 @@ export class FormularioAlojamientoComponent implements OnInit {
     let alojam = new Alojamiento();
     alojam = Object.assign(alojam, this.form.value);
     this.subs.push(
-      this.alojamientoServicio.Agregar(alojam).subscribe(
+      this.alojamientoServicio.addAccommodations(alojam).subscribe(
         // (res) => this.dialogRef.close(),
         // (error) => console.log('Hubo un error' + error)
 
@@ -100,12 +100,12 @@ export class FormularioAlojamientoComponent implements OnInit {
     );
   }
 
-  ActualizarAlojamiento(): void {
+  updateAccommodation(): void {
     let alojam = new Alojamiento();
     alojam = Object.assign(alojam, this.form.value);
     this.subs.push(
       this.alojamientoServicio
-        .ActualizarAlojamiento(alojam.id!, alojam)
+        .updateAccommodation(alojam.id!, alojam)
         .subscribe(
           // (res) => this.dialogRef.close(),
           // (error) => console.log('Hubo un error' + error)

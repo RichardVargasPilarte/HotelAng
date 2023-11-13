@@ -81,7 +81,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
 
     this.promesas.push(
       new Promise<void>((resolve) => {
-        const sub = this.alojamiento$.ObtenerAlojamientos().subscribe(
+        const sub = this.alojamiento$.GetAccommodations().subscribe(
           // (resp) => this.alojamiento.push(resp),
           // (error) => console.log(error),
           // () => resolve()
