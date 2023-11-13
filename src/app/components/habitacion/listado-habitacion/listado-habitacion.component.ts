@@ -143,7 +143,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   }
 
   // Metodo encargado de eliminar las habitaciones mediante su Id
-  async eliminarhabitacion(id: number): Promise<void> {
+  async removeRoom(id: number): Promise<void> {
     const result:SweetAlertResult  = await Swal.fire({
       title: '¿Esta seguro de eliminar este dato?',
       text: '¡No se podra recuperar este dato luego de ser eliminado!',

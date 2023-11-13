@@ -103,7 +103,7 @@
 
             <div class="row">
                 <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
-                    (click)="data.type === 'c' ? GuardarHabitacion():UpdateRoom()"
+                    (click)="data.type === 'c' ? saveRoom():UpdateRoom()"
                     [disabled]="form.invalid">
                     Guardar
                     <i class="material-icons">save</i>
