@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
-import { ChangePassword, CreateUser, Usuario } from '../models/usuario.model';
+import { CreateUser, Usuario } from '../models/usuario.model';
 import { wsModel } from '../models/webSocket.model';
 
 import { IUsuariosResponseDto } from '../dtos/Usuario.dto';
@@ -15,7 +15,7 @@ import { HttpCode } from '../../app/shared/types/httpResponse.types';
 export class UsuarioService extends MainService {
   public override resource = 'usuarios';
 
-  constructor(httpclient: HttpClient) {
+  constructor(private httpclient: HttpClient,) {
     super(httpclient);
   }
 
@@ -74,8 +74,9 @@ export class UsuarioService extends MainService {
   }
 
   changeUserPassword(id: string | number, userPassword: any) {
-    const body = { userPassword };
-    return this.updatePasswordUser(body, id);
+    const base_url = 'http://127.0.0.1:8000/api/usuarios';
+    const url = `${base_url}/CambiarContrasena/${id}`
+    return this.httpclient.put(url, userPassword);
   }
 
   // Metodo DELETE - Para eliminar un dato mediante su Id

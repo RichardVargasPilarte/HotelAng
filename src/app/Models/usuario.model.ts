@@ -63,11 +63,13 @@ export class SendEmail {
 
 /* Usuario cambia su contraseña desde enlace del correo */
 export interface IChangeForgottenPassword {
+  token: string;
   password:string;
 }
 
 export class ChangeForgottenPassword implements IChangeForgottenPassword {
-  password = ''
+  token = '';
+  password = '';
 }
 
 /* Usuario cambia su contraseña por una nueva */

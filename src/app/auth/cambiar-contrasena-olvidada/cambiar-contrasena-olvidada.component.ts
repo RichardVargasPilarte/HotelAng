@@ -3,6 +3,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 import { ChangeForgottenPassword } from '../../models/usuario.model';
 
+import Swal from 'sweetalert2';
+
 import {
   FormBuilder,
   FormControl,
@@ -22,12 +24,10 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   token!: string;
-  password!: '';
-  confirmPassword!: string;
   resetSuccessful = false;
 
   public form!: FormGroup;
-  
+
   constructor(
     private route: ActivatedRoute,
     private reestablecerContrasenaService: ReestablecerPasswordService,
@@ -39,9 +39,11 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.token = params['token'];
-    });
+    this.route.paramMap.subscribe(params => {
+      this.token = params.get('token') ?? '';
+
+      console.log('Este es el token:', this.token);
+    })
 
     this.createForm();
   }
@@ -57,27 +59,48 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
         Validators.minLength(8)
       ])
     },
-    {
-      validators: this.MustMatch('password', 'confirmPassword')
-    });
+      {
+        validators: this.MustMatch('password', 'confirmPassword')
+      });
   }
 
   resetUserPassword() {
-    if (this.password === this.confirmPassword) {
-      // Call the password reset service
-      this.reestablecerContrasenaService.resetPassword(this.password, this.token )
-        .subscribe(
-          {
-            next: () => {
-              this.resetSuccessful = true;
-            },
-            error: (error: any) => console.log('Password reset error:', error)
+    const { password } = this.form.value;
+
+    this.reestablecerContrasenaService.resetPassword(this.token, password)
+      .subscribe(
+        {
+          next: (res) => {
+            this.resetSuccessful = true;
+            console.log(res);
+            console.log(password);
+            console.log(this.token);
+
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "La contrseña a sido cambiada correctamente",
+              showConfirmButton: false,
+              timer: 2500
+            });
+
+            this.navigateToLogin();
+
+          },
+          error: (error: any) => {
+            console.log('Password reset error:', error);
+            console.log(password);
+            console.log(this.token);
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "A ocurrido un error al momento de cambiar la contraseña, vuelva a intententar lo nuevamente",
+              showConfirmButton: false,
+              timer: 2500
+            });
           }
-        );
-    } else {
-      // Handle password mismatch error
-      console.error('Passwords do not match.');
-    }
+        }
+      );
   }
 
   MustMatch(controlName: string, matchingControlName: string) {

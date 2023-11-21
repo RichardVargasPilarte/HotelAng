@@ -43,19 +43,31 @@ export class RestablecerContrasenaComponent implements OnInit {
   sendMail() {
     const { email } = this.form.value;
 
-    this.reestablecerContrasenaService.sendEmailPassword(this.form.value).subscribe((resp: any) => {
-      this.dialogRef.close();
-      console.log(resp);
-      console.log(email);
-    })
+    this.reestablecerContrasenaService.sendEmailPassword(this.form.value).subscribe(
+      {
+        next: () => {
+          this.dialogRef.close();
+          console.log(email);
 
-    // Swal.fire({
-    //   position: "top-end",
-    //   icon: "success",
-    //   title: "El correo a sido enviado correctamente, revisa tu bandeja d entrada",
-    //   showConfirmButton: false,
-    //   timer: 1500
-    // })
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "El correo a sido enviado correctamente, revisa tu bandeja de entrada",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        },
+        error: (error) => {
+          console.error(error);
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "A ocurrido un error al momento de enviar se el correo, vuelva a intententar lo nuevamente",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      },
+    )
   }
-
 }

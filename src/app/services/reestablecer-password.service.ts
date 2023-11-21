@@ -13,7 +13,7 @@ export class ReestablecerPasswordService {
   constructor(private http: HttpClient) { }
 
   base_url = 'http://127.0.0.1:8000/api/password_reset/';
-  resetPasswordUrl = 'http://localhost:8000/api/password_reset/confirm/?token'
+  resetPasswordUrl = `http://localhost:8000/api/password_reset/confirm/?token`
   
   // Se envia un correo con un enlace para cambiar contrasena
   sendEmailPassword(email:SendEmail): Observable<object> {
@@ -23,8 +23,8 @@ export class ReestablecerPasswordService {
 
   // Enlace recibido por correo para cambiar contrasena
   resetPassword(token: string, password: string ): Observable<any> {
-    const apiUrl = this.resetPasswordUrl;
     const resetData = { token, password };
+    const apiUrl = `${this.resetPasswordUrl}`;
     return this.http.post(apiUrl, resetData);
   }
 }

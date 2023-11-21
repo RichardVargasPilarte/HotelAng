@@ -48,12 +48,6 @@ export class MainService {
     return this.client.put(`${this.getUrl()}${id}`, body, head);
   }
 
-  updatePasswordUser(body: any, id: string | number): Observable<any> {
-    const head: any = {};
-    head['Content-Type'] = 'application/json';
-    return this.client.put(`${this.getUrl()}${id}`, body, head);
-  }
-
   delete(id: any): Observable<any> {
     const head: any = {};
     // if (confirm('¿Esta seguro que desea eliminar?')) {

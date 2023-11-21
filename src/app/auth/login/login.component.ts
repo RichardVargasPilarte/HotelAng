@@ -12,6 +12,8 @@ import { JwtService } from '../../services/jwt.service';
 import { MatDialog } from '@angular/material/dialog';
 
 import { RestablecerContrasenaComponent } from 'src/app/auth/restablecer-contrasena/restablecer-contrasena.component';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-login',
@@ -49,16 +51,6 @@ export class LoginComponent implements OnInit {
     this._JwtService
       .login(this.Form['username'].value, this.Form['password'].value)
       .subscribe(
-        // (res) => {
-        //   console.log(res);
-        //   window.location.reload();
-        //   this.loading = false;
-        // },
-        // (err) => {
-        //   alert(err.error.non_field_errors);
-        //   this.loading = false;
-        // }
-
         {
           next: (res) => {
             console.log(res);
@@ -67,6 +59,13 @@ export class LoginComponent implements OnInit {
           },
           error: (error) => {
             alert(error.error.non_field_errors);
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Nombre de usuario o contraseña equivocada, vuelva a intententar lo nuevamente",
+              showConfirmButton: false,
+              timer: 2500
+            });
             this.loading = false;
           }
         }

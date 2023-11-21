@@ -14,6 +14,7 @@ import { JwtService } from 'src/app/services/jwt.service';
 
 import { ChangePassword, Usuario } from '../../models/usuario.model';
 import JwtCustomInterface from 'src/app/models/jwtInterface';
+import Swal from 'sweetalert2';
 
 interface DialogData {
   type: string;
@@ -72,9 +73,28 @@ export class CambioContrasenaComponent implements OnInit {
         next: (res) => {
           console.log(userPassword)
           console.log(res)
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "La contrseña a sido cambiada correctamente",
+            showConfirmButton: false,
+            timer: 2500
+          });
+
           this.dialogRef.close();
         },
-        error: (error: any) => console.error(error),
+        error: (error: any) => {
+          console.error(error);
+
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "A ocurrido un error al momento de cambiar la contraseña, vuelva a intententar lo nuevamente",
+            showConfirmButton: false,
+            timer: 2500
+          });
+        },
       })
     );
   }
