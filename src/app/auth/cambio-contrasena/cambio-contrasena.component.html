@@ -1,0 +1,81 @@
+<div class="card-container">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <mat-card-title>Cambio Contraseña</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="form">
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Contraseña Anterior</mat-label>
+                            <input matInput type="password" formControlName="old_password"
+                                placeholder="Ingrese su contraseña" required autocomplete="off">
+
+                            <mat-error *ngIf="form.controls['old_password'].hasError('required')">
+                                <strong>La contraseña es requerida</strong>
+                            </mat-error>
+
+                            <mat-error *ngIf="form.controls['old_password'].hasError('minlength')">
+                                <strong>La contraseña debe de tener minimo 8 caracteres</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Nueva Contraseña</mat-label>
+                            <input matInput type="password" formControlName="new_password"
+                                placeholder="Confirme su contraseña" required autocomplete="off">
+
+                            <mat-error *ngIf="form.controls['new_password'].hasError('required')">
+                                <strong>La contraseña es requerida</strong>
+                            </mat-error>
+
+                            <mat-error *ngIf="form.controls['new_password'].hasError('minlength')">
+                                <strong>La contraseña debe de tener minimo 8 caracteres</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Confirmar Contraseña:</mat-label>
+                            <input matInput type="password" formControlName="confirmPassword" placeholder="Confirme su contraseña"
+                                required autocomplete="off">
+    
+                            <mat-error *ngIf="form.controls['confirmPassword'].hasError('required')">
+                                <strong>La contraseña es requerida</strong>
+                            </mat-error>
+    
+                            <mat-error *ngIf="form.controls['confirmPassword'].hasError('minlength')">
+                                <strong>La contraseña debe de tener minimo 8 caracteres</strong>
+                            </mat-error>
+                            
+                            <mat-error *ngIf="form.controls['confirmPassword'].hasError('MustMatch')">
+                                <strong>La contraseña no coinciden</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="row">
+                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+                    (click)="changePassword()" [disabled]="form.invalid">
+                    Guardar
+                    <i class="material-icons">save</i>
+                </button>
+
+                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+                    (click)="dialogRef.close()">
+                    Cancelar
+                    <i class="material-icons">cancel</i>
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

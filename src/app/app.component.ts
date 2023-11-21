@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ClienteService } from './services/cliente.service';
 import { JwtService } from './services/jwt.service';
 import { WebsocketService } from './services/websocket.service';
+
+import { AlojamientoService } from './services/alojamiento.service';
+import { HabitacionService } from './services/habitacion.service';
+import { ReservaService } from './services/reserva.service';
+import { UsuarioService } from './services/usuario.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,7 +19,16 @@ export class AppComponent implements OnInit {
 
   public verified = false;
 
-  constructor(private JwtService: JwtService, private ws: WebsocketService) {}
+  constructor(
+    private JwtService: JwtService,
+    private ws: WebsocketService,
+    private readonly clienteService: ClienteService,
+    private readonly alojamientoService: AlojamientoService,
+    private readonly habitacionService: HabitacionService,
+    private readonly reservaService: ReservaService,
+    private readonly usuarioService: UsuarioService,
+    private readonly router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.token();
@@ -30,12 +47,22 @@ export class AppComponent implements OnInit {
         (res) => {
           if (this.JwtService.isAuthenticated() && this.JwtService.loggedIn) {
             this.ws.setsock();
+            this.loadData();
           }
         },
         (err) => this.JwtService.logout()
       );
     } else {
       alert('No hay token');
+      // this.router.navigate(['/login']);
     }
+  }
+  async loadData() {
+    const customers = await this.clienteService.getClientsAsynchronous()
+    const alojamientos = await this.alojamientoService.getAccommodationsAsynchronous()
+    const habitaciones = await this.habitacionService.getRoomsAsynchronous()
+    const reservas = await this.reservaService.getAsynchronousReservations()
+    const usuarios = await this.usuarioService.getAsynchronousUsers()
+    console.log(customers, alojamientos, habitaciones, reservas, usuarios)
   }
 }

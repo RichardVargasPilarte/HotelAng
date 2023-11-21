@@ -4,8 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
-import { JwtInterceptorInterceptor } from './Interceptores/jwt.interceptor';
-import { RedirIfFailPipe } from './Pipes/redir-if-fail.pipe';
+import { JwtInterceptorInterceptor } from './interceptors/jwt.interceptor';
+import { RedirIfFailPipe } from './pipes/redir-if-fail.pipe';
 
 // rutas
 import { AppRoutingModule } from './app-routing.module';
@@ -23,12 +23,14 @@ import { GruposService } from './services/grupos.service';
 import { HabitacionService } from './services/habitacion.service';
 import { JwtService } from './services/jwt.service';
 import { MainService } from './services/main.service';
-import { UsuariosService } from './services/usuarios.service';
+import { UsuarioService } from './services/usuario.service';
 import { WebsocketService } from './services/websocket.service';
 
-import {UserGuardGuard } from './Guards/user.guard';
+import {UserGuard } from './guards/user.guard';
 
 import { } from '../environments/environment';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 
 const Servicios = [
   AlojamientoService,
@@ -36,7 +38,7 @@ const Servicios = [
   HabitacionService,
   JwtService,
   MainService,
-  UsuariosService,
+  UsuarioService,
   WebsocketService,
 ];
 
@@ -44,15 +46,17 @@ const Servicios = [
   declarations: [AppComponent, RedirIfFailPipe],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
     AuthModule,
-    ComponentsModule
+    ComponentsModule,
+    AppRoutingModule,
   ],
   exports: [],
   providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
+    DatePipe,
     Servicios,
     CookieService,
     {
@@ -60,7 +64,7 @@ const Servicios = [
       useClass: JwtInterceptorInterceptor,
       multi: true,
     },
-    UserGuardGuard
+    UserGuard
   ],
   bootstrap: [AppComponent],
 })

@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { JwtService } from './jwt.service';
 import { AlojamientoService } from './alojamiento.service';
 import { HabitacionService } from './habitacion.service';
-import { ip } from '../Models/api.model';
+import { ip } from '../models/api.model';
+import { UsuarioService } from './usuario.service';
+import { ClienteService } from './cliente.service';
+import { ReservaService } from './reserva.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +16,10 @@ export class WebsocketService {
   constructor(
     private jwt: JwtService,
     private Aloj$: AlojamientoService,
-    private Habit$: HabitacionService
+    private Habit$: HabitacionService,
+    private User$: UsuarioService,
+    private Client$: ClienteService,
+    private Reserv$: ReservaService
   ) {}
 
   private MAX_RECONNECTION = 5;
@@ -26,19 +33,40 @@ export class WebsocketService {
       console.log('WebSockets connection created for Socket Service');
       if (this.contador > 1) {
         // alertify.success('WebSocket reconectado, si hay multiples usuarios trabajando es recomendable recargar la pagina');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'WebSocket reconectado, si hay multiples usuarios trabajando es recomendable recargar la pagina',
+          showConfirmButton: true,
+          // timer: 2500
+        })
       }
       this.contador = 1;
     };
 
-    this.socket.onmessage = (event) => {
-      const action = JSON.parse(event.data);
+    this.socket.onmessage = (event: MessageEvent) => {
       console.log('hola', event);
+      let action = JSON.parse(event.data);
+      action = {
+        data: JSON.parse(action.message.data),
+        event: action.message.event,
+        model: action.message.model
+      }
       switch (action.model) {
         case 'Alojamiento':
           this.Aloj$.updateList(action);
           break;
         case 'Habitacion':
           this.Habit$.updateList(action);
+          break;
+        case 'Usuario':
+          this.User$.updateList(action);
+          break;
+        case 'Cliente':
+          this.Client$.updateList(action);
+          break;
+        case 'Reserva':
+          this.Reserv$.updateList(action);
           break;
       }
     };
@@ -51,6 +79,13 @@ export class WebsocketService {
         this.socket = undefined;
         const p3 = new Promise<void>((resolve) => {
           // alertify.error(`reconectando ws intento ${this.contador} de ${this.MAX_RECONNECTION}`);
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: `Reconectando websocket intento ${this.contador} de ${this.MAX_RECONNECTION}`,
+            showConfirmButton: true,
+            // timer: 1500
+          })
           this.contador++;
           setTimeout(() => {
             this.setsock();
@@ -63,6 +98,14 @@ export class WebsocketService {
         //   window.location.reload();
         // })
         // .set({ title: 'Error de conexion' });
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Error de conexion, por favor verificar su conexion a internet o recargar la pagina',
+          showConfirmButton: true,
+          // timer: 1500
+        })
+        
       }
     };
     if (this.socket.readyState === WebSocket.OPEN) {

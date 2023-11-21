@@ -14,42 +14,73 @@
 
     <span class="spacer"></span>
 
-    <button mat-flat-button color="warn" (click)="logout()">
-        Salir
-        <mat-icon>logout</mat-icon>
+    <h5>
+        Hola 
+        {{obtenerNombre.name}}
+    </h5>
+
+    <button mat-icon-button [matMenuTriggerFor]="profilemenu" aria-label="Notifications">
+        <img src="/assets/user-1.jpg" class="circle"/>
     </button>
+    <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
+        <button mat-menu-item (click)="openUserPasswordReset()">
+            <mat-icon>password</mat-icon>
+            <span routerLinkActive="active">Cambio Pass</span>
+        </button>
+
+        <div class="p-x-12 m-t-12">
+            <a mat-stroked-button color="primary" (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                Salir
+            </a>
+        </div>
+
+    </mat-menu>
 </mat-toolbar>
 
 <mat-sidenav-container>
     <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
 
-        <button mat-button matTooltip="Menu" class="text-center">
+        <button mat-button matTooltip="Menu" class="text-center" [routerLink]="['/app/Menu']">
             <span>Menu</span>
         </button>
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Alojamientos" class="menu-button">
+        <button mat-button matTooltip="Alojamientos" class="menu-button" [routerLink]="['/app/Alojamientos/Listado']">
             <mat-icon>home</mat-icon>
-            <span [routerLink]="['/Alojamientos/Listado']" routerLinkActive="active">Alojamientos</span>
+            <span routerLinkActive="active">Alojamientos</span>
         </button>
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Habitaciones" class="menu-button">
+        <button mat-button matTooltip="Habitaciones" class="menu-button" [routerLink]="['/app/Habitaciones/Listado']">
             <mat-icon>bedroom_parent</mat-icon>
-            <span [routerLink]="['/Habitaciones/Listado']" routerLinkActive="active">Habitaciones</span>
+            <span routerLinkActive="active">Habitaciones</span>
         </button>
 
         <mat-divider></mat-divider>
 
-        <button mat-button matTooltip="Usuarios" class="menu-button">
+        <button mat-button matTooltip="Clientes" class="menu-button" [routerLink]="['/app/Clientes/Listado']">
+            <mat-icon>group</mat-icon>
+            <span routerLinkActive="active">Clientes</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button matTooltip="Reservas" class="menu-button" [routerLink]="['/app/Reservas/Listado']">
+            <mat-icon>family_restroom</mat-icon>
+            <span routerLinkActive="active">Reservas</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button matTooltip="Usuarios" class="menu-button" [routerLink]="['/app/Usuarios/Listado']">
             <mat-icon>person</mat-icon>
-            <span [routerLink]="['/Usuarios/Listado']" routerLinkActive="active">Usuarios</span>
+            <span routerLinkActive="active">Usuarios</span>
         </button>
 
         <mat-divider></mat-divider>
-
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content">

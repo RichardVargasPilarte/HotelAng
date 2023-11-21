@@ -18,7 +18,7 @@
                         </mat-error>
 
                         <mat-error *ngIf="form.controls['nombre'].hasError('minlength')">
-                            El nombre debe de tener minimo 8 caracteres
+                            El nombre debe de tener minimo 5 caracteres
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -33,10 +33,6 @@
                         <mat-error *ngIf="form.controls['precio'].hasError('required')">
                             El precio es <strong>requerido</strong>
                         </mat-error>
-
-                        <mat-error *ngIf="form.controls['precio'].hasError('minlength')">
-                            El precio debe de tener minimo 2 digitos
-                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -45,13 +41,13 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo de Alojamiento</mat-label>
-                        <mat-select formControlName="nombre_alojamiento">
+                        <mat-select formControlName="alojamiento_id">
                             <mat-option *ngFor="let alojamiento of AlojamientosCargados" [value]="alojamiento.id">
                                 {{alojamiento.nombre}}
                             </mat-option>
                         </mat-select>
 
-                        <mat-error *ngIf="form.controls['nombre_alojamiento'].hasError('required')">
+                        <mat-error *ngIf="form.controls['alojamiento_id'].hasError('required')">
                             El tipo de alojamiento es <strong>requerido</strong>
 
                         </mat-error>
@@ -94,13 +90,30 @@
 
             <div class="row">
                 <div class="col">
-                    <mat-form-field class="full-width">
-                        <input matInput placeholder="Descripción" formControlName="descripcion">
+                    <mat-form-field appearance="outline" id="descripcion">
+                        <mat-label>Descripcion</mat-label>
+                        <input type="text" matInput name="descripcion" formControlName="descripcion"
+                            placeholder="descripcion" autocomplete="off">
                         <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
                             La descripción es <strong>requerido</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
+            </div>
+
+            <div class="row">
+                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+                    (click)="data.type === 'c' ? saveRoom():UpdateRoom()"
+                    [disabled]="form.invalid">
+                    Guardar
+                    <i class="material-icons">save</i>
+                </button>
+
+                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+                    (click)="dialogRef.close()">
+                    Cancelar
+                    <i class="material-icons">cancel</i>
+                </button>
             </div>
 
         </mat-card-content>

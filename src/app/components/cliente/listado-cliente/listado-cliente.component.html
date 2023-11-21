@@ -1,0 +1,73 @@
+<mat-toolbar id="border" class="">
+    <span>Clientes</span>
+    <span class="spacer"></span>
+    <button mat-flat-button color="warn" id="nuevo" (click)="openDialog('c')">
+        Nuevo
+        <mat-icon>add</mat-icon>
+    </button>
+</mat-toolbar>
+
+<div *ngIf="isLoaded">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!-- id Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> N<sup>o</sup> </th>
+            <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <!-- descripcion Column -->
+        <ng-container matColumnDef="apellido">
+            <th mat-header-cell *matHeaderCellDef> Apellido </th>
+            <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+        </ng-container>
+
+        <!-- tiempo_estadia Column -->
+        <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef> Telefono </th>
+            <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="tipo_identificacion">
+            <th mat-header-cell *matHeaderCellDef> Tipo Identificacion </th>
+            <td mat-cell *matCellDef="let element"> {{element.tipo_identificacion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="num_identificacion">
+            <th mat-header-cell *matHeaderCellDef> Identificacion </th>
+            <td mat-cell *matCellDef="let element"> {{element.num_identificacion}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-mini-fab color="primary" class="mr-2 mb-2 mt-2" (click)="openDialog('u', element.id)">
+                    <mat-icon appTooltip="Editar">create</mat-icon>
+                </button>
+
+                <button mat-mini-fab color="warn" class="mr-2 mb-2 mt-2" (click)="deleteClient(element.id)"
+                *ngIf="hasPermission(permissions.Cliente.Delete)">
+                    <mat-icon appTooltip="Eliminar">delete_forever</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale" [fullScreen]="true">
+    <p style="color: white"> Cargando los datos... </p>
+</ngx-spinner>

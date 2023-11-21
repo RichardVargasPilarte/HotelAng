@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "~@ng-select/ng-select/themes/material.theme.css";
+
 html,
 body {
   height: 100%;
@@ -13,3 +15,20 @@ body {
 .spacer {
   flex: 1 1 auto;
 }
+
+table {
+  width: 100%;
+  margin-top: 15px;
+}
+
+#border {
+  border-radius: 15px;
+  background: #E6E6E6;
+}
+
+// #nuevo {
+//   background: #FF0040;
+//   // background: #d9042b;
+//   color: white;
+// }
+

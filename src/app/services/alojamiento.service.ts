@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Alojamiento } from '../Models/alojamiento.model';
-import { wsModel } from '../Models/webSocket.model';
+import { Alojamiento } from '../models/alojamiento.model';
+import { wsModel } from '../models/webSocket.model';
 
 import { MainService } from './main.service';
+import { IAlojamientosResponseDto } from '../dtos/Alojamiento.dto';
+import { HttpCode } from '../../app/shared/types/httpResponse.types';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,11 +20,12 @@ export class AlojamientoService extends MainService {
   }
 
   // Metodo GET - Listar todos los alojamientos
-  ObtenerAlojamientos(): Observable<Alojamiento> {
+  GetAccommodations(): Observable<Alojamiento> {
     return new Observable((observer) => {
-      this.get().subscribe((data) => {
-        if (!data.detail) {
-          data.alojamiento.forEach((el: any) => {
+      this.get().subscribe((response) => {
+        // if (response.code == 200) {
+        if (response.code == HttpCode.OK) {
+          response.data.forEach((el: any) => {
             // console.log(el)
             let alojamiento = new Alojamiento();
             alojamiento = Object.assign(alojamiento, el);
@@ -29,20 +33,29 @@ export class AlojamientoService extends MainService {
             observer.next(alojamiento);
           });
         } else {
-          this.errorObten(data.detail);
+          this.errorObten(response.detail);
         }
         observer.complete();
       });
     });
   }
 
-  // Metodo POST - Agregar un nuevo alojamiento
-  Agregar(alojamiento: Alojamiento): Observable<any> {
+  // Metodo GET - Listar todos los alojamientos de manera asincrona desde el inicio
+  async getAccommodationsAsynchronous(): Promise<Array<Alojamiento>> {
+    const response: IAlojamientosResponseDto = await this.getAsync<IAlojamientosResponseDto>()
+    this.list = response.data
+    this.list$.next(this.list);
+    return response.data
+  }
+
+  // Metodo POST - addAccommodations un nuevo alojamiento
+  addAccommodations(alojamiento: Alojamiento): Observable<any> {
     console.log(alojamiento);
     const body = { alojamiento };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
-        if (!response.detail) {
+        // if (response.code == 201) {
+        if (response.code == HttpCode.Created) {
           this.realizado();
           observer.next(response);
         } else {
@@ -53,19 +66,19 @@ export class AlojamientoService extends MainService {
   }
 
   // Metodo GET - Para obtener un solo dato mediante su Id
-  ObtenerUnAlojamiento(id: number | string) {
+  getAnAccommodation(id: number | string) {
     console.log(id);
     return this.getByID(id);
   }
 
   // Metodo PUT - Para actualizar un dato mediante su Id
-  ActualizarAlojamiento(id: string | number, alojamientos: Alojamiento) {
+  updateAccommodation(id: string | number, alojamientos: Alojamiento) {
     const body = { alojamientos };
     return this.update(body, id);
   }
 
   // Metodo DELETE - Para eliminar un dato mediante su Id
-  BorrarAlojamiento(id: number | string) {
+  deleteAccommodation(id: number | string) {
     return this.delete(id);
   }
 

@@ -1,21 +1,21 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
+  FormGroup,
+  FormBuilder,
+  FormControl,
   Validators,
 } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { HabitacionService } from '../../../services/habitacion.service';
-import { Habitacion } from '../../../Models/habitacion.model';
+import { Habitacion, IHabitacionResponse } from '../../../models/habitacion.model';
 import { AlojamientoService } from '../../../services/alojamiento.service';
-import { Alojamiento } from '../../../Models/alojamiento.model';
+import { Alojamiento } from '../../../models/alojamiento.model';
 
 interface DialogData {
   type: string;
-  hab?: Habitacion;
+  hab?: Habitacion | IHabitacionResponse;
 }
 
 @Component({
@@ -29,13 +29,13 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
   public edit!: boolean;
   subs: Subscription[] = [];
   public selected? = '0';
-  public form!: UntypedFormGroup;
+  public form!: FormGroup;
   public refAloajamiento!: Observable<any>;
 
   EstadoHabitaciones: string[] = [
     'Disponible',
     'Reservada',
-    'Fuera de Servicio',
+    'Fuera_de_Servicio',
   ];
 
   constructor(
@@ -43,11 +43,10 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
     public alojamiento$: AlojamientoService,
     public dialogRef: MatDialogRef<FormularioHabitacionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private fb: UntypedFormBuilder
+    private fb: FormBuilder
   ) {
     this.AlojamientosCargados = this.alojamiento$.list;
     this.refAloajamiento = this.alojamiento$.getList();
-    this.selected = this.AlojamientosCargados[0].id;
   }
 
   ngOnInit(): void {
@@ -67,64 +66,63 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
   createForm(id?: string): void {
     if (this.data.type === 'c') {
       this.form = this.fb.group({
-        id: new UntypedFormControl(0),
-        nombre: new UntypedFormControl('', [
+        id: new FormControl(-1),
+        nombre: new FormControl('', [
           Validators.required,
           Validators.minLength(5),
+          Validators.maxLength(25)
         ]),
-        descripcion: new UntypedFormControl('', [
+        descripcion: new FormControl('', [
           Validators.required,
           Validators.minLength(15),
+          Validators.maxLength(150)
         ]),
-        precio: new UntypedFormControl('', [
-          Validators.required,
-          Validators.minLength(2),
+        precio: new FormControl('', [
+          Validators.required
         ]),
-        activo: new UntypedFormControl('', Validators.required),
-        numero_personas: new UntypedFormControl('', [
+        activo: new FormControl('', Validators.required),
+        numero_personas: new FormControl('', [
           Validators.required,
           Validators.minLength(1),
         ]),
-        nombre_alojamiento: new UntypedFormControl('', Validators.required),
-        nombre_alojamiento_id: new UntypedFormControl(0),
-        eliminado: new UntypedFormControl('NO'),
+        alojamiento_id: new FormControl(-1, Validators.required),
+        eliminado: new FormControl('NO'),
       });
     } else {
+      const habitacion: IHabitacionResponse = this.data.hab as IHabitacionResponse;
       this.form = this.fb.group({
-        id: this.data.hab!.id,
-        nombre: new UntypedFormControl(this.data.hab!.nombre, [
+        id: habitacion.id,
+        nombre: new FormControl(habitacion.nombre, [
           Validators.required,
           Validators.minLength(5),
+          Validators.maxLength(25)
         ]),
-        descripcion: new UntypedFormControl(this.data.hab!.descripcion, [
+        descripcion: new FormControl(habitacion.descripcion, [
           Validators.required,
           Validators.minLength(15),
+          Validators.maxLength(150)
         ]),
-        precio: new UntypedFormControl(this.data.hab!.precio, [
-          Validators.required,
-          Validators.minLength(2),
+        precio: new FormControl(habitacion.precio, [
+          Validators.required
         ]),
-        activo: new UntypedFormControl(this.data.hab!.activo, Validators.required),
-        numero_personas: new UntypedFormControl(this.data.hab!.numero_personas, [
+        activo: new FormControl(habitacion.activo, Validators.required),
+        numero_personas: new FormControl(habitacion.numero_personas, [
           Validators.required,
           Validators.minLength(1),
         ]),
-        nombre_alojamiento: new UntypedFormControl(
-          this.data.hab!.nombre_alojamiento,
+        alojamiento_id: new FormControl(
+          habitacion.alojamiento_id.id,
           Validators.required
-        ),
-        nombre_alojamiento_id: new UntypedFormControl(
-          this.data.hab!.nombre_alojamiento
         ),
       });
     }
   }
 
-  saveHabitacion(): void {
+  saveRoom(): void {
     let hab = new Habitacion();
     hab = Object.assign(hab, this.form.value);
     this.subs.push(
-      this.habitacionServicio.Agregar(hab).subscribe(
+      this.habitacionServicio.addRoom(hab).subscribe(
         {
           next: (res) => {
             this.dialogRef.close();
@@ -132,20 +130,15 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
           },
           error: (error: any) => console.log(error)
         }
-        // (res) => {
-        //   this.dialogRef.close();
-        //   console.log(res);
-        // },
-        // (error) => console.error(error)
       )
     );
   }
 
-  updateHabitacion(): void {
+  UpdateRoom(): void {
     let hab = new Habitacion();
     hab = Object.assign(hab, this.form.value);
     this.subs.push(
-      this.habitacionServicio.ActualizarHabitacion(hab.id!, hab).subscribe(
+      this.habitacionServicio.UpdateRoom(hab.id!, hab).subscribe(
         {
           next: (res) => {
             this.dialogRef.close();
@@ -153,8 +146,6 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
             (error: any) => console.error(error);
           },
         }
-        // res => this.dialogRef.close(),
-        // error => console.error(error),
       )
     );
   }

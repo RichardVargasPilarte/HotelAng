@@ -1,6 +1,7 @@
 form-card {
   min-width: 120px;
   margin: 20px auto;
+  width: 50%;
 }
 
 .row {
@@ -15,4 +16,18 @@ form-card {
 
 .col:last-child {
   margin-right: 0;
+}
+
+.pull-left {
+  width: 45%;
+  margin: 10px;
+  text-align: center !important;
+  margin: auto;
+}
+
+.pull-right {
+  width: 45%;
+  margin: 10px;
+  text-align: center !important;
+  margin: auto;
 }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
-import { Grupos } from '../Models/grupo.model';
+import { Grupos } from '../models/grupo.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class GruposService extends MainService {
   }
 
   // Metodo GET - Listar todos los alojamientos
-  ObtenerGrupos(): Observable<Grupos> {
+  getGroups(): Observable<Grupos> {
     return new Observable((observer) => {
       this.get().subscribe((data) => {
         if (!data.detail) {

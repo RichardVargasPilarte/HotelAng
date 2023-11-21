@@ -3,11 +3,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 
 import { AlojamientoService } from '../../../services/alojamiento.service';
-import { Alojamiento } from '../../../Models/alojamiento.model';
+import { Alojamiento } from '../../../models/alojamiento.model';
 import { FormularioAlojamientoComponent } from '../formulario-alojamiento/formulario-alojamiento.component';
 
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+
+import { RoleId } from '../../../shared/types/Roles.types';
+import { Permission } from '../../../shared/types/permissions.types';
+import { JwtService } from '../../../services/jwt.service';
 
 @Component({
   selector: 'app-listado-alojamiento',
@@ -29,14 +33,17 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     'actions',
   ];
   success = false;
+  roleIds = RoleId
+  permissions = new Permission();
 
   constructor(
     private _alojamientoService: AlojamientoService,
     private dialog: MatDialog,
-    private SpinnerService: NgxSpinnerService
+    private SpinnerService: NgxSpinnerService,
+    private jwtService: JwtService
   ) {
     this.promesa = new Promise<void>((resolve) => {
-      const sub = this._alojamientoService.ObtenerAlojamientos().subscribe(
+      const sub = this._alojamientoService.GetAccommodations().subscribe(
         // (res) => this.alojamientos.push(res),
         // (error) => console.log('Hubo un fallo al momento de traer los datos'),
         // () => resolve()
@@ -47,7 +54,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
           },
           error: (error: any) => {
             console.log(error),
-              console.log('Hubo un fallo al momento de traer los datos');
+            console.log('Hubo un fallo al momento de traer los datos');
           },
           complete() {
             resolve();
@@ -56,10 +63,9 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       );
       this.subs.push(sub);
     });
-
     this.refAloj = this._alojamientoService.getList();
   }
-
+  
   ngOnInit(): void {
     this.SpinnerService.show();
     this.promesa.then(() => {
@@ -76,7 +82,6 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       this.alojamientos.forEach((element) => {
         this.dataSource.push(element);
       });
-
       this.CloseDialog();
     });
   }
@@ -86,7 +91,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     this.subs.map((sub) => sub.unsubscribe());
   }
 
-  eliminarAlojamiento(id: number): any {
+  removeAccommodation(id: number): any {
     Swal.fire({
       title: '¿Esta seguro de eliminar este dato?',
       text: '¡No se podra recuperar este dato luego de ser eliminado!',
@@ -96,11 +101,11 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        this.SpinnerService.show();
-        this._alojamientoService.BorrarAlojamiento(id).subscribe((data) => {
+        // this.SpinnerService.show();
+        this._alojamientoService.deleteAccommodation(id).subscribe((data) => {
           this.success = true;
           Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
-          this.SpinnerService.hide();
+          // this.SpinnerService.hide();
           console.log('Se elimino el alojamiento');
           // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
           console.log(data);
@@ -133,5 +138,13 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
         data: { type: tipo, alojam },
       });
     }
+  }
+
+  hasRole(roleId: number) {
+    return this.jwtService.hasRole(roleId);
+  }
+
+  hasPermission(permissionId: number) {
+    return this.jwtService.hasPermission(permissionId);
   }
 }

@@ -12,7 +12,17 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatMenuModule} from '@angular/material/menu';
+
+import {MatListModule} from '@angular/material/list';
+
 import { Error404Component } from './error404/error404.component';
+import { MenuComponent } from './menu/menu.component';
+
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const MaterialComponents = [
   MatSidenavModule,
@@ -23,11 +33,16 @@ const MaterialComponents = [
   MatGridListModule,
   MatTooltipModule,
   MatDialogModule,
+  MatCardModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatMenuModule,
+  MatListModule
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, Error404Component],
-  imports: [CommonModule, MaterialComponents, RouterModule],
-  exports: [MaterialComponents, DashboardComponent, Error404Component],
+  declarations: [DashboardComponent, Error404Component, MenuComponent],
+  imports: [CommonModule, MaterialComponents, RouterModule, NgSelectModule],
+  exports: [MaterialComponents, DashboardComponent, Error404Component, NgSelectModule],
 })
 export class SharedModule {}

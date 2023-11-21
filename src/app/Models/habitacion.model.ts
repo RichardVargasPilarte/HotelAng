@@ -1,9 +1,33 @@
-export class Habitacion {
-  id: number | undefined;
-  nombre: string | undefined;
-  descripcion: string | undefined;
-  precio: number | undefined;
-  activo: string | undefined;
-  numero_personas: number | undefined;
-  nombre_alojamiento: string | undefined;
+import { Alojamiento } from "./alojamiento.model";
+
+export interface IHabitacion {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  activo: string;
+  numero_personas: number;
+  alojamiento_id: number;
 }
+
+
+export class Habitacion implements IHabitacion {
+  id: number = -1;
+  nombre = '';
+  descripcion = '';
+  precio = -1;
+  activo = '';
+  numero_personas = -1;
+  alojamiento_id = -1;
+}
+
+export interface IHabitacionResponse {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  activo: string;
+  numero_personas: number;
+  alojamiento_id: Alojamiento;
+}
+

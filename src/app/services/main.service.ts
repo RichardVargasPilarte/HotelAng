@@ -3,8 +3,8 @@ import { Observable, of, Subject, observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
-import { Api } from '../Models/api.model';
-import { wsModel } from '../Models/webSocket.model';
+import { Api } from '../models/api.model';
+import { wsModel } from '../models/webSocket.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,6 +26,9 @@ export class MainService {
 
   get(): Observable<any> {
     return this.client.get<any>(this.getUrl());
+  }
+  getAsync<T>(): Promise<T> {
+    return this.client.get<T>(this.getUrl()).toPromise() as Promise<T>;
   }
 
   getByID(id: number | string): Observable<any> {
@@ -53,7 +56,7 @@ export class MainService {
     // }
     console.log('delete: ', id);
     head['Content-Type'] = 'application/json';
-    console.log(head);
+    // console.log(head);
     return this.client.delete(this.getUrl() + id, head);
     // return new Observable();
   }
@@ -62,16 +65,16 @@ export class MainService {
     return this.list$.asObservable();
   }
 
-  updateList(data: wsModel) {}
+  updateList(data: wsModel) { }
 
   errorObten(err: string) {
     // alertify.error(`${err}`);
     Swal.fire({
       position: 'top-end',
       icon: 'error',
-      title: 'Your work has been saved',
-      showConfirmButton: false,
-      timer: 1500,
+      title: 'Ah ocurrido un error al momento de traer los datos',
+      showConfirmButton: true,
+      // timer: 1500,
     });
   }
 

@@ -9,7 +9,7 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Nombre Alojamiento</mat-label>
-                        <input matInput placeholder="Nombre Alojamiento" formControlName="nombre">
+                        <input matInput placeholder="Nombre Alojamiento" formControlName="nombre" maxlength="25">
                         <mat-error *ngIf="form.controls['nombre'].hasError('required')">
                             El nombre es <strong>requerido</strong>
                         </mat-error>
@@ -34,13 +34,33 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Descripción</mat-label>
-                        <input matInput placeholder="Descripción" formControlName="descripcion">
+                        <input matInput placeholder="Descripción" formControlName="descripcion" maxlength="150">
                         <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
                             La descripción es <strong>requerido</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="form.controls['descripcion'].hasError('minlength')">
+                            La descripción debe de tener minimo 10 caracteres
                         </mat-error>
                     </mat-form-field>
                 </div>
             </div>
+
+            <div class="row">
+                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+                    (click)="data.type === 'c' ? saveAccommodation():updateAccommodation()"
+                    [disabled]="form.invalid">
+                    Guardar
+                    <i class="material-icons">save</i>
+                </button>
+
+                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+                    (click)="dialogRef.close()">
+                    Cancelar
+                    <i class="material-icons">cancel</i>
+                </button>
+            </div>
+
         </mat-card-content>
     </mat-card>
 </form>

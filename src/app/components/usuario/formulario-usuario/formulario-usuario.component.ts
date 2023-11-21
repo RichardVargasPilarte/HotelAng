@@ -1,17 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
+  FormGroup,
+  FormBuilder,
+  FormControl,
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable } from 'rxjs';
 
-import { UsuariosService } from '../../../services/usuarios.service';
-import { Usuario } from '../../../Models/usuario.model';
+import { UsuarioService } from '../../../services/usuario.service';
+import { CreateUser, Usuario } from '../../../models/usuario.model';
 import { GruposService } from '../../../services/grupos.service';
-import { Grupos } from '../../../Models/grupo.model';
+import { Grupos } from '../../../models/grupo.model';
 
 interface DialogData {
   type: string;
@@ -26,24 +26,24 @@ interface DialogData {
 export class FormularioUsuarioComponent implements OnInit {
   public usuarios: Usuario = new Usuario();
   public gruposCargados: Grupos[] = [];
-  public edit: boolean | undefined;
+  public edit!: boolean;
   subs: Subscription[] = [];
-  public selected? = '0';
-  public form!: UntypedFormGroup;
+  public selected = '';
+  public form!: FormGroup;
   public refGrupos: Observable<any>;
 
   activo!: [{ id: 1; name: 'SI' }, { id: 2; name: 'NO' }];
 
   constructor(
-    private fb: UntypedFormBuilder,
-    private usuarioServicio: UsuariosService,
+    private fb: FormBuilder,
+    private usuarioServicio: UsuarioService,
     private grupoServicio: GruposService,
     public dialogRef: MatDialogRef<FormularioUsuarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.gruposCargados = this.grupoServicio.list;
     this.refGrupos = this.grupoServicio.getList();
-    this.selected = this.gruposCargados[0].id;
+    // this.selected = this.gruposCargados[0].id;
   }
 
   ngOnInit(): void {
@@ -58,84 +58,95 @@ export class FormularioUsuarioComponent implements OnInit {
     this.subs.map((sub) => sub.unsubscribe());
   }
 
-  createForm() {
+  createForm(id?: string): void {
     if (this.data.type === 'c') {
       this.form = this.fb.group({
-        id: new UntypedFormControl(0),
-        first_name: new UntypedFormControl('', [
+        id: new FormControl(0),
+        first_name: new FormControl('', [
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(3),
         ]),
-        last_name: new UntypedFormControl('', [
+        last_name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        password: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
         ]),
-        password: new UntypedFormControl('', [
+        confirmPassword: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
         ]),
-        username: new UntypedFormControl('', [
+        username: new FormControl('', [
           Validators.required,
           Validators.minLength(5),
         ]),
-        email: new UntypedFormControl('', Validators.required),
-        direccion: new UntypedFormControl('', [
+        email: new FormControl('', [Validators.required, Validators.email]),
+        direccion: new FormControl('', [
           Validators.required,
           Validators.minLength(10),
         ]),
-        tipo_usuario: new UntypedFormControl('', Validators.required),
-        estado: new UntypedFormControl('', Validators.required),
-        telefono: new UntypedFormControl('', Validators.required),
-        eliminado: new UntypedFormControl('NO'),
-      });
+        groups: new FormControl('', Validators.required),
+        estado: new FormControl('Activo', Validators.required),
+        telefono: new FormControl('', Validators.required),
+        eliminado: new FormControl('NO'),
+      },
+        {
+          validators: this.MustMatch('password', 'confirmPassword')
+        });
     } else {
       this.form = this.fb.group({
         id: this.data.user!.id,
-        first_name: new UntypedFormControl(this.data.user!.first_name, [
+        first_name: new FormControl(this.data.user!.first_name, [
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(3),
         ]),
-        last_name: new UntypedFormControl(this.data.user!.last_name, [
+        last_name: new FormControl(this.data.user!.last_name, [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        password: new FormControl(this.data.user!.password, [
           Validators.required,
           Validators.minLength(8),
         ]),
-        password: new UntypedFormControl(this.data.user!.password, [
-          Validators.required,
-          Validators.minLength(8),
-        ]),
-        username: new UntypedFormControl(this.data.user!.username, [
+        username: new FormControl(this.data.user!.username, [
           Validators.required,
           Validators.minLength(5),
         ]),
-        email: new UntypedFormControl(
+        email: new FormControl(
           this.data.user!.email,
           Validators.required
         ),
-        direccion: new UntypedFormControl(this.data.user!.direccion, [
+        direccion: new FormControl(this.data.user!.direccion, [
           Validators.required,
           Validators.minLength(10),
         ]),
-        tipo_usuario: new UntypedFormControl(
-          this.data.user!.tipo_usuario,
+        groups: new FormControl(
+          this.data?.user?.groups,
           Validators.required
         ),
-        estado: new UntypedFormControl(
+        estado: new FormControl(
           this.data.user!.estado,
           Validators.required
         ),
-        telefono: new UntypedFormControl(
+        telefono: new FormControl(
           this.data.user!.telefono,
           Validators.required
         ),
+        confirmPassword: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
       });
     }
   }
 
-  saveUsuario(): void {
-    let user = new Usuario();
+  saveUser(): void {
+    let user = new CreateUser();
     user = Object.assign(user, this.form.value);
     this.subs.push(
-      this.usuarioServicio.Agregar(user).subscribe({
+      this.usuarioServicio.addUsers(user).subscribe({
         next: (res) => {
           this.dialogRef.close();
           console.log(res);
@@ -145,11 +156,11 @@ export class FormularioUsuarioComponent implements OnInit {
     );
   }
 
-  updateUsuario(): void {
+  updateUser(): void {
     let user = new Usuario();
     user = Object.assign(user, this.form.value);
     this.subs.push(
-      this.usuarioServicio.ActualizarUsuario(user.id!, user).subscribe({
+      this.usuarioServicio.updateUser(user.id!, user).subscribe({
         next: (res) => {
           this.dialogRef.close();
           console.log(res);
@@ -161,5 +172,23 @@ export class FormularioUsuarioComponent implements OnInit {
 
   get Form(): any {
     return this.form.controls;
+  }
+
+
+  MustMatch(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors['MustMatch']) {
+        return
+      }
+
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ MustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    }
   }
 }

@@ -1,10 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
+
+
 import { delay } from 'rxjs/operators';
 
 import { JwtService } from '../../services/jwt.service';
-import { CookieService } from 'ngx-cookie-service';
+import { MatDialog } from '@angular/material/dialog';
+import { CambioContrasenaComponent } from 'src/app/auth/cambio-contrasena/cambio-contrasena.component';
+import JwtCustomInterface from '../../models/jwtInterface';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,17 +16,26 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+
+  panelOpenState = false;
 
   constructor(
     private observer: BreakpointObserver,
     private jwt: JwtService,
-    private cookieService: CookieService
-  ) {}
+    private readonly dialog: MatDialog,
+    public jwtService: JwtService
+  ) { }
+
+  public obtenerNombre = this.jwt.getDecodedToken() as JwtCustomInterface;
+
+  isDropdownOpen = false;
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
 
   logout() {
-    this.cookieService.delete('access');
     this.jwt.logout();
   }
 
@@ -45,4 +58,9 @@ export class DashboardComponent {
         }
       });
   }
+
+  openUserPasswordReset() {
+    this.dialog.open(CambioContrasenaComponent, {})
+  }
 }
+
