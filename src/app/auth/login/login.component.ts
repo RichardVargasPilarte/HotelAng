@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 
 import { JwtService } from '../../services/jwt.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 import { RestablecerContrasenaComponent } from 'src/app/auth/restablecer-contrasena/restablecer-contrasena.component';
 import Swal from 'sweetalert2';

@@ -9,7 +9,7 @@ import {
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReestablecerPasswordService } from '../../services/reestablecer-password.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import Swal from 'sweetalert2';
 
 @Component({
