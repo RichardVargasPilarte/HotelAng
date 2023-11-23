@@ -1,12 +1,12 @@
 
 <div class="parent">
-    <mat-card *ngFor="let item of lista; let i=index"class="example-card">
+    <mat-card appearance="outlined" *ngFor="let item of lista; let i=index"class="example-card">
         <mat-card-title-group>
             <mat-card-title>{{item.nombre}}</mat-card-title>
             <mat-icon>{{item.icon}}</mat-icon>
         </mat-card-title-group>
         <mat-divider></mat-divider>
-        <mat-card-content>
+        <mat-card-content class="mat-body-1">
             {{item.descripcion}}
         </mat-card-content>
     </mat-card>

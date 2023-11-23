@@ -6,7 +6,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { AlojamientoService } from '../../../services/alojamiento.service';
 import { Alojamiento, IAlojamientoResponse } from '../../../models/alojamiento.model';

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { JwtService } from 'src/app/services/jwt.service';

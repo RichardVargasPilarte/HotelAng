@@ -1,5 +1,5 @@
 <form [formGroup]="form" *ngIf="form">
-    <mat-card class="form-card">
+    <mat-card appearance="outlined" class="form-card">
         <mat-card-header>
             <mat-card-title>Formulario</mat-card-title>
         </mat-card-header>
@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="col">
-                    <mat-form-field appearance="legacy">
+                    <mat-form-field>
                         <mat-label>Habitacion</mat-label>
                         <mat-select formControlName="habitacion_id">
                             <mat-option *ngFor="let habitacion of habitaciones" [value]="habitacion.id">
@@ -30,7 +30,7 @@
 
             <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="legacy">
+                    <mat-form-field>
                         <mat-label>Fecha Inicio:</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="fecha_inicio" name="fecha_inicio" />
                         <mat-hint>DD/MM/YYYY</mat-hint>
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="col">
-                    <mat-form-field appearance="legacy">
+                    <mat-form-field>
                         <mat-label>Fecha Fin:</mat-label>
                         <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin" name="fecha_fin" />
                         <mat-hint>DD/MM/YYYY</mat-hint>
@@ -52,7 +52,7 @@
 
             <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="legacy">
+                    <mat-form-field>
                         <mat-label>Tipo Pago:</mat-label>
                         <mat-select formControlName="tipo_pago">
                             <ng-container *ngFor="let pago of TipoPago">
@@ -68,7 +68,7 @@
 
             <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="legacy" id="descripcion">
+                    <mat-form-field id="descripcion">
                         <mat-label>Descripcion</mat-label>
                         <input type="text" matInput name="descripcion" formControlName="descripcion"
                             placeholder="descripcion" autocomplete="off" />
