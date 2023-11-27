@@ -15,12 +15,13 @@
     <span class="spacer"></span>
 
     <h5>
-        Hola 
+        Hola
         {{obtenerNombre.name}}
     </h5>
 
-    <button mat-icon-button [matMenuTriggerFor]="profilemenu" aria-label="Notifications">
-        <img src="/assets/user-1.jpg" class="circle"/>
+    <button mat-icon-button [matMenuTriggerFor]="profilemenu">
+        <!-- <img src="/assets/user-1.jpg" class="circle"/> -->
+        <mat-icon>person</mat-icon>
     </button>
     <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
         <button mat-menu-item (click)="openUserPasswordReset()">
@@ -28,7 +29,9 @@
             <span routerLinkActive="active">Cambio Pass</span>
         </button>
 
-        <div class="p-x-12 m-t-12">
+        <hr>
+        
+        <div id="divMenu" class="p-x-12 m-t-12">
             <a mat-stroked-button color="primary" (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 Salir

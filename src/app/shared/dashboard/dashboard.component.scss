@@ -8,10 +8,14 @@ mat-sidenav {
   width: 200px;
   border-right: none;
   background: #002b5c;
-  color: white;
+  // color: white;
   border-radius: 10px;
   padding: 16px;
   text-align: center;
+}
+
+.mat-mdc-button:not(:disabled) {
+  color: white
 }
 
 // el content maneja la tabla de datos
@@ -26,8 +30,8 @@ mat-sidenav {
   // justify-content: center;
   // align-items: center;
 
-  font-size: 2rem;
-  color: lightgray;
+  font-size: 1rem;
+  color: black;
 }
 
 mat-sidenav-container {
@@ -44,6 +48,10 @@ mat-sidenav-container {
   mat-icon {
     margin-right: 8px;
   }
+}
+
+#divMenu {
+  text-align: center;
 }
 
 mat-divider {
@@ -100,10 +108,12 @@ mat-divider {
 
 
 .circle { 
-  width: 35px;
-  height: 35px;
-  background: blue; 
+  width: 37px;
+  height: 37px;
+  background: #004a9f; 
   -moz-border-radius: 70px; 
   -webkit-border-radius: 70px; 
   border-radius: 70px;
+  // --mdc-fab-container-color: #004a9f;
+  color: #004a9f;
 }
