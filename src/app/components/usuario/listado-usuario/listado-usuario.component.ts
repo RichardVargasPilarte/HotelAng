@@ -14,7 +14,7 @@ import { RedirIfFailPipe } from '../../../pipes/redir-if-fail.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { RoleId } from '../../../shared/types/Roles.types';
-import { Permission } from 'src/app/shared/types/permissions.types'; 
+import { Permission } from 'src/app/shared/types/permissions.types';
 import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
@@ -27,7 +27,6 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   public grupos: Grupos[] = [];
   public subs: Subscription[] = [];
   sub: Subscription | undefined;
-  private promesas: Promise<any>[] = [];
   public isLoaded = false;
   public dataSource: Usuario[] = [];
   refUsuarios!: Observable<any[]>;
@@ -55,66 +54,13 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     private SpinnerService: NgxSpinnerService,
     private jwtService: JwtService
   ) {
-    this.promesas.push(
-      new Promise<void>((resolve) => {
-        const sub = this.usuariosServicio.GetUser().subscribe(
-          {
-            next: (res) => {
-              this.usuarios.push(res);
-            },
-            error: (error: any) => {
-              console.log(error);
-              console.log('Hubo un fallo al momento de traer los datos');
-            },
-            complete: () => {
-              resolve();
-            }
-          }
-        );
-        this.subs.push(sub);
-      })
-    );
 
-    this.promesas.push(
-      new Promise<void>((resolve, reject) => {
-        const sub = grupos$.getGroups().subscribe(
-          {
-            next: (res) => {
-              this.grupos.push(res);
-            },
-            error: (error: any) => {
-              console.log(error),
-                console.log('Hubo un fallo al momento de traer los datos');
-            },
-            complete: () => {
-              resolve();
-            }
-          }
-        );
-        this.subs.push(sub);
-      })
-    );
     this.refUsuarios = this.usuariosServicio.getList();
     this.refGrupos = this.grupos$.getList();
   }
 
   async ngOnInit(): Promise<void> {
     this.SpinnerService.show();
-    Promise.all(this.promesas).then(() => {
-      if (
-        new RedirIfFailPipe().transform(
-          'Grupos/Listado',
-          this.grupos,
-          this.router
-        )
-      ) {
-        this.dataSource = this.usuarios;
-        console.log('estas son los usuarios:', this.dataSource);
-        this.isLoaded = true;
-        this.subs.push();
-        this.CloseDialog();
-      }
-    });
     this.refUsuarios.subscribe((data) => {
       this.usuarios = data;
       this.dataSource = [];
@@ -122,6 +68,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
         this.dataSource.push(element);
       });
       this.CloseDialog();
+      this.isLoaded= true;
     });
   }
 

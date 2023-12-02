@@ -54,7 +54,6 @@ export class AppComponent implements OnInit {
       );
     } else {
       alert('No hay token');
-      // this.router.navigate(['/login']);
     }
   }
   async loadData() {

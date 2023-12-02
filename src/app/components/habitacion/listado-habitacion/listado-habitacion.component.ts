@@ -87,7 +87,6 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     });
     this.refHabitacion.subscribe((data) => {
       this.habitaciones = data;
-      // console.log('probando', data);
       this.dataSource = [];
       this.habitaciones.forEach((element) => {
         this.dataSource.push(element);
@@ -103,7 +102,6 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Metodo encargado de eliminar las habitaciones mediante su Id
   async removeRoom(id: number): Promise<void> {
     const result: SweetAlertResult = await Swal.fire({
       title: '¿Esta seguro de eliminar este dato?',
@@ -118,7 +116,6 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
       this.habitacionservice.deleteRoom(id).subscribe((data) => {
         console.log('Se elimino la habitación');
         Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
-        // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
         console.log(data);
       });
     } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -144,7 +141,6 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     } else {
       const habitac = this.habitaciones.find((d) => d.id === id);
       this.dialog.open(FormularioHabitacionComponent, {
-        // width: '80%',
         data: { type: tipo, hab: habitac },
       });
     }
