@@ -56,63 +56,24 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     private SpinnerService: NgxSpinnerService,
     private jwtService: JwtService
   ) {
-    this.promesas.push(
-      new Promise<void>((resolve) => {
-        const sub = this.habitacionservice.listingRooms().subscribe(
-          // (resp) => this.habitaciones.push(resp),
-          // (error) => console.log(error),
-          // () => resolve()
-          {
-            next: (resp) => {
-              this.habitaciones.push(resp);
-            },
-            error: (error: any) => {
-              console.log(error);
-              console.log('Hubo un fallo al momento de traer los datos');
-            },
-            complete() {
-              resolve();
-            }
-          }
-        );
-        this.subs.push(sub);
-      })
-    );
-
-    this.promesas.push(
-      new Promise<void>((resolve) => {
-        const sub = this.alojamiento$.GetAccommodations().subscribe(
-          // (resp) => this.alojamiento.push(resp),
-          // (error) => console.log(error),
-          // () => resolve()
-
-          {
-            next: (resp) => {
-              this.alojamientos.push(resp);
-            },
-            error: (error) => {
-              console.log(error), 
-              console.log('Hubo un fallo al momento de traer los datos');
-            },
-            complete: () => {
-              resolve();
-            }
-          }
-        );
-        this.subs.push(sub);
-      })
-    );
     this.refHabitacion = this.habitacionservice.getList();
-    // console.log(this.refHabitacion);
     this.refAlojamiento = this.alojamiento$.getList();
   }
 
   async ngOnInit(): Promise<void> {
     this.SpinnerService.show();
+    this.refAlojamiento.subscribe((data) => {
+      this.alojamientos = data;
+    })
+
+    this.refHabitacion.subscribe((data) => {
+      this.habitaciones = data;
+    })
+
     Promise.all(this.promesas).then(() => {
       if (
         new RedirIfFailPipe().transform(
-          'Alojamientos/Listado',
+          'app/Alojamientos/Listado',
           this.alojamientos,
           this.router
         )
@@ -144,7 +105,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
 
   // Metodo encargado de eliminar las habitaciones mediante su Id
   async removeRoom(id: number): Promise<void> {
-    const result:SweetAlertResult  = await Swal.fire({
+    const result: SweetAlertResult = await Swal.fire({
       title: '¿Esta seguro de eliminar este dato?',
       text: '¡No se podra recuperar este dato luego de ser eliminado!',
       icon: 'warning',
@@ -153,7 +114,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     })
     console.log(result)
-    if(result.isConfirmed) {
+    if (result.isConfirmed) {
       this.habitacionservice.deleteRoom(id).subscribe((data) => {
         console.log('Se elimino la habitación');
         Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
@@ -162,7 +123,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
       });
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       (error: string) =>
-      console.log('Hubo un fallo al momento de eliminar el dato' + error);
+        console.log('Hubo un fallo al momento de eliminar el dato' + error);
       Swal.fire(
         'Cancelado',
         'El dato no fue eliminado y esta seguro :)',

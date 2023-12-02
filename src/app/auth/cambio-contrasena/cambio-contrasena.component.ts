@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import {
   FormGroup,
@@ -8,25 +8,19 @@ import {
 } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { JwtService } from 'src/app/services/jwt.service';
 
-import { ChangePassword, Usuario } from '../../models/usuario.model';
+import { ChangePassword } from '../../models/usuario.model';
 import JwtCustomInterface from 'src/app/models/jwtInterface';
 import Swal from 'sweetalert2';
 
-interface DialogData {
-  type: string;
-  user?: Usuario;
-}
 @Component({
   selector: 'app-cambio-contrasena',
   templateUrl: './cambio-contrasena.component.html',
   styleUrls: ['./cambio-contrasena.component.scss']
 })
 export class CambioContrasenaComponent implements OnInit {
-  subs: Subscription[] = [];
   public form!: FormGroup;
 
 
@@ -68,35 +62,38 @@ export class CambioContrasenaComponent implements OnInit {
   changePassword(): void {
     let userPassword = new ChangePassword();
     userPassword = Object.assign(userPassword, this.form.value);
-    this.subs.push(
-      this.usuarioServicio.changeUserPassword(userPassword.id!, userPassword).subscribe({
-        next: (res) => {
-          console.log(userPassword)
-          console.log(res)
 
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "La contrseña a sido cambiada correctamente",
-            showConfirmButton: false,
-            timer: 2500
-          });
+    // this.usuarioServicio.changeUserPassword(userPassword.id!, userPassword).subscribe({
+    //   next: async (res:any) => {
+    //     console.log(userPassword)
+    //     console.log(res)
 
-          this.dialogRef.close();
-        },
-        error: (error: any) => {
-          console.error(error);
+    //     await Swal.fire({
+    //       position: "top-end",
+    //       icon: "success",
+    //       title: "La contrseña a sido cambiada correctamente",
+    //       showConfirmButton: false,
+    //       timer: 2500
+    //     });
 
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "A ocurrido un error al momento de cambiar la contraseña, vuelva a intententar lo nuevamente",
-            showConfirmButton: false,
-            timer: 2500
-          });
-        },
-      })
-    );
+    //     this.dialogRef.close();
+
+    //     this.jwtService.logout();
+    //   },
+    //   error: (error: any) => {
+    //     console.error(error);
+
+    //     Swal.fire({
+    //       position: "top-end",
+    //       icon: "error",
+    //       title: "A ocurrido un error al momento de cambiar la contraseña, vuelva a intententar lo nuevamente",
+    //       showConfirmButton: false,
+    //       timer: 2500
+    //     });
+    //   },
+    // })
+
+    this.jwtService.logout()
   }
 
   MustMatch(controlName: string, matchingControlName: string) {

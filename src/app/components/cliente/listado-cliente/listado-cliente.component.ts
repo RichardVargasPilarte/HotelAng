@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 
@@ -23,7 +23,6 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
   refClient: Observable<any>;
   subs: Subscription[] = [];
   public isLoaded = false;
-  private promesa: Promise<any>;
   public dataSource: Cliente[] = [];
   displayedColumns: string[] = [
     'id',
@@ -43,49 +42,25 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     private _clienteService: ClienteService,
     private dialog: MatDialog,
     private SpinnerService: NgxSpinnerService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private cdRef: ChangeDetectorRef
   ) {
-    this.promesa = new Promise<void>((resolve) => {
-      const sub = this._clienteService.getCustomers().subscribe(
-        // (res) => this.alojamientos.push(res),
-        // (error) => console.log('Hubo un fallo al momento de traer los datos'),
-        // () => resolve()
-
-        {
-          next: (res) => {
-            this.clientes.push(res);
-          },
-          error: (error: any) => {
-            console.log(error),
-            console.log('Hubo un fallo al momento de traer los datos');
-          },
-          complete() {
-            resolve();
-          },
-        }
-      );
-      this.subs.push(sub);
-    });
     this.refClient = this._clienteService.getList();
   }
 
   ngOnInit(): void {
-    this.SpinnerService.show();
-    this.promesa.then(() => {
-      this.dataSource = this.clientes;
-      console.log('Yo traigo los datos y son estos:', this.dataSource);
-      this.isLoaded = true;
-      this.subs.push();
-      this.CloseDialog();
-    });
+    this.showLoading();
     this.refClient.subscribe((data) => {
       this.clientes = data;
-      // console.log('Hola', data);
+      console.log('clientes', this.clientes);
       this.dataSource = [];
       this.clientes.forEach((element) => {
         this.dataSource.push(element);
       });
-      this.CloseDialog();
+      console.log('clientes', this.dataSource);
+      this.cdRef.detectChanges();
+      this.hideLoading();
+      this.isLoaded = true;
     });
   }
 
@@ -125,7 +100,11 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     });
   }
 
-  CloseDialog(): void {
+  showLoading() {
+    this.SpinnerService.show()
+  }
+
+  hideLoading(): void {
     this.SpinnerService.hide();
   }
 

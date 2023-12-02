@@ -44,6 +44,7 @@ export class ClienteService extends MainService {
     const response: IClientesResponseDto = await this.getAsync<IClientesResponseDto>()
     this.list = response.data
     this.list$.next(this.list);
+    console.log(this.list)
     return response.data
   }
 

@@ -70,23 +70,16 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subs.push(
-      this.refCliente.subscribe(
-        (clients) => (this.clientes = clients)
-      ),
-      // this.subs.push(
-      //   this.refHabitacion.subscribe(
-      //     (habs) => (this.habitaciones = habs)
-      //   )
-      // )
-    );
-    this.createForm();
-    // this.changeLocale();
-  }
 
-  // changeLocale(){
-  //   this.adapter.setLocale('es');
-  // }
+    const clientsubscribe = this.refCliente.subscribe(
+      (clients) => {
+        this.clientes = clients
+        console.log(clients)
+      }
+    )
+    this.subs.push(clientsubscribe);
+    this.createForm();
+  }
 
   ngOnDestroy(): void {
     this.clientes = [];

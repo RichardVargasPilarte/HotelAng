@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject, observable } from 'rxjs';
+import { Observable, of, Subject, observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
@@ -11,7 +11,7 @@ import { wsModel } from '../models/webSocket.model';
 export class MainService {
   public client: HttpClient;
   public api = Api;
-  public list$ = new Subject<any[]>();
+  public list$ = new BehaviorSubject<any[]>([]);
   public resource: string | undefined;
 
   public list: any[] = [];
