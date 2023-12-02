@@ -23,7 +23,6 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
   refAloj: Observable<any>;
   subs: Subscription[] = [];
   public isLoaded = false;
-  private promesa: Promise<any>;
   public dataSource: Alojamiento[] = [];
   displayedColumns: string[] = [
     'id',
@@ -42,39 +41,11 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     private SpinnerService: NgxSpinnerService,
     private jwtService: JwtService
   ) {
-    this.promesa = new Promise<void>((resolve) => {
-      const sub = this._alojamientoService.GetAccommodations().subscribe(
-        // (res) => this.alojamientos.push(res),
-        // (error) => console.log('Hubo un fallo al momento de traer los datos'),
-        // () => resolve()
-
-        {
-          next: (res) => {
-            this.alojamientos.push(res);
-          },
-          error: (error: any) => {
-            console.log(error),
-            console.log('Hubo un fallo al momento de traer los datos');
-          },
-          complete() {
-            resolve();
-          },
-        }
-      );
-      this.subs.push(sub);
-    });
     this.refAloj = this._alojamientoService.getList();
   }
-  
+
   ngOnInit(): void {
     this.SpinnerService.show();
-    this.promesa.then(() => {
-      this.dataSource = this.alojamientos;
-      console.log('Yo traigo los datos y son estos:', this.dataSource);
-      this.isLoaded = true;
-      this.subs.push();
-      this.CloseDialog();
-    });
     this.refAloj.subscribe((data) => {
       this.alojamientos = data;
       // console.log('Hola', data);
@@ -83,6 +54,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
         this.dataSource.push(element);
       });
       this.CloseDialog();
+      this.isLoaded = true;
     });
   }
 
