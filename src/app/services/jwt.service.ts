@@ -16,28 +16,36 @@ export class JwtService {
     private cookie: CookieService
   ) { }
 
+  saveLocalStorage(token: string) {
+    localStorage.setItem('access', token);
+  }
+
   login(username: string, password: string) {
     return this.httpClient.post<any>(environment.API_Auth, { username, password }).pipe(tap(res => {
       console.log(res);
       alert(res);
-      this.cookie.set('access', String(res.access));
+      // this.cookie.set('access', String(res.access));
+      this.saveLocalStorage(res.access);
     }));
   }
 
   logout() {
     alert('logout');
-    this.deleteAllCookies();
+    // this.deleteAllCookies();
+    localStorage.removeItem('access');
     window.location.reload();
     // wait 5 sec to refresh
     // setTimeout(() => window.location.reload(), 5000);
   }
 
   public get loggedIn(): boolean {
-    return !!this.cookie.get('access')
+    // return !!this.cookie.get('access')
+    return !!localStorage.getItem('access')
   }
 
   getDecodedToken() {
-    const token = this.cookie.get('access');
+    // const token = this.cookie.get('access');
+    const token = localStorage.getItem('access');
     if (!token) return false;
     const decoded = jwtDecode<JwtCustomInterface>(token);
     return decoded;
@@ -63,7 +71,8 @@ export class JwtService {
   }
 
   public get Token(): string {
-    return this.cookie.get('access');
+    // return this.cookie.get('access');
+    return localStorage.getItem('access') || '';
   }
 
   tokenVerify(): Observable<any> {
