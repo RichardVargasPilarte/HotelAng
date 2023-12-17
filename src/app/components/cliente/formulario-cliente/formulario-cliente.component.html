@@ -51,7 +51,7 @@
                             <mat-error *ngIf="form.controls['telefono'].hasError('required')">
                                 El telefono es <strong>requerido</strong>
                             </mat-error>
-    
+
                             <mat-error *ngIf="form.controls['telefono'].hasError('minlength')">
                                 El telefono debe de tener minimo 8 digitos
                             </mat-error>
@@ -104,24 +104,6 @@
 
                         <mat-error *ngIf="form.controls['num_identificacion'].hasError('minlength')">
                             El número de identificacion debe de tener minimo 16 caracteres
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline" id="direccion">
-                        <mat-label>Dirección</mat-label>
-                        <input type="text" matInput name="direccion" formControlName="direccion"
-                            placeholder="direccion" autocomplete="off">
-
-                        <mat-error *ngIf="form.controls['direccion'].hasError('required')">
-                            La direccion del es <strong>requerida</strong>
-                        </mat-error>
-
-                        <mat-error *ngIf="form.controls['direccion'].hasError('minlength')">
-                            La direccion debe de tener minimo 5 caracteres
                         </mat-error>
                     </mat-form-field>
                 </div>

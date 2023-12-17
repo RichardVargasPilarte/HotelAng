@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -31,6 +31,7 @@ import { FormularioClienteComponent } from './cliente/formulario-cliente/formula
 import { FormularioReservaComponent } from './reserva/formulario-reserva/formulario-reserva.component';
 import { ListadoReservaComponent } from './reserva/listado-reserva/listado-reserva.component';
 import { SharedModule } from '../shared/shared.module';
+import { ActualizarUsuarioComponent } from './usuario/actualizar-usuario/actualizar-usuario.component';
 
 const MaterialComponents = [
   MatSidenavModule,
@@ -61,6 +62,7 @@ const MaterialComponents = [
     FormularioClienteComponent,
     FormularioReservaComponent,
     ListadoReservaComponent,
+    ActualizarUsuarioComponent,
   ],
   imports: [
     CommonModule,

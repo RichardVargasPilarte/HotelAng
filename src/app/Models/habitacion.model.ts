@@ -12,7 +12,7 @@ export interface IHabitacion {
 
 
 export class Habitacion implements IHabitacion {
-  id: number = -1;
+  id = -1;
   nombre = '';
   descripcion = '';
   precio = -1;

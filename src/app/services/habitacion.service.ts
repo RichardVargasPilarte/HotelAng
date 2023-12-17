@@ -19,13 +19,11 @@ export class HabitacionService extends MainService {
     super(httpclient);
   }
 
-  // Metodo GET - Listar todos las habitaciones
   listingRooms(): Observable<Habitacion> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
         if (response.code == HttpCode.OK) {
           response.data.forEach((el: any) => {
-            // console.log(el)
             let habitacion = new Habitacion();
             habitacion = Object.assign(habitacion, el);
             this.list.push(habitacion);
@@ -39,7 +37,6 @@ export class HabitacionService extends MainService {
     });
   }
 
-  // Metodo GET - Listar todos las habitaciones de manera asincrona desde el inicio
   async getRoomsAsynchronous(): Promise<Array<Habitacion>> {
     const response: IHabitacionesResponseDto = await this.getAsync<IHabitacionesResponseDto>()
     this.list = response.data
@@ -47,9 +44,7 @@ export class HabitacionService extends MainService {
     return response.data
   }
 
-  // Metodo POST - addRoom una nueva habitacion
   addRoom(habitacion: Habitacion): Observable<any> {
-    console.log(habitacion);
     const body = { habitacion };
     return new Observable((observer) => {
       this.create(body).subscribe((response) => {
@@ -63,48 +58,45 @@ export class HabitacionService extends MainService {
     });
   }
 
-  // Metodo GET - Para obtener un solo dato mediante su Id
   getARoom(id: number | string) {
-    console.log(id);
     return this.getByID(id);
   }
 
-  // Metodo PUT - Para actualizar un dato mediante su Id
   UpdateRoom(id: string | number, habitaciones: any) {
     const body = { habitaciones };
     return this.update(body, id);
   }
 
-  // Metodo DELETE - Para eliminar un dato mediante su Id
   deleteRoom(id: number | string) {
     return this.delete(id);
   }
 
   override updateList(data: wsModel) {
-    console.log(data);
     let habitacion = new Habitacion();
     habitacion = Object.assign(habitacion, data.data);
 
     switch (data.event) {
       case 'c':
-        console.log('Crear');
-        data.data = habitacion;
-        this.list.push(habitacion);
-        this.list$.next(this.list);
-        break;
+        {
+          data.data = habitacion;
+          this.list.push(habitacion);
+          this.list$.next(this.list);
+          break;
+        }
       case 'u':
-        console.log('update');
-        const index = this.list.map((el) => el.id).indexOf(habitacion.id);
-        this.list.splice(index, 1, habitacion);
-        this.list$.next(this.list);
-        break;
+        {
+          const index = this.list.map((el) => el.id).indexOf(habitacion.id);
+          this.list.splice(index, 1, habitacion);
+          this.list$.next(this.list);
+          break;
+        }
       case 'd':
-        console.log('delete');
-        const list = this.list.filter((el) => el.id !== habitacion.id);
-        console.log(list);
-        this.list = list;
-        this.list$.next(this.list);
-        break;
+        {
+          const list = this.list.filter((el) => el.id !== habitacion.id);
+          this.list = list;
+          this.list$.next(this.list);
+          break;
+        }
     }
   }
 }

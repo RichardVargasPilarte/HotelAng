@@ -1,10 +1,3 @@
-interface BaseCrud {
-    Create: number;
-    Read: number;
-    Update: number;
-    Delete: number;
-}
-
 export class Permission {
     Alojamiento = Alojamientos;
     Habitacion = Habitaciones;

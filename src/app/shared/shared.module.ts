@@ -23,6 +23,7 @@ import { Error404Component } from './error404/error404.component';
 import { MenuComponent } from './menu/menu.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 const MaterialComponents = [
   MatSidenavModule,
@@ -41,8 +42,8 @@ const MaterialComponents = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, Error404Component, MenuComponent],
-  imports: [CommonModule, MaterialComponents, RouterModule, NgSelectModule],
-  exports: [MaterialComponents, DashboardComponent, Error404Component, NgSelectModule],
+  declarations: [DashboardComponent, Error404Component, MenuComponent, SpinnerComponent],
+  imports: [CommonModule, MaterialComponents, RouterModule, NgSelectModule, ],
+  exports: [MaterialComponents, DashboardComponent, Error404Component, NgSelectModule, SpinnerComponent],
 })
 export class SharedModule {}

@@ -15,14 +15,11 @@ export class GruposService extends MainService {
     super(httpclient);
   }
 
-  // Metodo GET - Listar todos los alojamientos
   getGroups(): Observable<Grupos> {
     return new Observable((observer) => {
       this.get().subscribe((data) => {
         if (!data.detail) {
-          console.log('data: ', data);
           data.grupos.forEach((el: any) => {
-            // console.log(el)
             let grupos = new Grupos();
             grupos = Object.assign(grupos, el);
             this.list.push(grupos);

@@ -11,7 +11,7 @@ export interface ICliente {
 
 
 export class Cliente implements ICliente {
-  id: number = -1;
+  id = -1;
   nombre = '';
   apellido = '';
   direccion = '';

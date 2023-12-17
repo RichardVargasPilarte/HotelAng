@@ -38,7 +38,6 @@ export class MainService {
   create(body: any): Observable<any> {
     const head: any = {};
     head['Content-Type'] = 'application/json';
-    console.log('post: ', body);
     return this.client.post(this.getUrl(), body, head);
   }
 
@@ -50,15 +49,8 @@ export class MainService {
 
   delete(id: any): Observable<any> {
     const head: any = {};
-    // if (confirm('¿Esta seguro que desea eliminar?')) {
-    //   head['Content-Type'] = 'application/json';
-    //   return this.client.delete(this.getUrl() + id, head);
-    // }
-    console.log('delete: ', id);
     head['Content-Type'] = 'application/json';
-    // console.log(head);
     return this.client.delete(this.getUrl() + id, head);
-    // return new Observable();
   }
 
   getList() {
@@ -68,18 +60,15 @@ export class MainService {
   updateList(data: wsModel) { }
 
   errorObten(err: string) {
-    // alertify.error(`${err}`);
     Swal.fire({
       position: 'top-end',
       icon: 'error',
       title: 'Ah ocurrido un error al momento de traer los datos',
       showConfirmButton: true,
-      // timer: 1500,
     });
   }
 
   successObten() {
-    // alertify.success('Datos obtenidos de manera exitosa');
     Swal.fire({
       position: 'top-end',
       icon: 'success',

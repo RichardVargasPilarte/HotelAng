@@ -126,7 +126,6 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
         {
           next: (res) => {
             this.dialogRef.close();
-            console.log(res);
           },
           error: (error: any) => console.log(error)
         }
@@ -142,7 +141,6 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
         {
           next: (res) => {
             this.dialogRef.close();
-            console.log(res),
             (error: any) => console.error(error);
           },
         }

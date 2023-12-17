@@ -19,13 +19,11 @@ export class UsuarioService extends MainService {
     super(httpclient);
   }
 
-  // Metodo GET - Listar todos los usuarios
   GetUser(): Observable<any> {
     return new Observable((observer) => {
       this.get().subscribe((response) => {
         if (response.code == HttpCode.OK) {
           response.data.forEach((el: any) => {
-            // console.log(el)
             let usuario = new Usuario();
             usuario = Object.assign(usuario, el);
             this.list.push(usuario);
@@ -46,7 +44,6 @@ export class UsuarioService extends MainService {
     return response.data
   }
 
-  // Metodo POST - addUsers un nuevo usuario
   addUsers(usuario: CreateUser): Observable<object> {
     const body = { usuario };
     return new Observable((observer) => {
@@ -61,13 +58,10 @@ export class UsuarioService extends MainService {
     });
   }
 
-  // Metodo GET - Para obtener un solo dato mediante su Id
   getAUser(id: number | string) {
-    console.log(id);
     return this.getByID(id);
   }
 
-  // Metodo PUT - Para actualizar un dato mediante su Id
   updateUser(id: string | number, usuario: any) {
     const body = { usuario };
     return this.update(body, id);
@@ -79,36 +73,36 @@ export class UsuarioService extends MainService {
     return this.httpclient.put(url, userPassword);
   }
 
-  // Metodo DELETE - Para eliminar un dato mediante su Id
   deleteUser(id: string | number) {
     return this.delete(id);
   }
 
   override updateList(data: wsModel) {
-    // console.log(data)
     let usuario = new Usuario();
     usuario = Object.assign(usuario, data.data);
 
     switch (data.event) {
       case 'c':
-        // console.log("Crear")
-        data.data = usuario;
-        this.list.push(usuario);
-        this.list$.next(this.list);
-        break;
+        {
+          data.data = usuario;
+          this.list.push(usuario);
+          this.list$.next(this.list);
+          break;
+        }
       case 'u':
-        //  console.log("update")
-        const index = this.list.map((el) => el.id).indexOf(usuario.id);
-        this.list.splice(index, 1, usuario);
-        this.list$.next(this.list);
-        break;
+        {
+          const index = this.list.map((el) => el.id).indexOf(usuario.id);
+          this.list.splice(index, 1, usuario);
+          this.list$.next(this.list);
+          break;
+        }
       case 'd':
-        // console.log("delete")
-        const list = this.list.filter((el) => el.id !== usuario.id);
-        console.log(list);
-        this.list = list;
-        this.list$.next(this.list);
-        break;
+        {
+          const list = this.list.filter((el) => el.id !== usuario.id);
+          this.list = list;
+          this.list$.next(this.list);
+          break;
+        }
     }
   }
 }

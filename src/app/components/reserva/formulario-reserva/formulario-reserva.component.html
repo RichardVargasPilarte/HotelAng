@@ -33,7 +33,6 @@
                     <mat-form-field>
                         <mat-label>Fecha Inicio:</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="fecha_inicio" name="fecha_inicio" />
-                        <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -43,7 +42,6 @@
                     <mat-form-field>
                         <mat-label>Fecha Fin:</mat-label>
                         <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin" name="fecha_fin" />
-                        <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matSuffix [for]="fecha_fin"></mat-datepicker-toggle>
                         <mat-datepicker #fecha_fin></mat-datepicker>
                     </mat-form-field>

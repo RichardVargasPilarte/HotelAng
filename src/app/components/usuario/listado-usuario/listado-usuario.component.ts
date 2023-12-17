@@ -10,7 +10,6 @@ import { Grupos } from '../../../models/grupo.model';
 
 import { FormularioUsuarioComponent } from '../formulario-usuario/formulario-usuario.component';
 
-import { RedirIfFailPipe } from '../../../pipes/redir-if-fail.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { RoleId } from '../../../shared/types/Roles.types';
@@ -37,9 +36,8 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     'first_name',
     'last_name',
     'username',
-    'estado',
-    'telefono',
     'groups',
+    'estado',
     'actions',
   ];
 
@@ -79,8 +77,8 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteUser(id: number): any {
-    Swal.fire({
+  deleteUser(id: number): unknown {
+    return Swal.fire({
       title: '¿Esta seguro de eliminar este dato?',
       text: '¡No se podra recuperar este dato luego de ser eliminado!',
       icon: 'warning',
@@ -95,18 +93,13 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
             Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
             this.SpinnerService.hide();
             console.log('Se elimino el usuario');
-            // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
-            console.log(data);
-
-            (error: any) =>
-              console.log(
-                'Hubo un fallo al momento de eliminar el dato' + error
-              );
+            (error: unknown) => console.log(
+              'Hubo un fallo al momento de eliminar el dato' + error
+            );
           },
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        (error: string) =>
-          console.log('Hubo un fallo al momento de eliminar el dato' + error);
+        (error: string) => console.log('Hubo un fallo al momento de eliminar el dato' + error);
         Swal.fire(
           'Cancelado',
           'El dato no fue eliminado y esta seguro :)',
@@ -124,12 +117,10 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     if (tipo === 'c') {
       this.dialog.open(FormularioUsuarioComponent, {
         data: { type: tipo },
-        // width: '40%',
       });
     } else {
       const users = this.usuarios.find((d) => d.id === id);
       this.dialog.open(FormularioUsuarioComponent, {
-        // width: '40%',
         data: { type: tipo, user: users },
       });
     }

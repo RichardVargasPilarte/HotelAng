@@ -27,25 +27,21 @@ export class WebsocketService {
 
   setsock() {
     this.socket = new WebSocket(`ws://${ip}/ws/?access=${this.jwt.Token}`);
-    // console.log((`ws://${ip}:8000/ws/?token=${this.jwt.Token}`));
 
     this.socket.onopen = () => {
       console.log('WebSockets connection created for Socket Service');
       if (this.contador > 1) {
-        // alertify.success('WebSocket reconectado, si hay multiples usuarios trabajando es recomendable recargar la pagina');
         Swal.fire({
           position: 'top-end',
           icon: 'success',
           title: 'WebSocket reconectado, si hay multiples usuarios trabajando es recomendable recargar la pagina',
           showConfirmButton: true,
-          // timer: 2500
         })
       }
       this.contador = 1;
     };
 
     this.socket.onmessage = (event: MessageEvent) => {
-      console.log('hola', event);
       let action = JSON.parse(event.data);
       action = {
         data: JSON.parse(action.message.data),
@@ -71,20 +67,17 @@ export class WebsocketService {
       }
     };
     this.socket.onclose = () => {
-      // connection closed, discard old websocket and create a new one
       if (this.contador !== 0 && this.contador <= this.MAX_RECONNECTION) {
         console.log(
           `reconectando ws intento ${this.contador} de ${this.MAX_RECONNECTION}`
         );
         this.socket = undefined;
         const p3 = new Promise<void>((resolve) => {
-          // alertify.error(`reconectando ws intento ${this.contador} de ${this.MAX_RECONNECTION}`);
           Swal.fire({
             position: 'top-end',
             icon: 'success',
             title: `Reconectando websocket intento ${this.contador} de ${this.MAX_RECONNECTION}`,
             showConfirmButton: true,
-            // timer: 1500
           })
           this.contador++;
           setTimeout(() => {
@@ -93,19 +86,13 @@ export class WebsocketService {
           resolve();
         });
       } else {
-        // alertify.confirm('Recargar pagina')
-        // .set('onok', () => {
-        //   window.location.reload();
-        // })
-        // .set({ title: 'Error de conexion' });
         Swal.fire({
           position: 'top-end',
           icon: 'error',
           title: 'Error de conexion, por favor verificar su conexion a internet o recargar la pagina',
           showConfirmButton: true,
-          // timer: 1500
         })
-        
+
       }
     };
     if (this.socket.readyState === WebSocket.OPEN) {

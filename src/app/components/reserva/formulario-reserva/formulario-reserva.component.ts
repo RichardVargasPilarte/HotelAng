@@ -30,14 +30,6 @@ interface DialogData {
 })
 export class FormularioReservaComponent implements OnInit, OnDestroy {
   public reserva: Reserva = new Reserva();
-  // public clientes: any[] = [{
-  //   nombre: 'nombre',
-  //   id: 'nomb'
-  // },
-  // {
-  //   nombre: 'nombre2',
-  //   id: 'nomb2'
-  // }];
   public habitaciones: Habitacion[] = [];
   subs: Subscription[] = [];
   public selected?= '0';
@@ -65,8 +57,6 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     this.habitaciones = this.habitacionServicio$.list;
     this.refCliente = this.clienteServicio$.getList();
     this.refHabitacion = this.habitacionServicio$.getList();
-    // this.selected = this.clientes[0].id;
-    // this.selected = this.habitaciones[0].id;
   }
 
   ngOnInit(): void {
@@ -74,7 +64,6 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
     const clientsubscribe = this.refCliente.subscribe(
       (clients) => {
         this.clientes = clients
-        console.log(clients)
       }
     )
     this.subs.push(clientsubscribe);
@@ -99,7 +88,6 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(6),
         ]),
-        // pago_choices: new FormControl('', Validators.required),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(15), Validators.maxLength(150)]),
         eliminado: new FormControl('NO'),
       });
@@ -121,7 +109,6 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(6),
         ]),
-        // pago_choices: new FormControl(rserva.pago_choices, Validators.required),
         descripcion: new FormControl(reserva.descripcion, [Validators.required, Validators.minLength(15), Validators.maxLength(150)]),
       });
     }
@@ -137,7 +124,6 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
         {
           next: (res) => {
             this.dialogRef.close();
-            console.log(res);
           },
           error: (error: any) => console.log(error)
         }
@@ -153,7 +139,6 @@ export class FormularioReservaComponent implements OnInit, OnDestroy {
         {
           next: (res) => {
             this.dialogRef.close();
-            console.log(res),
               (error: any) => console.error(error);
           },
         }

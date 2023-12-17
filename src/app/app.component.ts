@@ -41,16 +41,18 @@ export class AppComponent implements OnInit {
   }
 
   token(): void {
-    console.log();
     if (this.JwtService.Token) {
       this.JwtService.tokenVerify().subscribe(
-        (res) => {
-          if (this.JwtService.isAuthenticated() && this.JwtService.loggedIn) {
-            this.ws.setsock();
-            this.loadData();
-          }
-        },
-        (err) => this.JwtService.logout()
+        {
+          next: () => {
+            if (this.JwtService.isAuthenticated() && this.JwtService.loggedIn) {
+              this.ws.setsock();
+              this.loadData();
+            }
+          },
+          error: () => this.JwtService.logout()
+        }
+
       );
     } else {
       alert('No hay token');

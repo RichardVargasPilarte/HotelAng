@@ -24,8 +24,8 @@ import { Permission } from '../../../shared/types/permissions.types';
   styleUrls: ['./listado-habitacion.component.scss'],
 })
 export class ListadoHabitacionComponent implements OnInit, OnDestroy {
-  public habitaciones: Habitacion[] = []; // propiedad encarga de interactuar con el modelo habitaciones
-  public alojamientos: Alojamiento[] = []; // propiedad encarga de interactuar con el modelo alojamientos
+  public habitaciones: Habitacion[] = [];
+  public alojamientos: Alojamiento[] = [];
   public subs: Subscription[] = [];
   sub: Subscription | undefined;
   private promesas: Promise<any>[] = [];
@@ -79,7 +79,6 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
         )
       ) {
         this.dataSource = this.habitaciones;
-        console.log('estas son las habitaciones:', this.dataSource);
         this.isLoaded = true;
         this.subs.push();
         this.CloseDialog();
@@ -111,12 +110,9 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Si',
       cancelButtonText: 'No',
     })
-    console.log(result)
     if (result.isConfirmed) {
       this.habitacionservice.deleteRoom(id).subscribe((data) => {
-        console.log('Se elimino la habitación');
         Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
-        console.log(data);
       });
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       (error: string) =>

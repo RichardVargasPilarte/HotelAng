@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { ChangeForgottenPassword } from '../../models/usuario.model';
-
 import Swal from 'sweetalert2';
 
 import {
@@ -41,8 +39,6 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.token = params.get('token') ?? '';
-
-      console.log('Este es el token:', this.token);
     })
 
     this.createForm();
@@ -72,9 +68,6 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
         {
           next: (res) => {
             this.resetSuccessful = true;
-            console.log(res);
-            console.log(password);
-            console.log(this.token);
 
             Swal.fire({
               position: "top-end",
@@ -88,9 +81,6 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
 
           },
           error: (error: any) => {
-            console.log('Password reset error:', error);
-            console.log(password);
-            console.log(this.token);
             Swal.fire({
               position: "top-end",
               icon: "error",
@@ -121,7 +111,6 @@ export class CambiarContrasenaOlvidadaComponent implements OnInit {
   }
 
   navigateToLogin() {
-    // Redirect the user to the login page after a successful password reset
     this.router.navigate(['/login']);
   }
 

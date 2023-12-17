@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -21,7 +21,7 @@ interface DialogData {
   templateUrl: './formulario-alojamiento.component.html',
   styleUrls: ['./formulario-alojamiento.component.scss'],
 })
-export class FormularioAlojamientoComponent implements OnInit {
+export class FormularioAlojamientoComponent {
   public alojamientos = new Alojamiento();
   public edit!: boolean;
   subs: Subscription[] = [];
@@ -36,8 +36,6 @@ export class FormularioAlojamientoComponent implements OnInit {
   ) {
     this.createForm()
   }
-
-  ngOnInit(): void {}
 
   createForm(id?: string): void {
     if (this.data.type === 'c') {
@@ -87,14 +85,11 @@ export class FormularioAlojamientoComponent implements OnInit {
     alojam = Object.assign(alojam, this.form.value);
     this.subs.push(
       this.alojamientoServicio.addAccommodations(alojam).subscribe(
-        // (res) => this.dialogRef.close(),
-        // (error) => console.log('Hubo un error' + error)
-
         {
-          next: (res) => {
+          next: () => {
             this.dialogRef.close();
           },
-          error: (error: any) => console.log('Hubo un error' + error)
+          error: (error: unknown) => console.log('Hubo un error' + error)
         }
       )
     );
@@ -107,20 +102,17 @@ export class FormularioAlojamientoComponent implements OnInit {
       this.alojamientoServicio
         .updateAccommodation(alojam.id!, alojam)
         .subscribe(
-          // (res) => this.dialogRef.close(),
-          // (error) => console.log('Hubo un error' + error)
-
           {
-            next: (res) => {
+            next: () => {
               this.dialogRef.close();
-              (error: any) => console.log('Hubo un error' + error)
+              (error: unknown) => console.log('Hubo un error' + error)
             }
           }
         )
     );
   }
 
-  get Form(): any {
+  get Form(): unknown {
     return this.form.controls;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   FormBuilder,
@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
   templateUrl: './restablecer-contrasena.component.html',
   styleUrls: ['./restablecer-contrasena.component.scss']
 })
-export class RestablecerContrasenaComponent implements OnInit {
+export class RestablecerContrasenaComponent {
 
   public form!: FormGroup;
 
@@ -29,9 +29,6 @@ export class RestablecerContrasenaComponent implements OnInit {
     public dialogRef: MatDialogRef<RestablecerContrasenaComponent>
   ) {
     this.createForm();
-  }
-
-  ngOnInit(): void {
   }
 
   createForm(): void {
@@ -47,7 +44,6 @@ export class RestablecerContrasenaComponent implements OnInit {
       {
         next: () => {
           this.dialogRef.close();
-          console.log(email);
 
           Swal.fire({
             position: "top-end",

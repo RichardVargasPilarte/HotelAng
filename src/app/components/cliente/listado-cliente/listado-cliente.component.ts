@@ -7,11 +7,12 @@ import { Cliente } from '../../../models/cliente.model';
 import { FormularioClienteComponent } from '../formulario-cliente/formulario-cliente.component';
 
 import Swal from 'sweetalert2';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 import { RoleId } from '../../../shared/types/Roles.types';
 import { Permission } from '../../../shared/types/permissions.types';
 import { JwtService } from '../../../services/jwt.service';
+
+import { SpinnerService } from '../../../services/spinner.service';
 
 @Component({
   selector: 'app-listado-cliente',
@@ -30,8 +31,6 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     'apellido',
     'telefono',
     'email',
-    // 'tipo_identificacion',
-    // 'num_identificacion',
     'actions',
   ];
   success = false;
@@ -41,7 +40,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
   constructor(
     private _clienteService: ClienteService,
     private dialog: MatDialog,
-    private SpinnerService: NgxSpinnerService,
+    private spinnerService: SpinnerService,
     private jwtService: JwtService,
     private cdRef: ChangeDetectorRef
   ) {
@@ -49,17 +48,15 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.showLoading();
+    this.spinnerService.showLoading();
     this.refClient.subscribe((data) => {
       this.clientes = data;
-      console.log('clientes', this.clientes);
       this.dataSource = [];
       this.clientes.forEach((element) => {
         this.dataSource.push(element);
       });
-      console.log('clientes', this.dataSource);
       this.cdRef.detectChanges();
-      this.hideLoading();
+      this.spinnerService.hideLoading();
       this.isLoaded = true;
     });
   }
@@ -79,14 +76,11 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        this.SpinnerService.show();
+        this.spinnerService.showLoading();
         this._clienteService.deleteClient(id).subscribe((data) => {
           this.success = true;
           Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
-          this.SpinnerService.hide();
-          console.log('Se elimino el cliente');
-          // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
-          console.log(data);
+          this.spinnerService.hideLoading();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         (error: string) =>
@@ -100,24 +94,15 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     });
   }
 
-  showLoading() {
-    this.SpinnerService.show()
-  }
-
-  hideLoading(): void {
-    this.SpinnerService.hide();
-  }
-
   openDialog(tipo: string, id?: number): void {
     if (tipo === 'c') {
       this.dialog.open(FormularioClienteComponent, {
         data: { type: tipo },
       });
     } else {
-      const habitac = this.clientes.find((d) => d.id === id);
+      const client = this.clientes.find((d) => d.id === id);
       this.dialog.open(FormularioClienteComponent, {
-        // width: '80%',
-        data: { type: tipo, hab: habitac },
+        data: { type: tipo, client: client },
       });
     }
   }

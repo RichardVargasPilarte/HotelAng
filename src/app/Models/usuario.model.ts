@@ -28,7 +28,30 @@ export class Usuario implements IUsuario {
   groups: IGrupos[] = []
 }
 
+export interface IActualizarUsuario {
+  id: number | null;
+  first_name: string | null;
+  last_name: string | null;
+  username: string | null;
+  email: string | null;
+  direccion: string | null;
+  estado: number | null;
+  telefono: string | null;
+  groups: IGrupos[]
+}
 
+
+export class ActualizarUsuario implements IActualizarUsuario{
+  id = -1;
+  first_name = ''
+  last_name = ''
+  username = ''
+  email = ''
+  direccion = ''
+  estado = -1;
+  telefono = ''
+  groups: IGrupos[] = []
+}
 
 export interface ICreateUser {
   first_name:string
@@ -56,12 +79,10 @@ export class CreateUser implements ICreateUser{
   groups =-1;
 }
 
-/* Se envia enlace al correo del usuario */
 export class SendEmail {
   email!: string;
 }
 
-/* Usuario cambia su contraseña desde enlace del correo */
 export interface IChangeForgottenPassword {
   token: string;
   password:string;
@@ -72,7 +93,6 @@ export class ChangeForgottenPassword implements IChangeForgottenPassword {
   password = '';
 }
 
-/* Usuario cambia su contraseña por una nueva */
 export class IChangePassword{
   id!:number;
   old_password!: string;

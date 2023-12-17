@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -21,7 +21,7 @@ interface DialogData {
   templateUrl: './formulario-cliente.component.html',
   styleUrls: ['./formulario-cliente.component.scss']
 })
-export class FormularioClienteComponent implements OnInit {
+export class FormularioClienteComponent {
 
   public clientes = new Cliente();
   public edit!: boolean;
@@ -42,13 +42,11 @@ export class FormularioClienteComponent implements OnInit {
   ) {
     this.createForm()
   }
-  ngOnInit(): void {
-  }
 
   createForm(id?: string): void {
     if (this.data.type === 'c') {
       this.form = this.fb.group({
-        id: new FormControl(0),
+        id: new FormControl(-1),
         nombre: new FormControl('', [
           Validators.required,
           Validators.minLength(3),
@@ -56,10 +54,6 @@ export class FormularioClienteComponent implements OnInit {
         apellido: new FormControl('', [
           Validators.required,
           Validators.minLength(3),
-        ]),
-        direccion: new FormControl('', [
-          Validators.required,
-          Validators.minLength(5),
         ]),
         telefono: new FormControl('', [
           Validators.required,
@@ -110,11 +104,8 @@ export class FormularioClienteComponent implements OnInit {
     client = Object.assign(client, this.form.value);
     this.subs.push(
       this.clienteServicio.addCustomer(client).subscribe(
-        // (res) => this.dialogRef.close(),
-        // (error) => console.log('Hubo un error' + error)
-
         {
-          next: (res) => {
+          next: () => {
             this.dialogRef.close();
           },
           error: (error: any) => console.log('Hubo un error' + error)
@@ -130,11 +121,8 @@ export class FormularioClienteComponent implements OnInit {
       this.clienteServicio
         .updateClient(client.id!, client)
         .subscribe(
-          // (res) => this.dialogRef.close(),
-          // (error) => console.log('Hubo un error' + error)
-
           {
-            next: (res) => {
+            next: () => {
               this.dialogRef.close();
               (error: any) => console.log('Hubo un error' + error)
             }

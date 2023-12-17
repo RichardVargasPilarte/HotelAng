@@ -48,7 +48,6 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     this.SpinnerService.show();
     this.refAloj.subscribe((data) => {
       this.alojamientos = data;
-      // console.log('Hola', data);
       this.dataSource = [];
       this.alojamientos.forEach((element) => {
         this.dataSource.push(element);
@@ -73,14 +72,9 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        // this.SpinnerService.show();
         this._alojamientoService.deleteAccommodation(id).subscribe((data) => {
           this.success = true;
           Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
-          // this.SpinnerService.hide();
-          console.log('Se elimino el alojamiento');
-          // se debe mandar a llamar al servicio para que se actualice la lista de datos para obtener los datos registrados
-          console.log(data);
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         (error: string) =>
@@ -106,7 +100,6 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     } else {
       const alojam = this.alojamientos.find((d) => d.id === id);
       this.dialog.open(FormularioAlojamientoComponent, {
-        // width: '70%',
         data: { type: tipo, alojam },
       });
     }

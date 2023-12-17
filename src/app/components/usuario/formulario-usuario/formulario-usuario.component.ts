@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -23,12 +23,10 @@ interface DialogData {
   templateUrl: './formulario-usuario.component.html',
   styleUrls: ['./formulario-usuario.component.scss'],
 })
-export class FormularioUsuarioComponent implements OnInit {
+export class FormularioUsuarioComponent implements OnInit, OnDestroy {
   public usuarios: Usuario = new Usuario();
   public gruposCargados: Grupos[] = [];
-  public edit!: boolean;
   subs: Subscription[] = [];
-  public selected = '';
   public form!: FormGroup;
   public refGrupos: Observable<any>;
 
@@ -43,7 +41,6 @@ export class FormularioUsuarioComponent implements OnInit {
   ) {
     this.gruposCargados = this.grupoServicio.list;
     this.refGrupos = this.grupoServicio.getList();
-    // this.selected = this.gruposCargados[0].id;
   }
 
   ngOnInit(): void {
@@ -147,11 +144,10 @@ export class FormularioUsuarioComponent implements OnInit {
     user = Object.assign(user, this.form.value);
     this.subs.push(
       this.usuarioServicio.addUsers(user).subscribe({
-        next: (res) => {
+        next: () => {
           this.dialogRef.close();
-          console.log(res);
         },
-        error: (error: any) => console.error(error),
+        error: (error: unknown) => console.error(error),
       })
     );
   }
@@ -161,9 +157,8 @@ export class FormularioUsuarioComponent implements OnInit {
     user = Object.assign(user, this.form.value);
     this.subs.push(
       this.usuarioServicio.updateUser(user.id!, user).subscribe({
-        next: (res) => {
+        next: () => {
           this.dialogRef.close();
-          console.log(res);
         },
         error: (error: any) => console.error(error),
       })

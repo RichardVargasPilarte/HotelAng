@@ -22,47 +22,41 @@ export class JwtService {
 
   login(username: string, password: string) {
     return this.httpClient.post<any>(environment.API_Auth, { username, password }).pipe(tap(res => {
-      console.log(res);
       alert(res);
-      // this.cookie.set('access', String(res.access));
-      this.saveLocalStorage(res.access);
+      this.cookie.set('access', String(res.access));
+      // this.saveLocalStorage(res.access);
     }));
   }
 
   logout() {
     alert('logout');
-    // this.deleteAllCookies();
-    localStorage.removeItem('access');
+    this.deleteAllCookies();
+    // localStorage.removeItem('access');
     window.location.reload();
     // wait 5 sec to refresh
     // setTimeout(() => window.location.reload(), 5000);
   }
 
   public get loggedIn(): boolean {
-    // return !!this.cookie.get('access')
-    return !!localStorage.getItem('access')
+    return !!this.cookie.get('access')
+    // return !!localStorage.getItem('access')
   }
 
   getDecodedToken() {
-    // const token = this.cookie.get('access');
-    const token = localStorage.getItem('access');
+    const token = this.cookie.get('access');
+    // const token = localStorage.getItem('access');
     if (!token) return false;
     const decoded = jwtDecode<JwtCustomInterface>(token);
     return decoded;
   }
 
   public isAuthenticated(): boolean {
-    // Check whether the token is expired and return
-    // true or false
     const decoded = this.getDecodedToken();
     if (decoded) {
-      // console.log(decoded);
       if (decoded.exp === undefined) {
-        console.log('No exp');
         return false;
       }
       if (decoded.exp < Date.now() / 1000) {
-        console.log('token expirado');
         return false;
       }
       return true;
@@ -71,8 +65,8 @@ export class JwtService {
   }
 
   public get Token(): string {
-    // return this.cookie.get('access');
-    return localStorage.getItem('access') || '';
+    return this.cookie.get('access');
+    // return localStorage.getItem('access') || '';
   }
 
   tokenVerify(): Observable<any> {
