@@ -11,12 +11,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReservaService } from '../../../services/reserva.service';
 
 import { HabitacionService } from '../../../services/habitacion.service';
-import { Habitacion } from '../../../models/habitacion.model';
+import { Habitacion } from '../../../Models/habitacion.model';
 
 import { ClienteService } from '../../../services/cliente.service';
-import { Cliente } from '../../../models/cliente.model';
+import { Cliente } from '../../../Models/cliente.model';
+
+
 import { DatePipe } from '@angular/common';
-import { IReservaResponse, Reserva } from 'src/app/models/reserva.model';
+import { IReservaResponse, Reserva } from 'src/app/Models/reserva.model';
 
 interface DialogData {
   type: string;

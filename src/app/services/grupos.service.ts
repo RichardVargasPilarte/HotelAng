@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
-import { Grupos } from '../models/grupo.model';
+
+import { Grupos } from '../Models/grupo.model';
 
 @Injectable({
   providedIn: 'root',

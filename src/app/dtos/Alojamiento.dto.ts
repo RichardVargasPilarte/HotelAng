@@ -1,5 +1,5 @@
 import { IMainResponseArrayDto, IMainResponseObjectDto } from "./Response.dto";
-import { Alojamiento } from '../models/alojamiento.model';
+import { Alojamiento } from '../Models/alojamiento.model';
 
 
 export interface IAlojamientoResponseDto extends IMainResponseObjectDto<Alojamiento> {

@@ -7,8 +7,10 @@ import { delay } from 'rxjs/operators';
 
 import { JwtService } from '../../services/jwt.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CambioContrasenaComponent } from 'src/app/auth/cambio-contrasena/cambio-contrasena.component';
-import JwtCustomInterface from '../../models/jwtInterface';
+import { CambioContrasenaComponent } from '../../auth/cambio-contrasena/cambio-contrasena.component';
+
+
+import JwtCustomInterface from '../../Models/jwtInterface';
 
 @Component({
   selector: 'app-dashboard',

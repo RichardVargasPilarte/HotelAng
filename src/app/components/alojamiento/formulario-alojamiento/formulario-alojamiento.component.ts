@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { AlojamientoService } from '../../../services/alojamiento.service';
-import { Alojamiento, IAlojamientoResponse } from '../../../models/alojamiento.model';
+import { Alojamiento, IAlojamientoResponse } from '../../../Models/alojamiento.model';
 
 interface DialogData {
   type: string;

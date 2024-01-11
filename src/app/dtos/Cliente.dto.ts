@@ -1,5 +1,5 @@
 import { IMainResponseArrayDto, IMainResponseObjectDto } from "./Response.dto";
-import { Cliente } from '../models/cliente.model';
+import { Cliente } from '../Models/cliente.model';
 
 
 

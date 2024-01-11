@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Cliente } from '../models/cliente.model';
-import { wsModel } from '../models/webSocket.model';
+import { Cliente } from '../Models/cliente.model';
+import { wsModel } from '../Models/webSocket.model';
 
 import { MainService } from './main.service';
 import { IClientesResponseDto } from '../dtos/Cliente.dto';

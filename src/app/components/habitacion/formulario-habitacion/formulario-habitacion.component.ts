@@ -9,9 +9,10 @@ import { Subscription, Observable } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { HabitacionService } from '../../../services/habitacion.service';
-import { Habitacion, IHabitacionResponse } from '../../../models/habitacion.model';
+import { Habitacion, IHabitacionResponse } from '../../../Models/habitacion.model';
+
 import { AlojamientoService } from '../../../services/alojamiento.service';
-import { Alojamiento } from '../../../models/alojamiento.model';
+import { Alojamiento } from '../../../Models/alojamiento.model';
 
 interface DialogData {
   type: string;

@@ -1,4 +1,4 @@
-import { Menu } from '../../models/menu.models';
+import { Menu } from '../../Models/menu.models';
 
 export const menu: Menu[]=[
     {

@@ -1,6 +1,6 @@
 import { IMainResponseArrayDto, IMainResponseObjectDto } from "./Response.dto";
 
-import { Habitacion } from '../models/habitacion.model';
+import { Habitacion } from '../Models/habitacion.model';
 
 export interface IHabitacionResponseDto extends IMainResponseObjectDto<Habitacion> {
 

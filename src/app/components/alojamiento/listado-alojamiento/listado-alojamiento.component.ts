@@ -3,7 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 
 import { AlojamientoService } from '../../../services/alojamiento.service';
-import { Alojamiento } from '../../../models/alojamiento.model';
+import { Alojamiento } from '../../../Models/alojamiento.model';
+
 import { FormularioAlojamientoComponent } from '../formulario-alojamiento/formulario-alojamiento.component';
 
 import Swal from 'sweetalert2';

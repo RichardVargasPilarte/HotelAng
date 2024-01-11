@@ -5,7 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
 import { JwtInterceptorInterceptor } from './interceptors/jwt.interceptor';
-import { RedirIfFailPipe } from './pipes/redir-if-fail.pipe';
+
+import { RedirIfFailPipe } from '../app/Pipes/redir-if-fail.pipe';
 
 // rutas
 import { AppRoutingModule } from './app-routing.module';
@@ -26,7 +27,7 @@ import { MainService } from './services/main.service';
 import { UsuarioService } from './services/usuario.service';
 import { WebsocketService } from './services/websocket.service';
 
-import {UserGuard } from './guards/user.guard';
+import {UserGuard } from '../app/Guards/user.guard';
 
 import { } from '../environments/environment';
 import { MAT_DATE_LOCALE } from '@angular/material/core';

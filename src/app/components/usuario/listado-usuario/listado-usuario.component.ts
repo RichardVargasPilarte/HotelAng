@@ -5,16 +5,16 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { UsuarioService } from '../../../services/usuario.service';
 import { GruposService } from '../../../services/grupos.service';
-import { Usuario } from '../../../models/usuario.model';
-import { Grupos } from '../../../models/grupo.model';
+import { Usuario } from '../../../Models/usuario.model';
+import { Grupos } from '../../../Models/grupo.model';
 
 import { FormularioUsuarioComponent } from '../formulario-usuario/formulario-usuario.component';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { RoleId } from '../../../shared/types/Roles.types';
-import { Permission } from 'src/app/shared/types/permissions.types';
-import { JwtService } from 'src/app/services/jwt.service';
+import { Permission } from '../../../shared/types/permissions.types';
+import { JwtService } from '../../../services/jwt.service';
 
 @Component({
   selector: 'app-listado-usuario',

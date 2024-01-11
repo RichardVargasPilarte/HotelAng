@@ -8,7 +8,8 @@ import { ListadoClienteComponent } from './components/cliente/listado-cliente/li
 import { LoginComponent } from './auth/login/login.component';
 import { Error404Component } from './shared/error404/error404.component';
 import { ListadoReservaComponent } from './components/reserva/listado-reserva/listado-reserva.component';
-import { UserGuard } from './guards/user.guard';
+import { UserGuard } from './Guards/user.guard';
+
 import { MenuComponent } from './shared/menu/menu.component';
 
 import { CambiarContrasenaOlvidadaComponent } from './auth/cambiar-contrasena-olvidada/cambiar-contrasena-olvidada.component';

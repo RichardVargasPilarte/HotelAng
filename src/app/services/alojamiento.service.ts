@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Alojamiento } from '../models/alojamiento.model';
-import { wsModel } from '../models/webSocket.model';
+import { Alojamiento } from '../Models/alojamiento.model';
+import { wsModel } from '../Models/webSocket.model';
 
 import { MainService } from './main.service';
 import { IAlojamientosResponseDto } from '../dtos/Alojamiento.dto';
 import { HttpCode } from '../../app/shared/types/httpResponse.types';
+
 
 @Injectable({
   providedIn: 'root',

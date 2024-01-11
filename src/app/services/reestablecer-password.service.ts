@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { SendEmail } from '../models/usuario.model';
+import { SendEmail } from '../Models/usuario.model';
 
 import { Observable } from 'rxjs';
 

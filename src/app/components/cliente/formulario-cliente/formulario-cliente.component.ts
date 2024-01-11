@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ClienteService } from '../../../services/cliente.service';
-import { Cliente, IClientResponse } from '../../../models/cliente.model';
+import { Cliente, IClientResponse } from '../../../Models/cliente.model';
 
 interface DialogData {
   type: string;

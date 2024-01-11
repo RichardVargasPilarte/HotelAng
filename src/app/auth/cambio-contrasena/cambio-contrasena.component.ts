@@ -8,11 +8,13 @@ import {
 } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
-import { UsuarioService } from 'src/app/services/usuario.service';
-import { JwtService } from 'src/app/services/jwt.service';
 
-import { ChangePassword } from '../../models/usuario.model';
-import JwtCustomInterface from 'src/app/models/jwtInterface';
+import { UsuarioService } from '../../services/usuario.service';
+
+import { JwtService } from '../../services/jwt.service';
+
+import { ChangePassword } from '../../Models/usuario.model';
+import JwtCustomInterface from '../../Models/jwtInterface';
 import Swal from 'sweetalert2';
 
 @Component({

@@ -5,7 +5,8 @@ import jwtDecode from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { environment } from "../../environments/environment";
 import { CookieService } from 'ngx-cookie-service';
-import JwtCustomInterface from '../models/jwtInterface';
+import JwtCustomInterface from '../Models/jwtInterface';
+
 @Injectable({
   providedIn: 'root'
 })

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { JwtService } from './jwt.service';
 import { AlojamientoService } from './alojamiento.service';
 import { HabitacionService } from './habitacion.service';
-import { ip } from '../models/api.model';
+import { ip } from '../Models/api.model';
 import { UsuarioService } from './usuario.service';
 import { ClienteService } from './cliente.service';
 import { ReservaService } from './reserva.service';

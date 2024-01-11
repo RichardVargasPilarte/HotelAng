@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
-import { Habitacion } from '../models/habitacion.model';
-import { wsModel } from '../models/webSocket.model';
+import { Habitacion } from '../Models/habitacion.model';
+import { wsModel } from '../Models/webSocket.model';
 
 import { IHabitacionesResponseDto } from '../dtos/Habitacion.dto';
 import { HttpCode } from '../../app/shared/types/httpResponse.types';

@@ -3,8 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
-import { CreateUser, Usuario } from '../models/usuario.model';
-import { wsModel } from '../models/webSocket.model';
+
+import { CreateUser, Usuario} from '../Models/usuario.model';
+
+import { wsModel } from '../Models/webSocket.model';
+
 
 import { IUsuariosResponseDto } from '../dtos/Usuario.dto';
 import { HttpCode } from '../../app/shared/types/httpResponse.types';

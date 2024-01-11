@@ -3,13 +3,16 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Habitacion } from '../../../models/habitacion.model';
+import { Habitacion } from '../../../Models/habitacion.model';
+
 import { HabitacionService } from '../../../services/habitacion.service';
-import { Alojamiento } from '../../../models/alojamiento.model';
+
+import { Alojamiento } from '../../../Models/alojamiento.model';
+
 import { AlojamientoService } from '../../../services/alojamiento.service';
 
 import { FormularioHabitacionComponent } from '../formulario-habitacion/formulario-habitacion.component';
-import { RedirIfFailPipe } from '../../../pipes/redir-if-fail.pipe';
+import { RedirIfFailPipe } from '../../../Pipes/redir-if-fail.pipe';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal, { SweetAlertResult } from 'sweetalert2';

@@ -3,14 +3,17 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Reserva } from '../../../models/reserva.model';
+import { Reserva } from '../../../Models/reserva.model';
+
 import { ReservaService } from '../../../services/reserva.service';
 import { FormularioReservaComponent } from '../formulario-reserva/formulario-reserva.component';
 
-import { Habitacion } from '../../../models/habitacion.model';
+import { Habitacion } from '../../../Models/habitacion.model';
+
 import { HabitacionService } from '../../../services/habitacion.service';
 
-import { RedirIfFailPipe } from '../../../pipes/redir-if-fail.pipe';
+import { RedirIfFailPipe } from '../../../Pipes/redir-if-fail.pipe';
+
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
 import { SpinnerService } from '../../../services/spinner.service';
