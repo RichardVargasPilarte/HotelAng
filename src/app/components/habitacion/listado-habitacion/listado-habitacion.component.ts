@@ -34,8 +34,8 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   private promesas: Promise<any>[] = [];
   public isLoaded = false;
   public dataSource: Habitacion[] = [];
-  refHabitacion!: Observable<any[]>;
-  refAlojamiento!: Observable<any[]>;
+  refHabitacion!: Observable<any[] | null>;
+  refAlojamiento!: Observable<any[] | null>;
   socket!: WebSocket;
 
   displayedColumns: string[] = [
@@ -66,10 +66,12 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.SpinnerService.show();
     this.refAlojamiento.subscribe((data) => {
+      if (!data) data = [];
       this.alojamientos = data;
     })
 
     this.refHabitacion.subscribe((data) => {
+      if (!data) data = [];
       this.habitaciones = data;
     })
 
@@ -88,6 +90,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
       }
     });
     this.refHabitacion.subscribe((data) => {
+      if (!data) data = []
       this.habitaciones = data;
       this.dataSource = [];
       this.habitaciones.forEach((element) => {

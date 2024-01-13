@@ -12,7 +12,7 @@ import { wsModel } from '../Models/webSocket.model';
 export class MainService {
   public client: HttpClient;
   public api = Api;
-  public list$ = new BehaviorSubject<any[]>([]);
+  public list$ = new BehaviorSubject<any[] | null>(null);
   public resource: string | undefined;
 
   public list: any[] = [];

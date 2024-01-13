@@ -47,15 +47,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.SpinnerService.show();
-    this.refAloj.subscribe((data) => {
-      this.alojamientos = data;
-      this.dataSource = [];
-      this.alojamientos.forEach((element) => {
-        this.dataSource.push(element);
-      });
-      this.CloseDialog();
-      this.isLoaded = true;
-    });
+    this.handleAlojRef();
   }
 
   ngOnDestroy(): void {
@@ -112,5 +104,17 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
 
   hasPermission(permissionId: number) {
     return this.jwtService.hasPermission(permissionId);
+  }
+
+  private handleAlojRef(): void {
+    this.refAloj.subscribe((data) => {
+      this.isLoaded = data !== null;
+      this.alojamientos = data || [];
+      this.dataSource = [...this.alojamientos];
+
+      if (this.isLoaded) {
+        this.CloseDialog();
+      }
+    });
   }
 }

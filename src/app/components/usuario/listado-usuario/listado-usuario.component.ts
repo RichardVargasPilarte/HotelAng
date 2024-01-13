@@ -28,8 +28,8 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   sub: Subscription | undefined;
   public isLoaded = false;
   public dataSource: Usuario[] = [];
-  refUsuarios!: Observable<any[]>;
-  refGrupos!: Observable<any[]>;
+  refUsuarios!: Observable<any[] | null>;
+  refGrupos!: Observable<any[] | null>;
   socket!: WebSocket;
   displayedColumns: string[] = [
     'id',
@@ -60,13 +60,14 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.SpinnerService.show();
     this.refUsuarios.subscribe((data) => {
+      if (!data) data = [];
       this.usuarios = data;
       this.dataSource = [];
       this.usuarios.forEach((element) => {
         this.dataSource.push(element);
       });
       this.CloseDialog();
-      this.isLoaded= true;
+      this.isLoaded = true;
     });
   }
 

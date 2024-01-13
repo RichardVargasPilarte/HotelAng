@@ -32,8 +32,8 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
   private promesas: Promise<any>[] = [];
   public isLoaded = false;
   public dataSource: Reserva[] = [];
-  refReserva!: Observable<any[]>;
-  refHabitacion!: Observable<any[]>;
+  refReserva!: Observable<any[] | null>;
+  refHabitacion!: Observable<any[] | null>;
   socket!: WebSocket;
 
   displayedColumns: string[] = [
@@ -61,10 +61,12 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
     this.spinnerService.showLoading();
 
     this.refHabitacion.subscribe((data) => {
+      if (!data) data = [];
       this.habitaciones = data;
     })
 
     this.refReserva.subscribe((data) => {
+      if (!data) data = [];
       this.reservas = data;
     })
 
@@ -84,6 +86,7 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
       }
     });
     this.refReserva.subscribe((data) => {
+      if (!data) data = [];
       this.reservas = data;
       this.dataSource = [];
       this.reservas.forEach((element) => {
