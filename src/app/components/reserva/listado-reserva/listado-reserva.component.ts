@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -11,8 +10,6 @@ import { FormularioReservaComponent } from '../formulario-reserva/formulario-res
 import { Habitacion } from '../../../Models/habitacion.model';
 
 import { HabitacionService } from '../../../services/habitacion.service';
-
-import { RedirIfFailPipe } from '../../../Pipes/redir-if-fail.pipe';
 
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -29,7 +26,6 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
   public habitaciones: Habitacion[] = [];
   public subs: Subscription[] = [];
   sub: Subscription | undefined;
-  private promesas: Promise<any>[] = [];
   public isLoaded = false;
   public dataSource: Reserva[] = [];
   refReserva!: Observable<any[] | null>;
@@ -50,7 +46,6 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
     private reservaService: ReservaService,
     private habitacionservice$: HabitacionService,
     private dialog: MatDialog,
-    private router: Router,
     private spinnerService: SpinnerService
   ) {
     this.refReserva = this.reservaService.getList();
@@ -70,30 +65,7 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
       this.reservas = data;
     })
 
-
-    Promise.all(this.promesas).then(() => {
-      if (
-        new RedirIfFailPipe().transform(
-          'app/Habitaciones/Listado',
-          this.habitaciones,
-          this.router
-        )
-      ) {
-        this.dataSource = this.reservas;
-        this.isLoaded = true;
-        this.subs.push();
-        this.spinnerService.hideLoading();
-      }
-    });
-    this.refReserva.subscribe((data) => {
-      if (!data) data = [];
-      this.reservas = data;
-      this.dataSource = [];
-      this.reservas.forEach((element) => {
-        this.dataSource.push(element);
-      });
-      this.spinnerService.hideLoading();
-    });
+    this.handleReservaRef()
   }
 
   ngOnDestroy(): void {
@@ -138,5 +110,15 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
         data: { type: tipo, reserv: reservs },
       });
     }
+  }
+
+  private handleReservaRef() {
+    this.refReserva.subscribe((data) => {
+      this.isLoaded = data !== null;
+      if (!data) data = [];
+      this.reservas = data;
+      this.dataSource = [...data]
+      if (this.isLoaded) this.spinnerService.hideLoading();
+    })
   }
 }

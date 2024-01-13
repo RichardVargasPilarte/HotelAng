@@ -50,16 +50,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.spinnerService.showLoading();
-    this.refClient.subscribe((data) => {
-      this.clientes = data;
-      this.dataSource = [];
-      this.clientes.forEach((element) => {
-        this.dataSource.push(element);
-      });
-      this.cdRef.detectChanges();
-      this.spinnerService.hideLoading();
-      this.isLoaded = true;
-    });
+    this.handleClientRef();
   }
 
   ngOnDestroy(): void {
@@ -115,4 +106,18 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
   hasPermission(permissionId: number) {
     return this.jwtService.hasPermission(permissionId);
   }
+
+  private handleClientRef(): void {
+    this.refClient.subscribe((data) => {
+      this.isLoaded = data !== null;
+      this.clientes = data || [];
+      this.dataSource = [...this.clientes];
+      this.cdRef.detectChanges();
+
+      if (this.isLoaded) {
+        this.spinnerService.hideLoading();
+      }
+    });
+  }
+
 }

@@ -48,7 +48,6 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     private usuariosServicio: UsuarioService,
     private grupos$: GruposService,
     public dialog: MatDialog,
-    private router: Router,
     private SpinnerService: NgxSpinnerService,
     private jwtService: JwtService
   ) {
@@ -59,15 +58,15 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.SpinnerService.show();
+    this.handleUsuariosRef();
+  }
+
+  private handleUsuariosRef(): void {
     this.refUsuarios.subscribe((data) => {
-      if (!data) data = [];
-      this.usuarios = data;
-      this.dataSource = [];
-      this.usuarios.forEach((element) => {
-        this.dataSource.push(element);
-      });
-      this.CloseDialog();
-      this.isLoaded = true;
+      this.isLoaded = data !== null;
+      this.usuarios = data || [];
+      this.dataSource = [...this.usuarios];
+      if (this.isLoaded) this.CloseDialog();
     });
   }
 

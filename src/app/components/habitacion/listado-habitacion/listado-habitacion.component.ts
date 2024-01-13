@@ -36,6 +36,8 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   public dataSource: Habitacion[] = [];
   refHabitacion!: Observable<any[] | null>;
   refAlojamiento!: Observable<any[] | null>;
+  private isHabitacionesLoaded = false;
+  private isAlojamientosLoaded = false;
   socket!: WebSocket;
 
   displayedColumns: string[] = [
@@ -63,41 +65,10 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     this.refAlojamiento = this.alojamiento$.getList();
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.SpinnerService.show();
-    this.refAlojamiento.subscribe((data) => {
-      if (!data) data = [];
-      this.alojamientos = data;
-    })
-
-    this.refHabitacion.subscribe((data) => {
-      if (!data) data = [];
-      this.habitaciones = data;
-    })
-
-    Promise.all(this.promesas).then(() => {
-      if (
-        new RedirIfFailPipe().transform(
-          'app/Alojamientos/Listado',
-          this.alojamientos,
-          this.router
-        )
-      ) {
-        this.dataSource = this.habitaciones;
-        this.isLoaded = true;
-        this.subs.push();
-        this.CloseDialog();
-      }
-    });
-    this.refHabitacion.subscribe((data) => {
-      if (!data) data = []
-      this.habitaciones = data;
-      this.dataSource = [];
-      this.habitaciones.forEach((element) => {
-        this.dataSource.push(element);
-      });
-      this.CloseDialog();
-    });
+    this.handleAlojamientoRef();
+    this.handleHabitacionRef();
   }
 
   ngOnDestroy(): void {
@@ -155,4 +126,30 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   hasPermission(permissionId: number) {
     return this.jwtService.hasPermission(permissionId);
   }
+
+  private handleAlojamientoRef(): void {
+    this.refAlojamiento.subscribe((data) => {
+      this.isAlojamientosLoaded = data !== null;
+      this.alojamientos = data || [];
+      this.checkBothLoaded();
+    });
+  }
+
+  private handleHabitacionRef(): void {
+    this.refHabitacion.subscribe((data) => {
+      this.isHabitacionesLoaded = data !== null;
+      console.log(data);
+      this.habitaciones = data || [];
+      this.dataSource = this.habitaciones;
+      this.checkBothLoaded();
+    });
+  }
+
+  private checkBothLoaded(): void {
+    if (this.isAlojamientosLoaded && this.isHabitacionesLoaded) {
+      this.SpinnerService.hide();
+      this.isLoaded = true;
+    }
+  }
+
 }
