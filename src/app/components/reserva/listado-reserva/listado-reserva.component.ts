@@ -13,7 +13,7 @@ import { HabitacionService } from '../../../services/habitacion.service';
 
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
-import { SpinnerService } from '../../../services/spinner.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-listado-reserva',
@@ -46,14 +46,14 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
     private reservaService: ReservaService,
     private habitacionservice$: HabitacionService,
     private dialog: MatDialog,
-    private spinnerService: SpinnerService
+    private spinnerService: NgxSpinnerService
   ) {
     this.refReserva = this.reservaService.getList();
     this.refHabitacion = this.habitacionservice$.getList();
   }
 
   async ngOnInit(): Promise<void> {
-    this.spinnerService.showLoading();
+    this.spinnerService.show();
 
     this.refHabitacion.subscribe((data) => {
       if (!data) data = [];
@@ -118,7 +118,7 @@ export class ListadoReservaComponent implements OnInit, OnDestroy {
       if (!data) data = [];
       this.reservas = data;
       this.dataSource = [...data]
-      if (this.isLoaded) this.spinnerService.hideLoading();
+      if (this.isLoaded) this.spinnerService.hide();
     })
   }
 }

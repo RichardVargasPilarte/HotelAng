@@ -39,14 +39,14 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
   constructor(
     private _alojamientoService: AlojamientoService,
     private dialog: MatDialog,
-    private SpinnerService: NgxSpinnerService,
+    private spinnerService: NgxSpinnerService,
     private jwtService: JwtService
   ) {
     this.refAloj = this._alojamientoService.getList();
   }
 
   ngOnInit(): void {
-    this.SpinnerService.show();
+    this.spinnerService.show();
     this.handleAlojRef();
   }
 
@@ -81,10 +81,6 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     });
   }
 
-  CloseDialog(): void {
-    this.SpinnerService.hide();
-  }
-
   openDialog(tipo: string, id?: number): void {
     if (tipo === 'c') {
       this.dialog.open(FormularioAlojamientoComponent, {
@@ -113,7 +109,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
       this.dataSource = [...this.alojamientos];
 
       if (this.isLoaded) {
-        this.CloseDialog();
+        this.spinnerService.hide();
       }
     });
   }

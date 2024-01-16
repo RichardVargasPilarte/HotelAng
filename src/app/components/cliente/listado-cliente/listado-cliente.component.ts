@@ -13,7 +13,7 @@ import { RoleId } from '../../../shared/types/Roles.types';
 import { Permission } from '../../../shared/types/permissions.types';
 import { JwtService } from '../../../services/jwt.service';
 
-import { SpinnerService } from '../../../services/spinner.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-listado-cliente',
@@ -41,7 +41,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
   constructor(
     private _clienteService: ClienteService,
     private dialog: MatDialog,
-    private spinnerService: SpinnerService,
+    private spinnerService: NgxSpinnerService,
     private jwtService: JwtService,
     private cdRef: ChangeDetectorRef
   ) {
@@ -49,7 +49,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.spinnerService.showLoading();
+    this.spinnerService.show();
     this.handleClientRef();
   }
 
@@ -68,11 +68,11 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        this.spinnerService.showLoading();
+        this.spinnerService.show();
         this._clienteService.deleteClient(id).subscribe((data) => {
           this.success = true;
           Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
-          this.spinnerService.hideLoading();
+          this.spinnerService.hide();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         (error: string) =>
@@ -115,7 +115,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
       this.cdRef.detectChanges();
 
       if (this.isLoaded) {
-        this.spinnerService.hideLoading();
+        this.spinnerService.hide();
       }
     });
   }

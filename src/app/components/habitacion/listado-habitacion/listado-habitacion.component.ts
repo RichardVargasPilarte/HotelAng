@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -12,7 +11,6 @@ import { Alojamiento } from '../../../Models/alojamiento.model';
 import { AlojamientoService } from '../../../services/alojamiento.service';
 
 import { FormularioHabitacionComponent } from '../formulario-habitacion/formulario-habitacion.component';
-import { RedirIfFailPipe } from '../../../Pipes/redir-if-fail.pipe';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal, { SweetAlertResult } from 'sweetalert2';
@@ -31,7 +29,6 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   public alojamientos: Alojamiento[] = [];
   public subs: Subscription[] = [];
   sub: Subscription | undefined;
-  private promesas: Promise<any>[] = [];
   public isLoaded = false;
   public dataSource: Habitacion[] = [];
   refHabitacion!: Observable<any[] | null>;
@@ -57,8 +54,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     private habitacionservice: HabitacionService,
     private alojamiento$: AlojamientoService,
     private dialog: MatDialog,
-    private router: Router,
-    private SpinnerService: NgxSpinnerService,
+    private spinnerService: NgxSpinnerService,
     private jwtService: JwtService
   ) {
     this.refHabitacion = this.habitacionservice.getList();
@@ -66,7 +62,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.SpinnerService.show();
+    this.spinnerService.show();
     this.handleAlojamientoRef();
     this.handleHabitacionRef();
   }
@@ -100,10 +96,6 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
         'error'
       );
     }
-  }
-
-  CloseDialog(): void {
-    this.SpinnerService.hide();
   }
 
   openDialog(tipo: string, id?: number): void {
@@ -147,7 +139,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
 
   private checkBothLoaded(): void {
     if (this.isAlojamientosLoaded && this.isHabitacionesLoaded) {
-      this.SpinnerService.hide();
+      this.spinnerService.hide();
       this.isLoaded = true;
     }
   }

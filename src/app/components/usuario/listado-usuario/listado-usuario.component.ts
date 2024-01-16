@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -48,7 +47,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     private usuariosServicio: UsuarioService,
     private grupos$: GruposService,
     public dialog: MatDialog,
-    private SpinnerService: NgxSpinnerService,
+    private spinnerService: NgxSpinnerService,
     private jwtService: JwtService
   ) {
 
@@ -57,7 +56,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.SpinnerService.show();
+    this.spinnerService.show();
     this.handleUsuariosRef();
   }
 
@@ -66,7 +65,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
       this.isLoaded = data !== null;
       this.usuarios = data || [];
       this.dataSource = [...this.usuarios];
-      if (this.isLoaded) this.CloseDialog();
+      if (this.isLoaded) this.spinnerService.hide();
     });
   }
 
@@ -87,11 +86,11 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        this.SpinnerService.show();
+        this.spinnerService.show();
         this.usuariosServicio.deleteUser(id).subscribe({
           next: (data) => {
             Swal.fire('Eliminado!', 'El dato ha sido eliminado.', 'success');
-            this.SpinnerService.hide();
+            this.spinnerService.hide();
             console.log('Se elimino el usuario');
             (error: unknown) => console.log(
               'Hubo un fallo al momento de eliminar el dato' + error
@@ -107,10 +106,6 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
         );
       }
     });
-  }
-
-  CloseDialog(): void {
-    this.SpinnerService.hide();
   }
 
   openDialog(tipo: string, id?: number): void {
