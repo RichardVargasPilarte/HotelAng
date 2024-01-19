@@ -62,9 +62,20 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
+
+                <div class="col">
+                  <mat-form-field id="descripcion">
+                      <mat-label>Descripcion</mat-label>
+                      <input type="text" matInput name="descripcion" formControlName="descripcion"
+                          placeholder="descripcion" autocomplete="off" />
+                      <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
+                          La descripción es <strong>requerido</strong>
+                      </mat-error>
+                  </mat-form-field>
+              </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col">
                     <mat-form-field id="descripcion">
                         <mat-label>Descripcion</mat-label>
@@ -75,7 +86,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-            </div>
+            </div> -->
 
             <div class="row">
                 <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar" (click)="
