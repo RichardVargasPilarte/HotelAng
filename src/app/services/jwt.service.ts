@@ -4,7 +4,6 @@ import { tap } from 'rxjs/operators';
 import jwtDecode from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { environment } from "../../environments/environment";
-import { CookieService } from 'ngx-cookie-service';
 import JwtCustomInterface from '../Models/jwtInterface';
 
 @Injectable({
@@ -14,7 +13,6 @@ export class JwtService {
 
   constructor(
     private httpClient: HttpClient,
-    private cookie: CookieService
   ) { }
 
   saveLocalStorage(token: string) {
@@ -23,29 +21,21 @@ export class JwtService {
 
   login(username: string, password: string) {
     return this.httpClient.post<any>(environment.API_Auth, { username, password }).pipe(tap(res => {
-      alert(res);
-      this.cookie.set('access', String(res.access));
-      // this.saveLocalStorage(res.access);
+      this.saveLocalStorage(res.access);
     }));
   }
 
   logout() {
-    alert('logout');
-    this.deleteAllCookies();
-    // localStorage.removeItem('access');
+    localStorage.removeItem('access');
     window.location.reload();
-    // wait 5 sec to refresh
-    // setTimeout(() => window.location.reload(), 5000);
   }
 
   public get loggedIn(): boolean {
-    return !!this.cookie.get('access')
-    // return !!localStorage.getItem('access')
+    return !!localStorage.getItem('access')
   }
 
   getDecodedToken() {
-    const token = this.cookie.get('access');
-    // const token = localStorage.getItem('access');
+    const token = localStorage.getItem('access');
     if (!token) return false;
     const decoded = jwtDecode<JwtCustomInterface>(token);
     return decoded;
@@ -66,8 +56,7 @@ export class JwtService {
   }
 
   public get Token(): string {
-    return this.cookie.get('access');
-    // return localStorage.getItem('access') || '';
+    return localStorage.getItem('access') || '';
   }
 
   tokenVerify(): Observable<any> {
@@ -83,13 +72,6 @@ export class JwtService {
     const groups = decodedToken.groups;
     return groups;
   }
-
-  // userhaveRole(role: string) {
-  //   const decoded = this.getDecodedToken() as JwtCustomInterface;
-  //   if (decoded?.user_id === 1) return true;
-  //   const userGrups = this.getUserRoles()
-  //   return userGrups.includes(role)
-  // }
 
   getUserPermissions() {
     const decodedToken = this.getDecodedToken();
@@ -110,17 +92,6 @@ export class JwtService {
     if (decoded?.user_id === 1) return true;
     const userGrups = this.getUserPermissions()
     return userGrups.includes(roleId)
-  }
-
-  deleteAllCookies() {
-    const cookies = document.cookie.split(";");
-
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i];
-      const eqPos = cookie.indexOf("=");
-      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
   }
 
 }
