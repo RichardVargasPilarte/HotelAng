@@ -36,8 +36,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     'last_name',
     'username',
     'groups',
-    'estado',
-    'actions',
+    'estado'
   ];
 
   roleIds = RoleId
@@ -58,6 +57,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.spinnerService.show();
     this.handleUsuariosRef();
+    this.addActionsColumns();
   }
 
   private handleUsuariosRef(): void {
@@ -127,5 +127,20 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
 
   hasPermission(permissionId: number) {
     return this.jwtService.hasPermission(permissionId);
+  }
+
+  hasUserPermissions(permissionIds: number[]) {
+    return this.jwtService.hasPermissions(permissionIds);
+  }
+
+  addActionsColumns() {
+    const permissionIds = [
+      this.permissions.Usuario.Update,
+      this.permissions.Usuario.Delete,
+    ]
+    const hasPermission = this.hasUserPermissions(permissionIds)
+    if (hasPermission) {
+      this.displayedColumns.push("actions")
+    }
   }
 }
