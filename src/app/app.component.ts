@@ -7,7 +7,7 @@ import { AlojamientoService } from './services/alojamiento.service';
 import { HabitacionService } from './services/habitacion.service';
 import { ReservaService } from './services/reserva.service';
 import { UsuarioService } from './services/usuario.service';
-import { Router } from '@angular/router';
+import { GruposService } from './services/grupos.service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
     private readonly habitacionService: HabitacionService,
     private readonly reservaService: ReservaService,
     private readonly usuarioService: UsuarioService,
-    private readonly router: Router,
+    private readonly grupoService: GruposService,
   ) { }
 
   ngOnInit(): void {
@@ -58,12 +58,30 @@ export class AppComponent implements OnInit {
       alert('No hay token');
     }
   }
+
   async loadData() {
-    const customers = await this.clienteService.getClientsAsynchronous()
-    const alojamientos = await this.alojamientoService.getAccommodationsAsynchronous()
-    const habitaciones = await this.habitacionService.getRoomsAsynchronous()
-    const reservas = await this.reservaService.getAsynchronousReservations()
-    const usuarios = await this.usuarioService.getAsynchronousUsers()
-    console.log(customers, alojamientos, habitaciones, reservas, usuarios)
+    try {
+      const [
+        customers,
+        alojamientos,
+        habitaciones,
+        reservas,
+        usuarios,
+        grupos,
+      ] = await Promise.all([
+        this.clienteService.getClientsAsynchronous(),
+        this.alojamientoService.getAccommodationsAsynchronous(),
+        this.habitacionService.getRoomsAsynchronous(),
+        this.reservaService.getAsynchronousReservations(),
+        this.usuarioService.getAsynchronousUsers(),
+        this.grupoService.getGroupsAsynchronous(),
+      ]);
+
+      console.log(customers, alojamientos, habitaciones, reservas, usuarios,grupos);
+    } catch (error) {
+      // Handle errors here
+      console.error("Error fetching data:", error);
+    }
   }
+
 }
