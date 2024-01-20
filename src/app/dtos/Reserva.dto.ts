@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import { IMainResponseArrayDto, IMainResponseObjectDto } from "./Response.dto";
 
 import { Reserva } from '../Models/reserva.model';
