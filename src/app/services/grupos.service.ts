@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { MainService } from './main.service';
 
 import { Grupos } from '../Models/grupo.model';
+import { IGruposResponseDto } from '../dtos/Grupo.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -32,5 +33,13 @@ export class GruposService extends MainService {
         observer.complete();
       });
     });
+  }
+
+
+  async getGroupsAsynchronous(): Promise<Array<Grupos>> {
+    const response: IGruposResponseDto = await this.getAsync<IGruposResponseDto>()
+    this.list = response.data
+    this.list$.next(this.list);
+    return response.data
   }
 }
