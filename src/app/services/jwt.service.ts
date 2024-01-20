@@ -94,4 +94,11 @@ export class JwtService {
     return userGrups.includes(roleId)
   }
 
+  hasPermissions(permissionIds: number[]) {
+    const decoded = this.getDecodedToken() as JwtCustomInterface;
+    if (decoded?.user_id === 1) return true;
+    const userPermissions = this.getUserPermissions()
+    return userPermissions.some((x) => permissionIds.includes(x))
+  }
+
 }
