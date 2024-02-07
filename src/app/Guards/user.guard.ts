@@ -20,9 +20,6 @@ export class UserGuard  {
       return true;
     } else {
       if ((route.data as IRouteData).isPublic) return true;
-
-      console.log('Not authorized')
-
       this.router.navigate(['/login']);
       return false;
     }

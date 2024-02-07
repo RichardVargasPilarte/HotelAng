@@ -53,12 +53,10 @@ export class LoginComponent implements OnInit {
       .subscribe(
         {
           next: (res) => {
-            console.log(res);
             window.location.reload();
             this.loading = false;
           },
           error: (error) => {
-            alert(error.error.non_field_errors);
             Swal.fire({
               position: "top-end",
               icon: "error",
