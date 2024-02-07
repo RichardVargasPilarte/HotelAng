@@ -55,32 +55,23 @@ export class AppComponent implements OnInit {
 
       );
     } else {
-      alert('No hay token');
+      console.log('No hay token');
     }
   }
 
   async loadData() {
     try {
-      const [
-        customers,
-        alojamientos,
-        habitaciones,
-        reservas,
-        usuarios,
-        grupos,
-      ] = await Promise.all([
-        this.clienteService.getClientsAsynchronous(),
+      await Promise.all([
+        this.grupoService.getGroupsAsynchronous(),
         this.alojamientoService.getAccommodationsAsynchronous(),
+        this.clienteService.getClientsAsynchronous(),
         this.habitacionService.getRoomsAsynchronous(),
         this.reservaService.getAsynchronousReservations(),
         this.usuarioService.getAsynchronousUsers(),
-        this.grupoService.getGroupsAsynchronous(),
       ]);
 
-      console.log(customers, alojamientos, habitaciones, reservas, usuarios,grupos);
     } catch (error) {
-      // Handle errors here
-      console.error("Error fetching data:", error);
+      console.error("Error al cargar los datos:", error);
     }
   }
 
