@@ -43,8 +43,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     'nombre_alojamiento',
     'numero_personas',
     'precio',
-    'activo',
-    'actions',
+    'activo'
   ];
 
   roleIds = RoleId
@@ -65,6 +64,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     this.spinnerService.show();
     this.handleAlojamientoRef();
     this.handleHabitacionRef();
+    this.addActionColumn();
   }
 
   ngOnDestroy(): void {
@@ -130,7 +130,6 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
   private handleHabitacionRef(): void {
     this.refHabitacion.subscribe((data) => {
       this.isHabitacionesLoaded = data !== null;
-      console.log(data);
       this.habitaciones = data || [];
       this.dataSource = this.habitaciones;
       this.checkBothLoaded();
@@ -144,4 +143,19 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     }
   }
 
+  hasUserPermissions(permissionIds: number[]) {
+    return this.jwtService.hasPermissions(permissionIds);
+  }
+
+  addActionColumn() {
+    const persmissionIds = [
+      this.permissions.Habitacion.Update,
+      this.permissions.Habitacion.Delete
+    ]
+
+    const hasPermission = this.hasUserPermissions(persmissionIds)
+    if (hasPermission) {
+      this.displayedColumns.push("actions")
+    }
+  }
 }

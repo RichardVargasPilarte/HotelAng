@@ -31,8 +31,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     'nombre',
     'apellido',
     'telefono',
-    'email',
-    'actions',
+    'email'
   ];
   success = false;
   roleIds = RoleId
@@ -51,6 +50,7 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.spinnerService.show();
     this.handleClientRef();
+    this.addActionColumn();
   }
 
   ngOnDestroy(): void {
@@ -120,4 +120,19 @@ export class ListadoClienteComponent implements OnInit, OnDestroy {
     });
   }
 
+  hasUserPermissions(permissionIds: number[]) {
+    return this.jwtService.hasPermissions(permissionIds)
+  }
+
+  addActionColumn() {
+    const permissionIds = [
+      this.permissions.Cliente.Update,
+      this.permissions.Cliente.Delete
+    ]
+
+    const hasPermission = this.hasUserPermissions(permissionIds)
+    if (hasPermission) {
+      this.displayedColumns.push("actions")
+    }
+  }
 }

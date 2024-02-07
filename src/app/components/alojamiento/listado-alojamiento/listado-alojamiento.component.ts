@@ -29,8 +29,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     'id',
     'nombre',
     'descripcion',
-    'tiempo_estadia',
-    'actions',
+    'tiempo_estadia'
   ];
   success = false;
   roleIds = RoleId
@@ -48,6 +47,7 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.spinnerService.show();
     this.handleAlojRef();
+    this.addActionsColumn();
   }
 
   ngOnDestroy(): void {
@@ -112,5 +112,21 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
         this.spinnerService.hide();
       }
     });
+  }
+
+  hasUserPermissions(permissionIds: number[]) {
+    return this.jwtService.hasPermissions(permissionIds);
+  }
+
+  addActionsColumn() {
+    const permissionsIds = [
+      this.permissions.Alojamiento.Update,
+      this.permissions.Alojamiento.Delete
+    ]
+
+    const hasPermissions = this.jwtService.hasPermissions(permissionsIds)
+    if (hasPermissions) {
+      this.displayedColumns.push("actions")
+    }
   }
 }
