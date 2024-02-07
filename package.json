@@ -24,7 +24,6 @@
     "@angular/router": "^16.2.12",
     "@ng-select/ng-select": "^11.1.1",
     "jwt-decode": "^3.1.2",
-    "ngx-cookie-service": "^16.0.2",
     "ngx-spinner": "^16.0.2",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.4.17",

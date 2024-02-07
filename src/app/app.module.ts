@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { CookieService } from 'ngx-cookie-service';
 import { JwtInterceptorInterceptor } from './interceptors/jwt.interceptor';
 
 import { RedirIfFailPipe } from '../app/Pipes/redir-if-fail.pipe';
@@ -59,7 +58,6 @@ const Servicios = [
     {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
     DatePipe,
     Servicios,
-    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptorInterceptor,
