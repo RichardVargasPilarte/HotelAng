@@ -1,9 +1,10 @@
 .example-card {
-    max-width: 400px;
+  border-radius: 10px 10px 10px 10px;
 }
 
 .card-container {
     min-height: 60vh;
+    width: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,4 +13,36 @@
 
 .mat-mdc-form-field {
     width:50vh;
+}
+
+.mat-mdc-card-title {
+  margin-bottom: 10px;
+}
+
+form-card {
+  min-width: 120px;
+  margin: 20px auto;
+  width: 50%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.pull-left {
+  margin: 10px;
+  text-align: center !important;
+  margin: auto;
+}
+
+.pull-right {
+  margin: 10px;
+  text-align: center !important;
+  margin: auto;
 }
