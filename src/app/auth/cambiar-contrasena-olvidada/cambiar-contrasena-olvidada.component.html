@@ -1,9 +1,9 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
     <span>
         Cambio de contraseña
     </span>
     <span class="example-spacer"></span>
-</mat-toolbar>
+</mat-toolbar> -->
 
 <div class="card-container">
     <mat-card appearance="outlined" class="example-card">
@@ -36,15 +36,15 @@
                             <mat-label>Confirmar Contraseña:</mat-label>
                             <input matInput type="password" formControlName="confirmPassword" placeholder="Confirme su contraseña"
                                 required autocomplete="off">
-    
+
                             <mat-error *ngIf="form.controls['confirmPassword'].hasError('required')">
                                 <strong>La contraseña es requerida</strong>
                             </mat-error>
-    
+
                             <mat-error *ngIf="form.controls['confirmPassword'].hasError('minlength')">
                                 <strong>La contraseña debe de tener minimo 8 caracteres</strong>
                             </mat-error>
-                            
+
                             <mat-error *ngIf="form.controls['confirmPassword'].hasError('MustMatch')">
                                 <strong>La contraseña no coinciden</strong>
                             </mat-error>

@@ -1,6 +1,9 @@
 .example-card {
-    max-width: 220px;
     border-radius: 10px 10px 10px 10px;
+}
+
+.mat-mdc-card-title {
+  margin-bottom: 10px;
 }
 
 .card-container {
