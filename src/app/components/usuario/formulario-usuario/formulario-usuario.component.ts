@@ -9,13 +9,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable } from 'rxjs';
 
 import { UsuarioService } from '../../../services/usuario.service';
-// import { CreateUser, Usuario } from '../../../models/usuario.model';
+import { CreateUser, IUsuario, Usuario } from '../../../Models/usuario.model';
 import { GruposService } from '../../../services/grupos.service';
-// import { Grupos } from '../../../models/grupo.model';
+import { Grupos } from '../../../Models/grupo.model';
 
-
-import { CreateUser, Usuario } from 'src/app/Models/usuario.model';
-import { Grupos } from 'src/app/Models/grupo.model';
 
 interface DialogData {
   type: string;
@@ -49,7 +46,7 @@ export class FormularioUsuarioComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.push(
-      this.refGrupos.subscribe((groups) => (this.gruposCargados = groups))
+      this.refGrupos.subscribe((groups_name) => (this.gruposCargados = groups_name))
     );
     this.createForm();
   }
@@ -97,49 +94,54 @@ export class FormularioUsuarioComponent implements OnInit, OnDestroy {
           validators: this.MustMatch('password', 'confirmPassword')
         });
     } else {
+      const usuarioData: IUsuario = this.data.user as IUsuario;
+      const userGroups = usuarioData.groups as any[];
+
       this.form = this.fb.group({
-        id: this.data.user!.id,
-        first_name: new FormControl(this.data.user!.first_name, [
+        id: usuarioData.id,
+        first_name: new FormControl(usuarioData.first_name, [
           Validators.required,
           Validators.minLength(3),
         ]),
-        last_name: new FormControl(this.data.user!.last_name, [
+        last_name: new FormControl(usuarioData.last_name, [
           Validators.required,
           Validators.minLength(3),
         ]),
-        password: new FormControl(this.data.user!.password, [
-          Validators.required,
-          Validators.minLength(8),
-        ]),
-        username: new FormControl(this.data.user!.username, [
+        password: new FormControl(usuarioData.password || null,
+          Validators.minLength(8)),
+        username: new FormControl(usuarioData.username, [
           Validators.required,
           Validators.minLength(5),
         ]),
         email: new FormControl(
-          this.data.user!.email,
+          usuarioData.email,
           Validators.required
         ),
-        direccion: new FormControl(this.data.user!.direccion, [
+        direccion: new FormControl(usuarioData.direccion, [
           Validators.required,
           Validators.minLength(10),
         ]),
+        // groups: new FormControl(
+        //   userGroups && userGroups.length > 0 ? userGroups[0].id : null,
+        //   Validators.required
+        // ),
         groups: new FormControl(
-          this.data?.user?.groups,
+          userGroups && userGroups.length > 0 ? userGroups.find(group => true)?.id : null,
           Validators.required
         ),
         estado: new FormControl(
-          this.data.user!.estado,
+          usuarioData.estado,
           Validators.required
         ),
         telefono: new FormControl(
-          this.data.user!.telefono,
+          usuarioData.telefono,
           Validators.required
         ),
-        confirmPassword: new FormControl('', [
-          Validators.required,
+        confirmPassword: new FormControl('',
           Validators.minLength(8),
-        ]),
+        ),
       });
+      this.gruposCargados = userGroups;
     }
   }
 
