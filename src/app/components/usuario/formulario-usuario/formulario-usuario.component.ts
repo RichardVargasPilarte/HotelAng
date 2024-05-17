@@ -86,64 +86,15 @@ export class FormularioUsuarioComponent implements OnInit, OnDestroy {
           Validators.minLength(10),
         ]),
         groups: new FormControl('', Validators.required),
-        estado: new FormControl('Activo', Validators.required),
         telefono: new FormControl('', Validators.required),
         eliminado: new FormControl('NO'),
       },
-        {
-          validators: this.MustMatch('password', 'confirmPassword')
-        });
-    } else {
-      const usuarioData: IUsuario = this.data.user as IUsuario;
-      const userGroups = usuarioData.groups as any[];
-
-      this.form = this.fb.group({
-        id: usuarioData.id,
-        first_name: new FormControl(usuarioData.first_name, [
-          Validators.required,
-          Validators.minLength(3),
-        ]),
-        last_name: new FormControl(usuarioData.last_name, [
-          Validators.required,
-          Validators.minLength(3),
-        ]),
-        password: new FormControl(usuarioData.password || null,
-          Validators.minLength(8)),
-        username: new FormControl(usuarioData.username, [
-          Validators.required,
-          Validators.minLength(5),
-        ]),
-        email: new FormControl(
-          usuarioData.email,
-          Validators.required
-        ),
-        direccion: new FormControl(usuarioData.direccion, [
-          Validators.required,
-          Validators.minLength(10),
-        ]),
-        // groups: new FormControl(
-        //   userGroups && userGroups.length > 0 ? userGroups[0].id : null,
-        //   Validators.required
-        // ),
-        groups: new FormControl(
-          userGroups && userGroups.length > 0 ? userGroups.find(group => true)?.id : null,
-          Validators.required
-        ),
-        estado: new FormControl(
-          usuarioData.estado,
-          Validators.required
-        ),
-        telefono: new FormControl(
-          usuarioData.telefono,
-          Validators.required
-        ),
-        confirmPassword: new FormControl('',
-          Validators.minLength(8),
-        ),
+      {
+        validators: this.MustMatch('password', 'confirmPassword')
       });
-      this.gruposCargados = userGroups;
     }
   }
+  
 
   saveUser(): void {
     let user = new CreateUser();
@@ -154,19 +105,6 @@ export class FormularioUsuarioComponent implements OnInit, OnDestroy {
           this.dialogRef.close();
         },
         error: (error: unknown) => console.error(error),
-      })
-    );
-  }
-
-  updateUser(): void {
-    let user = new Usuario();
-    user = Object.assign(user, this.form.value);
-    this.subs.push(
-      this.usuarioServicio.updateUser(user.id!, user).subscribe({
-        next: () => {
-          this.dialogRef.close();
-        },
-        error: (error: any) => console.error(error),
       })
     );
   }
