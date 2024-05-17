@@ -8,11 +8,16 @@
   </button>
 </mat-toolbar>
 
+
 <ngx-spinner bdOpacity=0.9 bdColor="rgba(51,51,51,0.8)" size="medium" color="#000000" type="ball-scale-multiple">
   <p style="color: white"> Cargando los datos... </p>
 </ngx-spinner>
 
 <div *ngIf="isLoaded">
+
+  <mat-form-field>
+    <input matInput placeholder="Buscar alojamiento" [(ngModel)]="searchTerm" (keyup)="search()">
+  </mat-form-field>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -61,6 +66,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+
 </div>
+
 
 <!-- <app-spinner *ngIf="isLoaded"></app-spinner> -->

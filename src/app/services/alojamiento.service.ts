@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 
 import { Alojamiento } from '../Models/alojamiento.model';
 import { wsModel } from '../Models/webSocket.model';
@@ -16,8 +17,15 @@ import { HttpCode } from '../../app/shared/types/httpResponse.types';
 export class AlojamientoService extends MainService {
   public override resource = 'alojamientos';
 
+  private searchTerms = new Subject<string>();
+  private accommodationsCache: Alojamiento[] = [];
+
   constructor(httpclient: HttpClient) {
     super(httpclient);
+
+    this.getAccommodationsAsynchronous().then(data => {
+      this.accommodationsCache = data;
+    })
   }
 
   GetAccommodations(): Observable<Alojamiento> {
@@ -70,6 +78,29 @@ export class AlojamientoService extends MainService {
 
   deleteAccommodation(id: number | string) {
     return this.delete(id);
+  }
+
+  searchAccommodations(term: string): Observable<Alojamiento[]> {
+    this.searchTerms.next(term); // Enviar el término de búsqueda
+    return this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      map((searchTerm: string) => this.filterAccommodations(searchTerm)),
+      catchError(this.handleError<Alojamiento[]>('searchAccommodations', []))
+    );
+  }
+
+  private filterAccommodations(term: string): Alojamiento[] {
+    return this.accommodationsCache.filter((accommodation: Alojamiento) =>
+      accommodation.nombre.toLowerCase().includes(term.toLowerCase())
+    );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
   }
 
   override updateList(data: wsModel) {

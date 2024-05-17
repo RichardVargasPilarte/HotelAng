@@ -35,6 +35,8 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
   roleIds = RoleId
   permissions = new Permission();
 
+  public searchTerm = '';
+
   constructor(
     private _alojamientoService: AlojamientoService,
     private dialog: MatDialog,
@@ -48,6 +50,11 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     this.spinnerService.show();
     this.handleAlojRef();
     this.addActionsColumn();
+
+    // Suscribirse al observable de búsqueda en el servicio
+    this._alojamientoService.searchAccommodations('').subscribe(result => {
+      this.dataSource = result;
+    });
   }
 
   ngOnDestroy(): void {
@@ -128,5 +135,13 @@ export class ListadoAlojamientoComponent implements OnInit, OnDestroy {
     if (hasPermissions) {
       this.displayedColumns.push("actions")
     }
+  }
+
+  search(): void {
+    console.log('Término de búsqueda:', this.searchTerm);
+    // Enviar el término de búsqueda al servicio
+    this._alojamientoService.searchAccommodations(this.searchTerm).subscribe(result => {
+      this.dataSource = result;
+    });
   }
 }
