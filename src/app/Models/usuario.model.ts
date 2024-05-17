@@ -9,7 +9,6 @@ export interface IUsuario {
   username: string | null;
   email: string | null;
   direccion: string | null;
-  estado: number | null;
   telefono: string | null;
   groups: IGrupos[]
 }
@@ -23,7 +22,6 @@ export class Usuario implements IUsuario {
   username = ''
   email = ''
   direccion = ''
-  estado = -1;
   telefono = ''
   groups: IGrupos[] = []
 }
@@ -35,7 +33,6 @@ export interface ICreateUser {
   username:string
   email:string
   direccion:string
-  estado:number;
   telefono:string
   groups:number;
 }
@@ -49,9 +46,30 @@ export class CreateUser implements ICreateUser{
   username = ''
   email = ''
   direccion = ''
-  estado = -1;
   telefono = ''
   groups =-1;
+}
+
+export interface IUserUpdate {
+  id: number;
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  direccion: string;
+  telefono: string;
+  groups: IGrupos[]
+}
+
+export class UserUpdate implements IUserUpdate {
+  id = -1;
+  first_name = '';
+  last_name = '';
+  username = '';
+  email = '';
+  direccion = '';
+  telefono = '';
+  groups: IGrupos[] = []
 }
 
 export class SendEmail {

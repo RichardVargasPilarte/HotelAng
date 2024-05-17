@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { MainService } from './main.service';
 
-import { CreateUser, Usuario} from '../Models/usuario.model';
+import { CreateUser, Usuario, UserUpdate} from '../Models/usuario.model';
 
 import { wsModel } from '../Models/webSocket.model';
 
@@ -65,7 +65,7 @@ export class UsuarioService extends MainService {
     return this.getByID(id);
   }
 
-  updateUser(id: string | number, usuario: any) {
+  updateUser(id: string | number, usuario: UserUpdate) {
     const body = { usuario };
     return this.update(body, id);
   }

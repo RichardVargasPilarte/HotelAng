@@ -8,6 +8,7 @@ import { Usuario } from '../../../Models/usuario.model';
 import { Grupos } from '../../../Models/grupo.model';
 
 import { FormularioUsuarioComponent } from '../formulario-usuario/formulario-usuario.component';
+import { ActualizarUsuarioComponent } from '../actualizar-usuario/actualizar-usuario.component';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -36,7 +37,6 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     'last_name',
     'username',
     'groups',
-    'estado'
   ];
 
   roleIds = RoleId
@@ -108,6 +108,7 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
   openDialog(tipo: string, id?: number): void {
     if (tipo === 'c') {
       this.dialog.open(FormularioUsuarioComponent, {
@@ -116,6 +117,20 @@ export class ListadoUsuarioComponent implements OnInit, OnDestroy {
     } else {
       const users = this.usuarios.find((d) => d.id === id);
       this.dialog.open(FormularioUsuarioComponent, {
+        data: { type: tipo, user: users },
+        });
+    }
+  }
+  */
+
+  openDialog(tipo: string, id?: number): void {
+    if (tipo === 'c') {
+      this.dialog.open(FormularioUsuarioComponent, {
+        data: { type: tipo },
+      });
+    } else if (tipo === 'u') {
+      const users = this.usuarios.find((d) => d.id === id);
+      this.dialog.open(ActualizarUsuarioComponent, {
         data: { type: tipo, user: users },
       });
     }

@@ -31,6 +31,7 @@ import { FormularioClienteComponent } from './cliente/formulario-cliente/formula
 import { FormularioReservaComponent } from './reserva/formulario-reserva/formulario-reserva.component';
 import { ListadoReservaComponent } from './reserva/listado-reserva/listado-reserva.component';
 import { SharedModule } from '../shared/shared.module';
+import { ActualizarUsuarioComponent } from './usuario/actualizar-usuario/actualizar-usuario.component';
 
 const MaterialComponents = [
   MatSidenavModule,
@@ -60,7 +61,8 @@ const MaterialComponents = [
     ListadoClienteComponent,
     FormularioClienteComponent,
     FormularioReservaComponent,
-    ListadoReservaComponent
+    ListadoReservaComponent,
+    ActualizarUsuarioComponent
   ],
   imports: [
     CommonModule,
