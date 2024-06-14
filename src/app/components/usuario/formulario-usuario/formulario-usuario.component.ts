@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable } from 'rxjs';
 
 import { UsuarioService } from '../../../services/usuario.service';
-import { CreateUser, IUsuario, Usuario } from '../../../Models/usuario.model';
+import { CreateUser, Usuario } from '../../../Models/usuario.model';
 import { GruposService } from '../../../services/grupos.service';
 import { Grupos } from '../../../Models/grupo.model';
 
@@ -30,8 +30,6 @@ export class FormularioUsuarioComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   public form!: FormGroup;
   public refGrupos: Observable<any>;
-
-  activo!: [{ id: 1; name: 'SI' }, { id: 2; name: 'NO' }];
 
   constructor(
     private fb: FormBuilder,

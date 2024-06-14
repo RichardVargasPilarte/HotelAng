@@ -65,11 +65,11 @@
                         <input matInput type="password" formControlName="confirmPassword" placeholder="Confirme su contraseña"
                             required autocomplete="off">
 
-                        <mat-error *ngIf=" data.type === 'c' && form.controls['confirmPassword'].hasError('required')">
+                        <mat-error *ngIf="form.controls['confirmPassword'].hasError('required')">
                             <strong>La contraseña es requerida</strong>
                         </mat-error>
 
-                        <mat-error *ngIf="data.type === 'c' && form.controls['confirmPassword'].hasError('MustMatch')">
+                        <mat-error *ngIf="form.controls['confirmPassword'].hasError('MustMatch')">
                             <strong>La contraseña no coinciden</strong>
                         </mat-error>
                     </mat-form-field>
