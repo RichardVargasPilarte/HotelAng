@@ -3,7 +3,6 @@ interface IResponseDto {
     error?: string;
     message?: string;
 }
-
 export interface IMainResponseObjectDto<T> extends IResponseDto {
     data: T
 }
