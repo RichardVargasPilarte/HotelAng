@@ -43,7 +43,7 @@ export class ListadoHabitacionComponent implements OnInit, OnDestroy {
     'nombre_alojamiento',
     'numero_personas',
     'precio',
-    'activo'
+    'estado'
   ];
 
   roleIds = RoleId

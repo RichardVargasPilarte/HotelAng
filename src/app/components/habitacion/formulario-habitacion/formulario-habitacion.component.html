@@ -76,12 +76,12 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Estado Habitación:</mat-label>
-                        <mat-select formControlName="activo">
+                        <mat-select formControlName="estado">
                             <ng-container *ngFor="let estado of EstadoHabitaciones">
                                 <mat-option [value]="estado">{{estado}}</mat-option>
                             </ng-container>
                         </mat-select>
-                        <mat-error *ngIf="form.controls['activo'].hasError('required')">
+                        <mat-error *ngIf="form.controls['estado'].hasError('required')">
                             El estado de la habitación es <strong>requerida</strong>
                         </mat-error>
                     </mat-form-field>

@@ -81,7 +81,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
         precio: new FormControl('', [
           Validators.required
         ]),
-        activo: new FormControl('', Validators.required),
+        estado: new FormControl('', Validators.required),
         numero_personas: new FormControl('', [
           Validators.required,
           Validators.minLength(1),
@@ -106,7 +106,7 @@ export class FormularioHabitacionComponent implements OnInit, OnDestroy {
         precio: new FormControl(habitacion.precio, [
           Validators.required
         ]),
-        activo: new FormControl(habitacion.activo, Validators.required),
+        estado: new FormControl(habitacion.estado, Validators.required),
         numero_personas: new FormControl(habitacion.numero_personas, [
           Validators.required,
           Validators.minLength(1),

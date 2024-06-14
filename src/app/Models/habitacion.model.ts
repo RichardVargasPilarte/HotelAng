@@ -5,7 +5,7 @@ export interface IHabitacion {
   nombre: string;
   descripcion: string;
   precio: number;
-  activo: string;
+  estado: string;
   numero_personas: number;
   alojamiento_id: number;
 }
@@ -16,7 +16,7 @@ export class Habitacion implements IHabitacion {
   nombre = '';
   descripcion = '';
   precio = -1;
-  activo = '';
+  estado = '';
   numero_personas = -1;
   alojamiento_id = -1;
 }
@@ -26,7 +26,7 @@ export interface IHabitacionResponse {
   nombre: string;
   descripcion: string;
   precio: number;
-  activo: string;
+  estado: string;
   numero_personas: number;
   alojamiento_id: Alojamiento;
 }

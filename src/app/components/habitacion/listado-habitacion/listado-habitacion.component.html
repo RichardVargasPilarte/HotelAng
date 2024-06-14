@@ -39,9 +39,9 @@
       <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.precio | currency:'USD'}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="activo">
+    <ng-container matColumnDef="estado">
       <th mat-header-cell *matHeaderCellDef> Estado </th>
-      <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.activo}} </td>
+      <td mat-cell *matCellDef="let habitaciones"> {{habitaciones.estado}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
