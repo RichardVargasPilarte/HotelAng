@@ -1,66 +1,76 @@
 <form [formGroup]="form">
-    <mat-card appearance="outlined" class="form-card">
-        <mat-card-header>
-            <mat-card-title>Formulario</mat-card-title>
-        </mat-card-header>
+  <mat-card appearance="outlined" class="form-card">
+    <mat-card-header>
+      <mat-card-title>Formulario</mat-card-title>
+    </mat-card-header>
 
-        <mat-card-content>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombre Alojamiento</mat-label>
-                        <input matInput placeholder="Nombre Alojamiento" formControlName="nombre" maxlength="25">
-                        <mat-error *ngIf="form.controls['nombre'].hasError('required')">
-                            El nombre es <strong>requerido</strong>
-                        </mat-error>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre Alojamiento</mat-label>
+            <input matInput placeholder="Nombre Alojamiento" formControlName="nombre" maxlength="25">
+            @if (form.controls['nombre'].hasError('required')) {
+              <mat-error>
+                El nombre es <strong>requerido</strong>
+              </mat-error>
+            }
 
-                        <mat-error *ngIf="form.controls['nombre'].hasError('minlength')">
-                            El nombre debe de tener minimo 8 caracteres
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Tiempo Estadia</mat-label>
-                        <input matInput type="number" placeholder="Tiempo Estadia" formControlName="tiempo_estadia">
-                        <mat-error *ngIf="form.controls['tiempo_estadia'].hasError('required')">
-                            El tiempo de estadia es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
+            @if (form.controls['nombre'].hasError('minlength')) {
+              <mat-error>
+                El nombre debe de tener minimo 8 caracteres
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Tiempo Estadia</mat-label>
+            <input matInput type="number" placeholder="Tiempo Estadia" formControlName="tiempo_estadia">
+            @if (form.controls['tiempo_estadia'].hasError('required')) {
+              <mat-error>
+                El tiempo de estadia es <strong>requerido</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
 
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Descripción</mat-label>
-                        <input matInput placeholder="Descripción" formControlName="descripcion" maxlength="150">
-                        <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
-                            La descripción es <strong>requerido</strong>
-                        </mat-error>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <input matInput placeholder="Descripción" formControlName="descripcion" maxlength="150">
+            @if (form.controls['descripcion'].hasError('required')) {
+              <mat-error>
+                La descripción es <strong>requerido</strong>
+              </mat-error>
+            }
 
-                        <mat-error *ngIf="form.controls['descripcion'].hasError('minlength')">
-                            La descripción debe de tener minimo 10 caracteres
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
+            @if (form.controls['descripcion'].hasError('minlength')) {
+              <mat-error>
+                La descripción debe de tener minimo 10 caracteres
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
 
-            <div class="row">
-                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
-                    (click)="data.type === 'c' ? saveAccommodation():updateAccommodation()"
-                    [disabled]="form.invalid">
-                    Guardar
-                    <i class="material-icons">save</i>
-                </button>
+      <div class="row">
+        <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+          (click)="data.type === 'c' ? saveAccommodation():updateAccommodation()"
+          [disabled]="form.invalid">
+          Guardar
+          <i class="material-icons">save</i>
+        </button>
 
-                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
-                    (click)="dialogRef.close()">
-                    Cancelar
-                    <i class="material-icons">cancel</i>
-                </button>
-            </div>
+        <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+          (click)="dialogRef.close()">
+          Cancelar
+          <i class="material-icons">cancel</i>
+        </button>
+      </div>
 
-        </mat-card-content>
-    </mat-card>
+    </mat-card-content>
+  </mat-card>
 </form>
