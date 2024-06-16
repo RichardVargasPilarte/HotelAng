@@ -1,146 +1,147 @@
-<form [formGroup]="form" *ngIf="form">
+@if (form) {
+  <form [formGroup]="form">
     <mat-card appearance="outlined" class="form-card">
-        <mat-card-header>
-            <mat-card-title>Formulario</mat-card-title>
-        </mat-card-header>
-
-        <mat-divider></mat-divider>
-
-        <mat-card-content>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombres:</mat-label>
-
-                        <input matInput formControlName="first_name" name="first_name" placeholder="Nombres de usuario"
-                            autocomplete="off" required>
-
-                        <mat-error *ngIf="form.controls['first_name'].hasError('required')">
-                            El nombre es <strong>requerido</strong>
-                        </mat-error>
-
-                        <mat-error *ngIf="form.controls['first_name'].hasError('minlength')">
-                            <strong>El nombre debe de tener minimo 3 caracteres</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Apellidos:</mat-label>
-                        <input matInput type="text" formControlName="last_name" placeholder="Apellidos del usuario"
-                            required autocomplete="off">
-
-                        <mat-error *ngIf="form.controls['last_name'].hasError('required')">
-                            <strong>Los apellidos son requerido</strong>
-                        </mat-error>
-
-                        <mat-error *ngIf="form.controls['last_name'].hasError('minlength')">
-                            <strong>El apellido debe de tener minimo 3 caracteres</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+      <mat-card-header>
+        <mat-card-title>Formulario</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombres:</mat-label>
+              <input matInput formControlName="first_name" name="first_name" placeholder="Nombres de usuario"
+                autocomplete="off" required>
+                @if (form.controls['first_name'].hasError('required')) {
+                  <mat-error>
+                    El nombre es <strong>requerido</strong>
+                  </mat-error>
+                }
+                @if (form.controls['first_name'].hasError('minlength')) {
+                  <mat-error>
+                    <strong>El nombre debe de tener minimo 3 caracteres</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombre de usuario (Nick):</mat-label>
-
-                        <input type="text" matInput formControlName="username" placeholder="Ingrese el nick de usuario"
-                            required autocomplete="off" />
-
-                        <mat-error *ngIf="form.controls['username'].hasError('required')">
-                            <strong>El nombre de usuario es requerido</strong>
-                        </mat-error>
-
-                        <mat-error *ngIf="form.controls['username'].hasError('minlength')">
-                            <strong>El nombre de usuario debe de tener minimo 8 caracteres</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Número de teléfono:</mat-label>
-
-                        <input type="tel" matInput formControlName="telefono" placeholder="Ingrese su número telefónico"
-                            required autocomplete="off" />
-
-                        <mat-error *ngIf="form.controls['telefono'].hasError('required')">
-                            <strong>El Número de teléfono es requerido</strong>
-                        </mat-error>
-
-                    </mat-form-field>
-                </div>
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <mat-label>Apellidos:</mat-label>
+                <input matInput type="text" formControlName="last_name" placeholder="Apellidos del usuario"
+                  required autocomplete="off">
+                  @if (form.controls['last_name'].hasError('required')) {
+                    <mat-error>
+                      <strong>Los apellidos son requerido</strong>
+                    </mat-error>
+                  }
+                  @if (form.controls['last_name'].hasError('minlength')) {
+                    <mat-error>
+                      <strong>El apellido debe de tener minimo 3 caracteres</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
             </div>
-
             <div class="row">
+              <div class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Nombre de usuario (Nick):</mat-label>
+                  <input type="text" matInput formControlName="username" placeholder="Ingrese el nick de usuario"
+                    required autocomplete="off" />
+                    @if (form.controls['username'].hasError('required')) {
+                      <mat-error>
+                        <strong>El nombre de usuario es requerido</strong>
+                      </mat-error>
+                    }
+                    @if (form.controls['username'].hasError('minlength')) {
+                      <mat-error>
+                        <strong>El nombre de usuario debe de tener minimo 8 caracteres</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                </div>
                 <div class="col">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Número de teléfono:</mat-label>
+                    <input type="tel" matInput formControlName="telefono" placeholder="Ingrese su número telefónico"
+                      required autocomplete="off" />
+                      @if (form.controls['telefono'].hasError('required')) {
+                        <mat-error>
+                          <strong>El Número de teléfono es requerido</strong>
+                        </mat-error>
+                      }
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
                     <mat-form-field appearance="outline">
-                        <mat-label>email:</mat-label>
-                        <input matInput type="email" formControlName="email" placeholder="email"
-                            required autocomplete="off">
-
-                            <mat-error *ngIf="form.controls['email'].hasError('required')">
-                                <strong>El email es requerido</strong>
-                            </mat-error>
-
-                        <mat-error *ngIf="form.controls['email'].hasError('minlength')">
+                      <mat-label>email:</mat-label>
+                      <input matInput type="email" formControlName="email" placeholder="email"
+                        required autocomplete="off">
+                        @if (form.controls['email'].hasError('required')) {
+                          <mat-error>
                             <strong>El email es requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Tipo de usuario:</mat-label>
-                      <mat-select formControlName="groups">
-                            <mat-option *ngFor="let grupo of gruposCargados" [value]="grupo.id">
-                                {{grupo.name}}
+                          </mat-error>
+                        }
+                        @if (form.controls['email'].hasError('minlength')) {
+                          <mat-error>
+                            <strong>El email es requerido</strong>
+                          </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                    <div class="col">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Tipo de usuario:</mat-label>
+                        <mat-select formControlName="groups">
+                          @for (grupo of gruposCargados; track grupo) {
+                            <mat-option [value]="grupo.id">
+                              {{grupo.name}}
                             </mat-option>
+                          }
                         </mat-select>
-
-                        <mat-error *ngIf="form.controls['groups'].hasError('required')">
+                        @if (form.controls['groups'].hasError('required')) {
+                          <mat-error>
                             <strong>El tipo usuario es requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline" id="direccion">
+                          </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <mat-form-field appearance="outline" id="direccion">
                         <mat-label>Dirección:</mat-label>
-
                         <input type="text" matInput name="direccion" formControlName="direccion"
-                            placeholder="Dirección del usuario" required autocomplete="off">
-
-                        <mat-error *ngIf="form.controls['direccion'].hasError('required')">
-                            <strong>La dirección es requerida</strong>
-                        </mat-error>
-
-                        <mat-error *ngIf="form.controls['direccion'].hasError('minlength')">
-                            <strong>La dirección debe de tener minimo 8 caracteres</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="row">
-                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
-                    (click)="updateUser()"
-                    [disabled]="form.invalid">
-                    Guardar
-                    <i class="material-icons">save</i>
-                </button>
-
-                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
-                    (click)="dialogRef.close()">
-                    Cancelar
-                    <i class="material-icons">cancel</i>
-                </button>
-            </div>
-        </mat-card-content>
-    </mat-card>
-</form>
+                          placeholder="Dirección del usuario" required autocomplete="off">
+                          @if (form.controls['direccion'].hasError('required')) {
+                            <mat-error>
+                              <strong>La dirección es requerida</strong>
+                            </mat-error>
+                          }
+                          @if (form.controls['direccion'].hasError('minlength')) {
+                            <mat-error>
+                              <strong>La dirección debe de tener minimo 8 caracteres</strong>
+                            </mat-error>
+                          }
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+                        (click)="updateUser()"
+                        [disabled]="form.invalid">
+                        Guardar
+                        <i class="material-icons">save</i>
+                      </button>
+                      <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+                        (click)="dialogRef.close()">
+                        Cancelar
+                        <i class="material-icons">cancel</i>
+                      </button>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </form>
+            }

@@ -1,107 +1,107 @@
-<form [formGroup]="form" *ngIf="form">
+@if (form) {
+  <form [formGroup]="form">
     <mat-card appearance="outlined" class="form-card">
-        <mat-card-header>
-            <mat-card-title>Formulario</mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content>
-            <div class="row">
-                <div class="col">
-                    <ng-select [items]="clientes" bindLabel="nombre" bindValue="id"
-                        formControlName="cliente_id" placeholder="Ingrese nombre del cliente">
-                    </ng-select>
-                </div>
-
-                <div class="col">
-                    <mat-form-field>
-                        <mat-label>Habitacion</mat-label>
-                        <mat-select formControlName="habitacion_id">
-                            <mat-option *ngFor="let habitacion of habitaciones" [value]="habitacion.id">
-                                {{ habitacion.nombre }}
-                            </mat-option>
-                        </mat-select>
-
-                        <mat-error *ngIf="form.controls['habitacion_id'].hasError('required')">
-                            La habitacion es <strong>requerid</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+      <mat-card-header>
+        <mat-card-title>Formulario</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <ng-select [items]="clientes" bindLabel="nombre" bindValue="id"
+              formControlName="cliente_id" placeholder="Ingrese nombre del cliente">
+            </ng-select>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Habitacion</mat-label>
+              <mat-select formControlName="habitacion_id">
+                @for (habitacion of habitaciones; track habitacion) {
+                  <mat-option [value]="habitacion.id">
+                    {{ habitacion.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (form.controls['habitacion_id'].hasError('required')) {
+                <mat-error>
+                  La habitacion es <strong>requerid</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Fecha Inicio:</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="fecha_inicio" name="fecha_inicio" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Fecha Fin:</mat-label>
+              <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin" name="fecha_fin" />
+              <mat-datepicker-toggle matSuffix [for]="fecha_fin"></mat-datepicker-toggle>
+              <mat-datepicker #fecha_fin></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Tipo Pago:</mat-label>
+              <mat-select formControlName="tipo_pago">
+                @for (pago of TipoPago; track pago) {
+                  <mat-option [value]="pago">{{ pago }}</mat-option>
+                }
+              </mat-select>
+              @if (form.controls['tipo_pago'].hasError('required')) {
+                <mat-error>
+                  El pago es <strong>requerido</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field id="descripcion">
+              <mat-label>Descripcion</mat-label>
+              <input type="text" matInput name="descripcion" formControlName="descripcion"
+                placeholder="descripcion" autocomplete="off" />
+                @if (form.controls['descripcion'].hasError('required')) {
+                  <mat-error>
+                    La descripción es <strong>requerido</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <mat-form-field>
-                        <mat-label>Fecha Inicio:</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="fecha_inicio" name="fecha_inicio" />
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-form-field>
-                        <mat-label>Fecha Fin:</mat-label>
-                        <input matInput [matDatepicker]="fecha_fin" formControlName="fecha_fin" name="fecha_fin" />
-                        <mat-datepicker-toggle matSuffix [for]="fecha_fin"></mat-datepicker-toggle>
-                        <mat-datepicker #fecha_fin></mat-datepicker>
-                    </mat-form-field>
-                </div>
+          </div>
+          <!-- <div class="row">
+          <div class="col">
+            <mat-form-field id="descripcion">
+              <mat-label>Descripcion</mat-label>
+              <input type="text" matInput name="descripcion" formControlName="descripcion"
+                placeholder="descripcion" autocomplete="off" />
+                <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
+                  La descripción es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <mat-form-field>
-                        <mat-label>Tipo Pago:</mat-label>
-                        <mat-select formControlName="tipo_pago">
-                            <ng-container *ngFor="let pago of TipoPago">
-                                <mat-option [value]="pago">{{ pago }}</mat-option>
-                            </ng-container>
-                        </mat-select>
-                        <mat-error *ngIf="form.controls['tipo_pago'].hasError('required')">
-                            El pago es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                  <mat-form-field id="descripcion">
-                      <mat-label>Descripcion</mat-label>
-                      <input type="text" matInput name="descripcion" formControlName="descripcion"
-                          placeholder="descripcion" autocomplete="off" />
-                      <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
-                          La descripción es <strong>requerido</strong>
-                      </mat-error>
-                  </mat-form-field>
-              </div>
-            </div>
-
-            <!-- <div class="row">
-                <div class="col">
-                    <mat-form-field id="descripcion">
-                        <mat-label>Descripcion</mat-label>
-                        <input type="text" matInput name="descripcion" formControlName="descripcion"
-                            placeholder="descripcion" autocomplete="off" />
-                        <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
-                            La descripción es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div> -->
-
-            <div class="row">
+          </div> -->
+          <div class="row">
                 <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar" (click)="
             data.type === 'c' ? saveReserve() : updateReservation()
           " [disabled]="form.invalid">
-                    Guardar
-                    <i class="material-icons">save</i>
-                </button>
-
-                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
-                    (click)="dialogRef.close()">
-                    Cancelar
-                    <i class="material-icons">cancel</i>
-                </button>
-            </div>
+              Guardar
+              <i class="material-icons">save</i>
+            </button>
+            <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+              (click)="dialogRef.close()">
+              Cancelar
+              <i class="material-icons">cancel</i>
+            </button>
+          </div>
         </mat-card-content>
-    </mat-card>
-</form>
+      </mat-card>
+    </form>
+  }

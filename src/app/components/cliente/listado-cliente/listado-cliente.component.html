@@ -11,56 +11,50 @@
   <p style="color: white"> Cargando datos... </p>
 </ngx-spinner>
 
-<div *ngIf="isLoaded">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> N<sup>o</sup> </th>
-      <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let clientes"> {{clientes.nombre}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="apellido">
-      <th mat-header-cell *matHeaderCellDef> Apellido </th>
-      <td mat-cell *matCellDef="let clientes"> {{clientes.apellido}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="telefono">
-      <th mat-header-cell *matHeaderCellDef> Telefono </th>
-      <td mat-cell *matCellDef="let clientes"> {{clientes.telefono}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let clientes"> {{clientes.email}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let clientes">
-
-        <ng-container>
-          <button mat-mini-fab color="primary" class="" (click)="openDialog('u', clientes.id)">
-            <mat-icon appTooltip="Editar">create</mat-icon>
-          </button>
-        </ng-container>
-
-        <span class="button-spacing"></span>
-
-        <ng-container>
-          <button mat-mini-fab color="warn" class="" (click)="deleteClient(clientes.id)"
-            *ngIf="hasPermission(permissions.Cliente.Delete)">
-            <mat-icon appTooltip="Eliminar">delete_forever</mat-icon>
-          </button>
-        </ng-container>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-</div>
+@if (isLoaded) {
+  <div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> N<sup>o</sup> </th>
+        <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+      </ng-container>
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let clientes"> {{clientes.nombre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="apellido">
+        <th mat-header-cell *matHeaderCellDef> Apellido </th>
+        <td mat-cell *matCellDef="let clientes"> {{clientes.apellido}} </td>
+      </ng-container>
+      <ng-container matColumnDef="telefono">
+        <th mat-header-cell *matHeaderCellDef> Telefono </th>
+        <td mat-cell *matCellDef="let clientes"> {{clientes.telefono}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let clientes"> {{clientes.email}} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let clientes">
+          <ng-container>
+            <button mat-mini-fab color="primary" class="" (click)="openDialog('u', clientes.id)">
+              <mat-icon appTooltip="Editar">create</mat-icon>
+            </button>
+          </ng-container>
+          <span class="button-spacing"></span>
+          <ng-container>
+            @if (hasPermission(permissions.Cliente.Delete)) {
+              <button mat-mini-fab color="warn" class="" (click)="deleteClient(clientes.id)"
+                >
+                <mat-icon appTooltip="Eliminar">delete_forever</mat-icon>
+              </button>
+            }
+          </ng-container>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+}

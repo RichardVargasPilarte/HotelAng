@@ -1,121 +1,122 @@
-<form [formGroup]="form" *ngIf="form">
+@if (form) {
+  <form [formGroup]="form">
     <mat-card appearance="outlined" class="form-card">
-        <mat-card-header>
-            <mat-card-title>Formulario</mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombre Habitación:</mat-label>
-
-                        <input matInput formControlName="nombre" name="nombre" placeholder="Nombre de la Habitación"
-                            autocomplete="off" maxlength="25">
-
-                        <mat-error *ngIf="form.controls['nombre'].hasError('required')">
-                            El nombre es <strong>requerido</strong>
-                        </mat-error>
-
-                        <mat-error *ngIf="form.controls['nombre'].hasError('minlength')">
-                            El nombre debe de tener minimo 5 caracteres
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Precio:</mat-label>
-
-                        <input type="number" matInput name="precio" formControlName="precio" placeholder="Precio"
-                            autocomplete="off">
-
-                        <mat-error *ngIf="form.controls['precio'].hasError('required')">
-                            El precio es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+      <mat-card-header>
+        <mat-card-title>Formulario</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre Habitación:</mat-label>
+              <input matInput formControlName="nombre" name="nombre" placeholder="Nombre de la Habitación"
+                autocomplete="off" maxlength="25">
+                @if (form.controls['nombre'].hasError('required')) {
+                  <mat-error>
+                    El nombre es <strong>requerido</strong>
+                  </mat-error>
+                }
+                @if (form.controls['nombre'].hasError('minlength')) {
+                  <mat-error>
+                    El nombre debe de tener minimo 5 caracteres
+                  </mat-error>
+                }
+              </mat-form-field>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Tipo de Alojamiento</mat-label>
-                        <mat-select formControlName="alojamiento_id">
-                            <mat-option *ngFor="let alojamiento of AlojamientosCargados" [value]="alojamiento.id">
-                                {{alojamiento.nombre}}
-                            </mat-option>
-                        </mat-select>
-
-                        <mat-error *ngIf="form.controls['alojamiento_id'].hasError('required')">
-                            El tipo de alojamiento es <strong>requerido</strong>
-
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Número de Personas:</mat-label>
-
-                        <input type="number" matInput name="numero_personas" formControlName="numero_personas"
-                            placeholder="NumeroPersonas" autocomplete="off">
-
-                        <mat-error *ngIf="form.controls['numero_personas'].hasError('required')">
-                            El numero de personas es <strong>requerido</strong>
-                        </mat-error>
-
-                        <mat-error *ngIf="form.controls['numero_personas'].hasError('minlength')">
-                            El minimo de personas por habitación es de 1 persona
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <mat-label>Precio:</mat-label>
+                <input type="number" matInput name="precio" formControlName="precio" placeholder="Precio"
+                  autocomplete="off">
+                  @if (form.controls['precio'].hasError('required')) {
+                    <mat-error>
+                      El precio es <strong>requerido</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
             </div>
-
             <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Estado Habitación:</mat-label>
-                        <mat-select formControlName="estado">
-                            <ng-container *ngFor="let estado of EstadoHabitaciones">
-                                <mat-option [value]="estado">{{estado}}</mat-option>
-                            </ng-container>
-                        </mat-select>
-                        <mat-error *ngIf="form.controls['estado'].hasError('required')">
-                            El estado de la habitación es <strong>requerida</strong>
-                        </mat-error>
-                    </mat-form-field>
+              <div class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Tipo de Alojamiento</mat-label>
+                  <mat-select formControlName="alojamiento_id">
+                    @for (alojamiento of AlojamientosCargados; track alojamiento) {
+                      <mat-option [value]="alojamiento.id">
+                        {{alojamiento.nombre}}
+                      </mat-option>
+                    }
+                  </mat-select>
+                  @if (form.controls['alojamiento_id'].hasError('required')) {
+                    <mat-error>
+                      El tipo de alojamiento es <strong>requerido</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Número de Personas:</mat-label>
+                  <input type="number" matInput name="numero_personas" formControlName="numero_personas"
+                    placeholder="NumeroPersonas" autocomplete="off">
+                    @if (form.controls['numero_personas'].hasError('required')) {
+                      <mat-error>
+                        El numero de personas es <strong>requerido</strong>
+                      </mat-error>
+                    }
+                    @if (form.controls['numero_personas'].hasError('minlength')) {
+                      <mat-error>
+                        El minimo de personas por habitación es de 1 persona
+                      </mat-error>
+                    }
+                  </mat-form-field>
                 </div>
-            </div>
-
-            <div class="row">
+              </div>
+              <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="outline" id="descripcion">
-                        <mat-label>Descripcion</mat-label>
-                        <input type="text" matInput name="descripcion" formControlName="descripcion"
-                            placeholder="descripcion" autocomplete="off">
-                        <mat-error *ngIf="form.controls['descripcion'].hasError('required')">
-                            La descripción es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Estado Habitación:</mat-label>
+                    <mat-select formControlName="estado">
+                      @for (estado of EstadoHabitaciones; track estado) {
+                        <mat-option [value]="estado">{{estado}}</mat-option>
+                      }
+                    </mat-select>
+                    @if (form.controls['estado'].hasError('required')) {
+                      <mat-error>
+                        El estado de la habitación es <strong>requerida</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
                 </div>
-            </div>
-
-            <div class="row">
-                <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field appearance="outline" id="descripcion">
+                    <mat-label>Descripcion</mat-label>
+                    <input type="text" matInput name="descripcion" formControlName="descripcion"
+                      placeholder="descripcion" autocomplete="off">
+                      @if (form.controls['descripcion'].hasError('required')) {
+                        <mat-error>
+                          La descripción es <strong>requerido</strong>
+                        </mat-error>
+                      }
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <button mat-raised-button color="primary" class="pull-left" type="button" id="btn_guardar"
                     (click)="data.type === 'c' ? saveRoom():UpdateRoom()"
                     [disabled]="form.invalid">
                     Guardar
                     <i class="material-icons">save</i>
-                </button>
-
-                <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
+                  </button>
+                  <button mat-raised-button color="warn" type="button" class="pull-right" id="btn_salir"
                     (click)="dialogRef.close()">
                     Cancelar
                     <i class="material-icons">cancel</i>
-                </button>
-            </div>
-
-        </mat-card-content>
-    </mat-card>
-</form>
+                  </button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </form>
+        }

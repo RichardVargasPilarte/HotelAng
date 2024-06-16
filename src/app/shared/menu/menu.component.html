@@ -1,14 +1,16 @@
 <div class="parent">
 
-    <mat-card *ngFor="let item of lista; let i=index" class="example-card">
-        <mat-card-title-group>
-            <mat-card-title>{{item.nombre}}</mat-card-title>
-            <mat-icon>{{item.icon}}</mat-icon>
-        </mat-card-title-group>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            {{item.descripcion}}
-        </mat-card-content>
+  @for (item of lista; track item; let i = $index) {
+    <mat-card class="example-card">
+      <mat-card-title-group>
+        <mat-card-title>{{item.nombre}}</mat-card-title>
+        <mat-icon>{{item.icon}}</mat-icon>
+      </mat-card-title-group>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        {{item.descripcion}}
+      </mat-card-content>
     </mat-card>
+  }
 
 </div>
